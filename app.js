@@ -26,6 +26,7 @@ function render(){
  const b=$("branch").value,ba=records.filter(x=>!b||x.branch===b);$("summary").innerHTML=statsHtml(ba);
  const bs=unique([...records.map(x=>x.branch),...extras]);
  $("summaryTabs").innerHTML='<button class="tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'</button>').join("");
+ const sidebar=$("branchTabs");if(sidebar)sidebar.innerHTML='<button class="branch-tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="branch-tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'<span>'+records.filter(r=>r.branch===x).length+'</span></button>').join("");
  $("count").textContent="عرض "+a.length+" من "+records.length+" سجل";
  $("records").innerHTML=a.map(x=>{
    const fields=x.headers.map(h=>{
