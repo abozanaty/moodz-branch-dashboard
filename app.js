@@ -3,7 +3,7 @@ const URL_API="https://yogsjsqctpnmhhsjxcfm.supabase.co";
 const PUBLIC_KEY="sb_publishable_0HWgGuV4SkfFXlIbFdRsBw_5R-mLz3H";
 const db=window.supabase.createClient(URL_API,PUBLIC_KEY);
 const extras=["توفي","كوربة"];
-let user=null,profile=null,records=[],channel=null,branchSettings={},activeTimeBranch="";
+let user=null,profile=null,records=[],channel=null,branchSettings={},activeTimeBranch="",recordsVisible=false;
 const $=id=>document.getElementById(id);
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
 function esc(s){return String(s==null?"":s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}
@@ -28,7 +28,10 @@ function render(){
  $("summaryTabs").innerHTML='<button class="tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'</button>').join("");
  const sidebar=$("branchTabs");if(sidebar)sidebar.innerHTML='<button class="branch-tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="branch-tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'<span>'+records.filter(r=>r.branch===x).length+'</span></button>').join("");
  $("count").textContent="عرض "+a.length+" من "+records.length+" سجل";
- $("records").innerHTML=a.map(x=>{
+ const recordsEl=$("records");
+ if(!recordsVisible){recordsEl.classList.add("hidden");$("toggleRecords").textContent="＋ إظهار سجلات "+(b||"كل الفروع");$("toggleRecords").setAttribute("aria-expanded","false");}
+ else{recordsEl.classList.remove("hidden");$("toggleRecords").textContent="− إخفاء السجلات";$("toggleRecords").setAttribute("aria-expanded","true");}
+ recordsEl.innerHTML=a.map(x=>{
    const fields=x.headers.map(h=>{
      const label='<label>'+esc(h)+'</label>';
      const attr=' data-id="'+esc(x.id)+'" data-key="'+esc(h)+'"';
@@ -65,7 +68,7 @@ window.saveOpeningTimeFor=async function(branch){
 };
 
 
-function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");render()}
+function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");recordsVisible=false;render()}\nwindow.toggleRecordsVisibility=function(){recordsVisible=!recordsVisible;render()};
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
 async function saveCard(id){if(!canEdit())return;const x=records.find(r=>r.id===id);const {error}=await db.from("branch_records").update({branch:x.branch,sheet:x.sheet,headers:x.headers,row_data:x.row}).eq("id",id);if(error)toast("فشل الحفظ: "+error.message);else toast("تم حفظ التعديلات ومزامنتها")}
 async function deleteRecord(id){if(!canDelete()||!confirm("حذف السجل نهائيًا؟"))return;const {error}=await db.from("branch_records").delete().eq("id",id);if(error)toast("فشل الحذف: "+error.message);else{toast("تم الحذف");await refresh()}}
