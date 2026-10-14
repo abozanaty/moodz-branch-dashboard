@@ -40,3 +40,9 @@ main.wrap{display:block!important;width:100%;max-width:1400px;margin:0 auto}
 .opening-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:900px){.opening-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.opening-grid{grid-template-columns:1fr}}
+
+/* Improve dashboard heading readability */
+header h1{font-size:28px}
+h3,.visual-card h3,.record h3{font-size:19px}
+.opening-panel h3{font-size:21px}
+.bar-row{font-size:14px}
