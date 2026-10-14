@@ -35,6 +35,7 @@ function render(){
    }).join("");
    return '<article class="record"><h3>'+esc(x.branch)+' — '+esc(x.sheet)+'</h3>'+fields+'<div class="row">'+(canEdit()?'<button class="primary" data-id="'+esc(x.id)+'" onclick="saveCard(this.dataset.id)">حفظ التعديلات</button>':'')+(canDelete()?'<button class="danger" data-id="'+esc(x.id)+'" onclick="deleteRecord(this.dataset.id)">حذف</button>':'')+'</div></article>';
  }).join("");
+ applyLanguage();
 }
 function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");render()}
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
@@ -68,3 +69,45 @@ async function addRecord(){
 async function importJson(){if(profile.role!=="admin")return toast("الاستيراد متاح لمسؤول النظام فقط");if(records.length&&!confirm("قاعدة البيانات تحتوي بالفعل على "+records.length+" سجل. هل تريد إضافة البيانات مرة أخرى؟"))return;const f=$("importFile").files[0];if(!f)return toast("اختار ملف التقارير_الأصلية.json أولًا");try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw new Error("صيغة الملف غير صحيحة");const rows=data.map(x=>({branch:x.branch||"غير محدد",sheet:x.sheet||"عام",headers:x.headers||Object.keys(x.row||{}),row_data:x.row||x.row_data||{},created_by:user.id}));for(let i=0;i<rows.length;i+=100){const {error}=await db.from("branch_records").insert(rows.slice(i,i+100));if(error)throw error}toast("تم استيراد "+rows.length+" سجل");await refresh()}catch(e){toast("فشل الاستيراد: "+e.message)}}
 function exportCsv(){const a=filtered();if(!a.length)return toast("لا توجد بيانات للتصدير");const hs=unique(a.flatMap(x=>x.headers));const rows=[["الفرع","نوع التقرير",...hs],...a.map(x=>[x.branch,x.sheet,...hs.map(h=>x.row[h]||"")])];const csv="\ufeff"+rows.map(r=>r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(",")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),el=document.createElement("a");el.href=url;el.download="تقرير_الفروع.csv";el.click();URL.revokeObjectURL(url)}
 start();
+applyLanguage();
+
+
+let uiLanguage="ar";
+const englishText=new Map([
+ ["تسجيل الدخول","Sign in"],["لوحة متابعة الفروع","Branch Follow-up Dashboard"],
+ ["حساب مستقل لكل مدير — جميع الفروع في قاعدة بيانات مشتركة.","Separate account for each manager — all branches share one database."],
+ ["البريد الإلكتروني","Email"],["كلمة المرور","Password"],["دخول","Sign in"],
+ ["جارٍ تسجيل الدخول...","Signing in..."],["تسجيل الخروج","Sign out"],
+ ["تحديثات مشتركة مباشرة — مودز وبروكلينز","Live shared updates — Moodz & Brooklyn’s"],
+ ["الفرع","Branch"],["نوع التقرير","Report type"],["الحالة","Status"],["بحث","Search"],
+ ["ابحث في البيانات...","Search records..."],["ملخص الفرع","Branch summary"],
+ ["＋ إضافة سجل","＋ Add record"],["استيراد التقارير الأصلية (JSON)","Import original reports (JSON)"],
+ ["استيراد الملف","Import file"],["تصدير CSV","Export CSV"],
+ ["الأدوار: مسؤول النظام (إضافة/تعديل/حذف)، محرر (إضافة/تعديل)، عرض فقط (مشاهدة). لا ترفع ملف التقارير الأصلية أكثر من مرة.","Roles: Admin (add/edit/delete), Editor (add/edit), Viewer (read-only). Do not import the original report file more than once."],
+ ["كل الفروع","All branches"],["كل التقارير","All reports"],["كل الحالات","All statuses"],
+ ["إجمالي السجلات","Total records"],["قيد المتابعة / مفتوح","Pending / Open"],
+ ["تم الحل","Resolved"],["بدون مسؤول محدد","No owner assigned"],["عرض ","Showing "],
+ [" من "," of "],[" سجل"," records"],["＋ إضافة سجل جديد","＋ Add new record"],
+ ["إلغاء","Cancel"],["حفظ السجل","Save record"],["جارٍ الحفظ...","Saving..."],
+ ["وصف السجل / المشكلة / الإجراء","Record / issue / action description"],
+ ["المسؤول عن المتابعة","Assigned to"],["غير محدد","Unassigned"],
+ ["التاريخ","Date"],["لا توجد بيانات للتصدير","No data to export"],
+ ["اختار ملف التقارير_الأصلية.json أولًا","Choose the original reports JSON file first"],
+ ["تم حفظ التعديلات ومزامنتها","Changes saved and synced"],["تمت إضافة السجل","Record added"]
+]);
+function applyLanguage(){
+ const en=uiLanguage==="en";
+ document.documentElement.lang=en?"en":"ar";
+ document.documentElement.dir=en?"ltr":"rtl";
+ document.body.style.direction=en?"ltr":"rtl";
+ const toggle=$("languageToggle");if(toggle)toggle.textContent=en?"العربية":"English";
+ const map=en?englishText:new Map([...englishText].map(([ar,eng])=>[eng,ar]));
+ document.querySelectorAll("h1,h2,h3,p,label,button,span,option").forEach(el=>{
+   if(el.children.length===0){const v=el.textContent; if(map.has(v))el.textContent=map.get(v);}
+ });
+ const search=$("search");if(search)search.placeholder=en?"Search records...":"ابحث في البيانات...";
+ const desc=document.querySelector('#newRecordForm textarea[name="description"]');if(desc)desc.placeholder=en?"Enter details here":"اكتب التفاصيل هنا";
+ document.querySelectorAll("#newRecordForm label").forEach(el=>{if(en){if(el.textContent==="وصف السجل / المشكلة / الإجراء")el.textContent="Record / issue / action description";if(el.textContent==="المسؤول عن المتابعة")el.textContent="Assigned to";if(el.textContent==="التاريخ")el.textContent="Date";if(el.textContent==="الفرع")el.textContent="Branch";if(el.textContent==="نوع التقرير")el.textContent="Report type";if(el.textContent==="الحالة")el.textContent="Status";}else{const back=new Map([...englishText].map(([a,b])=>[b,a]));if(back.has(el.textContent))el.textContent=back.get(el.textContent);}});
+}
+window.toggleLanguage=function(){uiLanguage=uiLanguage==="ar"?"en":"ar";applyLanguage();};
+
