@@ -31,3 +31,12 @@
 
 
 @media(max-width:850px){}
+
+/* Restore full-width original dashboard layout; no branch sidebar */
+#branchTabs,.branch-sidebar{display:none!important}
+main.wrap{display:block!important;width:100%;max-width:1400px;margin:0 auto}
+.dashboard-content{display:block!important;width:100%;max-width:none;min-width:0}
+#openingTimes,.opening-panel{width:100%;max-width:none}
+.opening-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){.opening-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.opening-grid{grid-template-columns:1fr}}
