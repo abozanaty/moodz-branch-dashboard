@@ -68,7 +68,7 @@ window.saveOpeningTimeFor=async function(branch){
 };
 
 
-function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");recordsVisible=false;render()} 
+function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");recordsVisible=true;render()} 
 window.toggleRecordsVisibility=function(){recordsVisible=!recordsVisible;render()};
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
 async function saveCard(id){if(!canEdit())return;const x=records.find(r=>r.id===id);const {error}=await db.from("branch_records").update({branch:x.branch,sheet:x.sheet,headers:x.headers,row_data:x.row}).eq("id",id);if(error)toast("فشل الحفظ: "+error.message);else toast("تم حفظ التعديلات ومزامنتها")}
