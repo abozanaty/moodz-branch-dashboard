@@ -40,7 +40,7 @@ function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...ex
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
 async function saveCard(id){if(!canEdit())return;const x=records.find(r=>r.id===id);const {error}=await db.from("branch_records").update({branch:x.branch,sheet:x.sheet,headers:x.headers,row_data:x.row}).eq("id",id);if(error)toast("فشل الحفظ: "+error.message);else toast("تم حفظ التعديلات ومزامنتها")}
 async function deleteRecord(id){if(!canDelete()||!confirm("حذف السجل نهائيًا؟"))return;const {error}=await db.from("branch_records").delete().eq("id",id);if(error)toast("فشل الحذف: "+error.message);else{toast("تم الحذف");await refresh()}}
-async async function addRecord(){
+async function addRecord(){
  if(!canEdit())return;
  const branches=unique([...records.map(x=>x.branch).filter(Boolean),...extras]);
  const sheets=unique(records.map(x=>x.sheet).filter(Boolean));
