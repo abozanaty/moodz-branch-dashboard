@@ -159,3 +159,28 @@ header h1,.page-title,h1{font-size:clamp(1.65rem,2.4vw,2.15rem);font-weight:900;
 .revenue-square .revenue-mini-bar{margin-top:auto}
 @media(max-width:900px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.opening-square{padding:8px;min-height:105px}.opening-square h4{font-size:11px}.revenue-square{padding:9px;min-height:230px}}
+
+/* Tight, contained branch cards and controls */
+.opening-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;align-items:stretch}
+.opening-square{min-width:0;min-height:0;height:auto;aspect-ratio:auto;padding:8px;gap:5px;overflow:hidden;justify-content:flex-start;border-radius:10px}
+.opening-square h4{margin:0;line-height:1.2;font-size:clamp(10px,.95vw,13px);overflow-wrap:anywhere}
+.opening-square .opening-date{font-size:11px;line-height:1.2}
+.opening-square input[type=time]{min-width:0;width:100%;max-width:100%;padding:6px 4px;font-size:12px}
+.opening-square .opening-actions{display:flex;gap:4px;width:100%;min-width:0;margin:0}
+.opening-square button{min-width:0;max-width:100%;padding:6px 8px;font-size:11px;white-space:normal;overflow-wrap:anywhere}
+.opening-square .opening-save-status{font-size:10px;line-height:1.2;min-height:0;overflow-wrap:anywhere}
+.revenue-square{min-width:0;min-height:0;height:auto;aspect-ratio:auto;padding:10px;gap:6px;overflow:hidden}
+.revenue-square h4{margin:0;overflow-wrap:anywhere}
+.revenue-square .revenue-entry{gap:5px;min-width:0}
+.revenue-square .revenue-entry>*{min-width:0;max-width:100%}
+.revenue-square .revenue-entry button,.revenue-square button{width:100%;white-space:normal;overflow-wrap:anywhere;padding:7px 8px}
+.revenue-square .revenue-notes-wrap,.revenue-square .revenue-notes-field{min-width:0;width:100%}
+.revenue-square input{min-width:0;max-width:100%}
+.revenue-square .revenue-mini-bar{min-width:0;width:100%;overflow:hidden}
+.revenue-square .bar-track{width:100%;min-width:0}
+.admin-tools,.panel,.opening-panel,.opening-grid,.revenue-branch-grid,.opening-square,.revenue-square{box-sizing:border-box;min-width:0;max-width:100%}
+.admin-tools>*{min-width:0;max-width:100%}
+.panel-titlebar,.opening-actions,.row{min-width:0;max-width:100%;flex-wrap:wrap}
+.panel-titlebar>* , .opening-actions>* , .row>*{min-width:0;max-width:100%}
+@media(max-width:900px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.opening-square{padding:7px;gap:4px}.opening-square h4{font-size:10px}.opening-square input[type=time]{font-size:11px;padding:5px 2px}.opening-square button{font-size:10px;padding:5px 6px}.revenue-square{padding:8px}}
