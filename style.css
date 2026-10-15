@@ -121,3 +121,8 @@ button.primary{background:#39b9a5;color:#062a28;border-color:#39b9a5;font-weight
 .revenue-mini-bar small{display:block;margin-top:6px;color:#9fb7b1}
 header{width:100%}
 @media(max-width:600px){.wrap{padding:12px}.revenue-branch-grid{grid-template-columns:1fr}}
+
+/* M-Daily language and revenue card polish */
+.language-toggle{min-width:42px;height:42px;padding:0 12px;border-radius:12px;font-weight:800;font-size:18px;direction:ltr}
+#adminTools{width:100%}
+#branchSettingsAdmin,#dailyRevenueAdmin{width:100%}
