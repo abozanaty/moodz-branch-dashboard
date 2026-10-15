@@ -56,7 +56,7 @@ function filtered(){const b=$("branch").value,s=$("sheet").value,st=$("status").
 function statsHtml(a){const pending=a.filter(x=>{const s=String(x.row["الحالة"]||"");return s.includes("متابعة")||s.includes("مفتوح")||s==="?"||!s}).length;const done=a.filter(x=>String(x.row["الحالة"]||"").includes("تم الحل")).length;const noOwner=a.filter(x=>{const k=Object.keys(x.row).find(k=>k.includes("مسؤول"));return !k||!String(x.row[k]||"").trim()||String(x.row[k]).trim()==="?"}).length;return '<div class="stat"><span>إجمالي السجلات</span><strong>'+a.length+'</strong></div><div class="stat"><span>قيد المتابعة / مفتوح</span><strong>'+pending+'</strong></div><div class="stat"><span>تم الحل</span><strong>'+done+'</strong></div><div class="stat"><span>بدون مسؤول محدد</span><strong>'+noOwner+'</strong></div>'}
 function render(){
  const a=filtered();$("stats").innerHTML=statsHtml(a);
- const b=$("branch").value,ba=records.filter(x=>!b||x.branch===b);$("summary").innerHTML=statsHtml(ba);
+ const b=$("branch").value,visible=new Set(availableBranches()),ba=records.filter(x=>visible.has(x.branch)&&(!b||x.branch===b));$("summary").innerHTML=statsHtml(ba);
  const bs=availableBranches();
  $("summaryTabs").innerHTML='<button class="tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'</button>').join("");
  const sidebar=$("branchTabs");if(sidebar)sidebar.innerHTML='<button class="branch-tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="branch-tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'<span>'+records.filter(r=>r.branch===x).length+'</span></button>').join("");
@@ -80,7 +80,7 @@ function render(){
 function renderVisuals(a,ba){
  const el=$("visuals");if(!el)return;
  const statuses=[["قيد المتابعة",a.filter(x=>String(x.row["الحالة"]||"").includes("متابعة")).length],["مفتوح",a.filter(x=>String(x.row["الحالة"]||"").includes("مفتوح")).length],["تم الحل",a.filter(x=>String(x.row["الحالة"]||"").includes("تم الحل")).length],["مؤجل",a.filter(x=>String(x.row["الحالة"]||"").includes("مؤجل")).length]];
- const branches=availableBranches().map(b=>({name:b,count:records.filter(x=>x.branch===b).length})).sort((x,y)=>y.count-x.count);
+ const branches=availableBranches().map(b=>({name:b,count:records.filter(x=>x.branch===b).length,issues:records.filter(x=>x.branch===b&&/(قيد المتابعة|مفتوح|مؤجل)/.test(String(x.row["الحالة"]||""))).length})).sort((x,y)=>y.count-x.count);
  const max=Math.max(1,...branches.map(x=>x.count));
  el.innerHTML='<div class="visual-grid"><section class="panel visual-card"><h3>حالة المهام</h3>'+statuses.map(s=>'<div class="bar-row"><span>'+esc(s[0])+'</span><div class="bar-track"><i style="width:'+(a.length?Math.round(s[1]/a.length*100):0)+'%"></i></div><b>'+s[1]+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>السجلات حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.count/max*100)+'%"></i></div><b>'+b.count+'</b></div>').join('')+'</section></div>';
 }
