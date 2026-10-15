@@ -185,7 +185,25 @@ const englishText=new Map([
  ["المسؤول عن المتابعة","Assigned to"],["غير محدد","Unassigned"],
  ["التاريخ","Date"],["لا توجد بيانات للتصدير","No data to export"],
  ["اختار ملف التقارير_الأصلية.json أولًا","Choose the original reports JSON file first"],
- ["تم حفظ التعديلات ومزامنتها","Changes saved and synced"],["تمت إضافة السجل","Record added"]
+ ["تم حفظ التعديلات ومزامنتها","Changes saved and synced"],["تمت إضافة السجل","Record added"],
+ ["إدارة المستخدمين والصلاحيات","User Management & Permissions"],["المستخدمون الحاليون","Current users"],["＋ إضافة مستخدم","＋ Add user"],["إضافة سجل جديد","Add new record"],
+ ["إيرادات الفروع اليومية","Daily Branch Revenue"],["إعدادات ظهور الفروع","Branch Visibility Settings"],["حفظ إعدادات الفروع","Save Branch Settings"],
+ ["إخفاء الفرع يخفي سجلاته وملخصاته من الداشبورد الرئيسية، ويمكن إظهاره مرة أخرى في أي وقت.","Hiding a branch removes its records and summaries from the main dashboard. You can show it again at any time."],
+ ["تظهر الإيرادات للفروع الممنوحة لحسابك. الإدخال متاح للفروع التي تملك صلاحية التعديل عليها.","Revenue is shown only for branches assigned to your account. Entry is available for branches where you have edit permission."],
+ ["الإيراد بالجنيه","Revenue (EGP)"],["ملاحظات","Notes"],["اختياري","Optional"],["حفظ الإيراد","Save Revenue"],["مشاهدة فقط — لا تملك صلاحية تعديل الإيراد","View only — you cannot edit revenue"],
+ ["إجمالي الإيرادات المسجلة","Total recorded revenue"],["إجمالي الإيرادات المسجلة: ","Total recorded revenue: "],["آخر إدخال: ","Last entry: "],["لم يُدخل إيراد بعد","No revenue entered yet"],
+ ["حفظ إيراد ","Saved revenue for "],["تعذر حفظ الإيراد: ","Could not save revenue: "],["تم حفظ إعدادات ظهور الفروع","Branch visibility settings saved"],
+ ["تعذر حفظ الإعدادات: ","Could not save settings: "],["حالة المهام","Task Status"],["السجلات حسب الفرع","Records by Branch"],["المشاكل المفتوحة حسب الفرع","Open Issues by Branch"],
+ ["مواعيد فتح الفروع","Branch Opening Times"],["ميعاد فتح الفرع","Branch opening time"],["تم إدخال مواعيد كل الفروع","Opening times entered for all branches"],["ادخل ميعاد الفرع","Enter branch opening time"],
+ ["كل الفروع لها ميعاد فتح مسجل","All branches have an opening time"],["الفروع باللون الأحمر لم يتم تسجيل ميعاد فتحها بعد","Branches in red have no opening time recorded"],
+ ["سجّل ميعاد فتح كل فرع واضغط حفظ. الفرع يتحول للأخضر بعد حفظ الميعاد.","Enter each branch opening time and save. The branch turns green after saving."],
+ ["إضافة سجل جديد","Add New Record"],["اختار الفرع ونوع التقرير من القوائم، واكتب اسم المسؤول عن المتابعة بحرية.","Choose the branch and report type, then enter the person responsible for follow-up."],
+ ["صيانة عامة","General Maintenance"],["صيانة معدات","Equipment Maintenance"],["تأخيرات","Delays"],["مشاكل موظفين","Staff Issues"],["مشاكل تشغيلية","Operational Issues"],["مهمات","Tasks"],["تعليمات تشغيلية","Operational Instructions"],
+ ["حفظ التعديلات","Save Changes"],["حذف","Delete"],["إظهار السجلات","Show Records"],["إخفاء السجلات","Hide Records"],
+ ["مشاهدة فقط","View Only"],["مشاهدة وتعديل","View & Edit"],["مسؤول النظام","Administrator"],["محرر","Editor"],
+ ["الاسم","Name"],["الصلاحية","Role"],["الفروع المسموح بها","Allowed Branches"],["حفظ المستخدم","Save User"],["مستخدم جديد / إلغاء التعديل","New User / Cancel Edit"],
+ ["إضافة مستخدم جديد","Add New User"],["تعديل المستخدم","Edit User"],["تعيين كلمة مرور","Reset Password"],["حذف المستخدم","Delete User"],["العودة للوحة","Back to Dashboard"],
+ ["＋ إظهار سجلات ","＋ Show records for "],["− إخفاء السجلات","− Hide records"],["تعذر تحميل الداشبورد: ","Dashboard could not load: "]
 ]);
 function makePanelsCollapsible(){
  document.querySelectorAll("#app .panel").forEach(panel=>{
@@ -208,9 +226,9 @@ function applyLanguage(){
  document.documentElement.lang=en?"en":"ar";
  document.documentElement.dir=en?"ltr":"rtl";
  document.body.style.direction=en?"ltr":"rtl";
- const toggle=$("languageToggle");if(toggle)toggle.textContent=en?"العربية":"English";
+ const toggle=$("languageToggle");if(toggle)toggle.textContent=en?"العربية":"English";const dashToggle=$("dashboardLanguage");if(dashToggle)dashToggle.textContent=en?"ع":"E";
  const map=en?englishText:new Map([...englishText].map(([ar,eng])=>[eng,ar]));
- document.querySelectorAll("h1,h2,h3,h4,p,label,button,span,option,small,th,td").forEach(el=>{
+ document.querySelectorAll("h1,h2,h3,h4,p,label,button,span,option,small,th,td,strong,div").forEach(el=>{
    if(el.children.length===0){const v=el.textContent; if(map.has(v))el.textContent=map.get(v);}
  });
  const search=$("search");if(search)search.placeholder=en?"Search records...":"ابحث في البيانات...";
