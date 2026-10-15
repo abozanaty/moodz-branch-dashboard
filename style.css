@@ -144,3 +144,18 @@ header h1,.page-title,h1{font-size:clamp(1.65rem,2.4vw,2.15rem);font-weight:900;
 .opening-actions{display:flex;gap:8px;justify-content:center}
 .opening-actions button{flex:1}
 .revenue-square .revenue-entry{margin-top:0}
+
+/* Compact four-branch opening cards */
+.opening-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.opening-square{aspect-ratio:auto;min-height:112px;justify-content:flex-start;gap:6px;padding:10px;overflow:visible}
+.opening-square h4{font-size:clamp(11px,1vw,14px);margin:0;overflow-wrap:anywhere}
+.opening-square input[type=time]{padding:7px;font-size:13px}
+.opening-save-status{font-size:11px;color:#65d8c2;min-height:14px}
+.revenue-square{aspect-ratio:auto;min-height:245px;gap:8px;padding:12px}
+.revenue-square .revenue-latest{font-size:18px;margin:2px 0}
+.revenue-square .revenue-entry{gap:6px;margin-top:0}
+.revenue-square .revenue-entry label{margin:2px 0}
+.revenue-square .revenue-entry input{padding:7px}
+.revenue-square .revenue-mini-bar{margin-top:auto}
+@media(max-width:900px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.opening-grid,.revenue-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.opening-square{padding:8px;min-height:105px}.opening-square h4{font-size:11px}.revenue-square{padding:9px;min-height:230px}}
