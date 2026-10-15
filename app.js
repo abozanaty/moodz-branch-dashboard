@@ -3,28 +3,30 @@ const URL_API="https://yogsjsqctpnmhhsjxcfm.supabase.co";
 const PUBLIC_KEY="sb_publishable_0HWgGuV4SkfFXlIbFdRsBw_5R-mLz3H";
 const db=window.supabase.createClient(URL_API,PUBLIC_KEY);
 const extras=["توفي","كوربة"];
-let user=null,profile=null,records=[],channel=null,branchSettings={},activeTimeBranch="",recordsVisible=false;
+let user=null,profile=null,records=[],channel=null,branchSettings={},activeTimeBranch="",recordsVisible=false,userBranches=[];
 const $=id=>document.getElementById(id);
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
 function esc(s){return String(s==null?"":s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}
 function canEdit(){return profile&&["admin","editor"].includes(profile.role)}
 function canDelete(){return profile&&profile.role==="admin"}
+function canManageUsers(){return profile&&profile.role==="admin"}
+function availableBranches(){const known=unique([...records.map(x=>x.branch).filter(Boolean),...extras]);return profile?.role==="admin"?known:known.filter(b=>userBranches.includes(b))}
 function roleName(r){return ({admin:"مسؤول النظام",editor:"محرر",viewer:"عرض فقط"})[r]||r}
 window.signIn=async function signIn(){try{const email=$("email").value.trim(),password=$("password").value;if(!email||!password)return toast("اكتب البريد وكلمة المرور");const btn=document.querySelector("#login button.primary");if(btn){btn.disabled=true;btn.textContent="جارٍ تسجيل الدخول..."}const {data,error}=await db.auth.signInWithPassword({email,password});if(error)toast("تعذر الدخول: "+error.message);else if(data.user){user=data.user;await load()}}catch(e){toast("خطأ أثناء الدخول: "+(e?.message||String(e)))}finally{const btn=document.querySelector("#login button.primary");if(btn){btn.disabled=false;btn.textContent="دخول"}}};
 async function signOut(){if(channel)await db.removeChannel(channel);await db.auth.signOut();location.reload()}
 async function start(){const {data:{session}}=await db.auth.getSession();if(session){user=session.user;await load()}db.auth.onAuthStateChange((event,s)=>{if(event==="SIGNED_IN"&&s){user=s.user;load()}if(event==="SIGNED_OUT")location.reload()})}
-async function load(){try{const p=await db.from("profiles").select("role,display_name").eq("id",user.id).single();if(p.error)throw new Error("الحساب موجود لكن لم تُحدد له صلاحية في profiles. اطلب من المسؤول إكمال الإعداد.");profile=p.data;await refresh();$("login").classList.add("hidden");$("app").classList.remove("hidden");$("who").textContent=(profile.display_name||user.email)+" — "+roleName(profile.role);$("add").disabled=!canEdit();if(channel)db.removeChannel(channel);channel=db.channel("records-live").on("postgres_changes",{event:"*",schema:"public",table:"branch_records"},refresh).subscribe()}catch(e){toast(e.message||String(e))}}
-async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();fillFilters();render()}
+async function load(){try{const p=await db.from("profiles").select("role,display_name").eq("id",user.id).single();if(p.error)throw new Error("الحساب موجود لكن لم تُحدد له صلاحية في profiles. اطلب من المسؤول إكمال الإعداد.");profile=p.data;const {data:assignments,error:assignError}=await db.from("user_branch_access").select("branch").eq("user_id",user.id);if(assignError)throw assignError;userBranches=(assignments||[]).map(x=>x.branch);await refresh();$("login").classList.add("hidden");$("app").classList.remove("hidden");$("who").textContent=(profile.display_name||user.email)+" — "+roleName(profile.role);$("add").disabled=!canEdit();if(channel)db.removeChannel(channel);channel=db.channel("records-live").on("postgres_changes",{event:"*",schema:"public",table:"branch_records"},refresh).subscribe()}catch(e){toast(e.message||String(e))}}
+async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();fillFilters();render();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
 function egyptDate(value=new Date()){return new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(value)}
 async function loadBranchSettings(){const {data,error}=await db.from("branch_settings").select("*");if(error){console.error(error);return}branchSettings={};const today=egyptDate();for(const x of (data||[])){const savedDay=x.updated_at?egyptDate(new Date(x.updated_at)):"";if(x.opening_time&&savedDay&&savedDay!==today){const {error:clearError}=await db.from("branch_settings").update({opening_time:null,updated_at:new Date().toISOString(),updated_by:user?.id||null}).eq("branch",x.branch);if(clearError){console.error(clearError);branchSettings[x.branch]=String(x.opening_time).slice(0,5)}else branchSettings[x.branch]="";}else branchSettings[x.branch]=x.opening_time?String(x.opening_time).slice(0,5):"";}}
 function unique(a){return [...new Set(a)]}
-function fillFilters(){const bs=unique([...records.map(x=>x.branch),...extras]),ss=unique([...records.map(x=>x.sheet),"Task"]);const oldB=$("branch").value,oldS=$("sheet").value;$("branch").innerHTML='<option value="">كل الفروع</option>'+bs.map(x=>'<option>'+esc(x)+'</option>').join("");$("sheet").innerHTML='<option value="">كل التقارير</option>'+ss.map(x=>'<option>'+esc(x)+'</option>').join("");$("branch").value=bs.includes(oldB)?oldB:"";$("sheet").value=ss.includes(oldS)?oldS:""}
+function fillFilters(){const bs=availableBranches(),ss=unique([...records.map(x=>x.sheet),"Task"]);const oldB=$("branch").value,oldS=$("sheet").value;$("branch").innerHTML='<option value="">كل الفروع</option>'+bs.map(x=>'<option>'+esc(x)+'</option>').join("");$("sheet").innerHTML='<option value="">كل التقارير</option>'+ss.map(x=>'<option>'+esc(x)+'</option>').join("");$("branch").value=bs.includes(oldB)?oldB:"";$("sheet").value=ss.includes(oldS)?oldS:""}
 function filtered(){const b=$("branch").value,s=$("sheet").value,st=$("status").value,q=$("search").value.toLowerCase().trim();return records.filter(x=>(!b||x.branch===b)&&(!s||x.sheet===s)&&(!st||String(x.row["الحالة"]||"").includes(st))&&(!q||[x.branch,x.sheet,...Object.values(x.row)].some(v=>String(v||"").toLowerCase().includes(q))))}
 function statsHtml(a){const pending=a.filter(x=>{const s=String(x.row["الحالة"]||"");return s.includes("متابعة")||s.includes("مفتوح")||s==="?"||!s}).length;const done=a.filter(x=>String(x.row["الحالة"]||"").includes("تم الحل")).length;const noOwner=a.filter(x=>{const k=Object.keys(x.row).find(k=>k.includes("مسؤول"));return !k||!String(x.row[k]||"").trim()||String(x.row[k]).trim()==="?"}).length;return '<div class="stat"><span>إجمالي السجلات</span><strong>'+a.length+'</strong></div><div class="stat"><span>قيد المتابعة / مفتوح</span><strong>'+pending+'</strong></div><div class="stat"><span>تم الحل</span><strong>'+done+'</strong></div><div class="stat"><span>بدون مسؤول محدد</span><strong>'+noOwner+'</strong></div>'}
 function render(){
  const a=filtered();$("stats").innerHTML=statsHtml(a);
  const b=$("branch").value,ba=records.filter(x=>!b||x.branch===b);$("summary").innerHTML=statsHtml(ba);
- const bs=unique([...records.map(x=>x.branch),...extras]);
+ const bs=availableBranches();
  $("summaryTabs").innerHTML='<button class="tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'</button>').join("");
  const sidebar=$("branchTabs");if(sidebar)sidebar.innerHTML='<button class="branch-tab '+(!b?'active':'')+'" onclick="selectBranchIndex(-1)">كل الفروع</button>'+bs.map((x,i)=>'<button class="branch-tab '+(x===b?'active':'')+'" onclick="selectBranchIndex('+i+')">'+esc(x)+'<span>'+records.filter(r=>r.branch===x).length+'</span></button>').join("");
  $("count").textContent="عرض "+a.length+" من "+records.length+" سجل";
@@ -53,7 +55,7 @@ function renderVisuals(a,ba){
 }
 function renderOpeningTimes(){
  const el=$("openingTimes");if(!el)return;
- const branches=unique([...records.map(x=>x.branch).filter(Boolean),...extras]);
+ const branches=availableBranches();
  const complete=branches.length>0&&branches.every(b=>!!branchSettings[b]);
  el.innerHTML='<section class="panel opening-panel"><div class="opening-alert '+(complete?'is-complete':'is-pending')+'"><span class="opening-alert-dot"></span><strong>'+(complete?'تم إدخال مواعيد كل الفروع':'ادخل ميعاد الفرع')+'</strong><span>'+(complete?'كل الفروع لها ميعاد فتح مسجل':'الفروع باللون الأحمر لم يتم تسجيل ميعاد فتحها بعد')+'</span></div><h3>مواعيد فتح الفروع</h3><p class="note">سجّل ميعاد فتح كل فرع واضغط حفظ. الفرع يتحول للأخضر بعد حفظ الميعاد.</p><div class="opening-grid">'+branches.map((b,i)=>{const saved=!!branchSettings[b];return '<div class="opening-branch '+(saved?'is-set':'is-missing')+'"><h4><span class="branch-status-dot"></span>'+esc(b)+'</h4><label for="openingTime-'+i+'">ميعاد الفتح</label><div class="time-row"><input id="openingTime-'+i+'" data-branch="'+esc(b)+'" type="time" step="60" value="'+esc(branchSettings[b]||"")+'" '+(!canEdit()?'disabled':'')+'><button type="button" class="primary" data-branch="'+esc(b)+'" onclick="saveOpeningTimeFor(this.dataset.branch)" '+(!canEdit()?'disabled':'')+'>حفظ</button></div><div class="opening-saved">'+(saved?'تم تسجيل الميعاد: '+esc(branchSettings[b]):'لم يتم تسجيل ميعاد الفتح')+'</div></div>'}).join('')+'</div></section>';
 }
@@ -68,7 +70,7 @@ window.saveOpeningTimeFor=async function(branch){
 };
 
 
-function selectBranchIndex(i){const bs=unique([...records.map(x=>x.branch),...extras]);$("branch").value=i<0?"":(bs[i]||"");recordsVisible=true;render()} 
+function selectBranchIndex(i){const bs=availableBranches();$("branch").value=i<0?"":(bs[i]||"");recordsVisible=true;render()} 
 window.toggleRecordsVisibility=function(){recordsVisible=!recordsVisible;render()};
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
 async function saveCard(id){if(!canEdit())return;const x=records.find(r=>r.id===id);const {error}=await db.from("branch_records").update({branch:x.branch,sheet:x.sheet,headers:x.headers,row_data:x.row}).eq("id",id);if(error)toast("فشل الحفظ: "+error.message);else toast("تم حفظ التعديلات ومزامنتها")}
@@ -98,6 +100,34 @@ async function addRecord(){
   else{overlay.remove();toast("تمت إضافة السجل");await refresh()}
  };
 }
+
+async function callUserAdmin(payload){
+ const {data:{session}}=await db.auth.getSession();if(!session)throw new Error("انتهت الجلسة، سجّل الدخول مرة أخرى");
+ const response=await fetch(URL_API+"/functions/v1/manage-dashboard-users",{method:"POST",headers:{"Content-Type":"application/json","apikey":PUBLIC_KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});
+ const result=await response.json();if(!response.ok)throw new Error(result.error||"تعذر تنفيذ العملية");return result;
+}
+window.openUserManagement=async function(){
+ if(!canManageUsers())return;
+ const modal=document.createElement("div");modal.id="usersModal";modal.style.cssText="position:fixed;inset:0;background:#10182899;z-index:120;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto";
+ modal.innerHTML='<section class="panel users-panel"><div class="users-heading"><h2>إدارة المستخدمين والصلاحيات</h2><button type="button" id="closeUsers">إغلاق</button></div><p class="note">أنشئ حسابًا وحدد دوره والفروع المسموح له بالوصول إليها. المسؤول يرى كل الفروع.</p><div id="usersList">جارٍ تحميل المستخدمين...</div><hr><h3 id="userFormTitle">إضافة مستخدم جديد</h3><form id="userAdminForm"><input type="hidden" name="user_id"><label>الاسم</label><input name="display_name" required><label>البريد الإلكتروني</label><input name="email" type="email" required><div id="passwordWrap"><label>كلمة مرور مؤقتة (8 أحرف على الأقل)</label><input name="password" type="password" minlength="8" autocomplete="new-password"></div><label>الصلاحية</label><select name="role"><option value="viewer">مشاهدة فقط</option><option value="editor">محرر</option><option value="admin">مسؤول النظام</option></select><div id="branchChoices"><label>الفروع المسموح بها</label><div class="user-branch-grid" id="userBranchChecks"></div><p class="note">لو المستخدم ليس مسؤول نظام، سيشاهد الفروع المحددة فقط. يجب اختيار فرع واحد على الأقل.</p></div><div class="row"><button type="button" id="resetUserForm">مستخدم جديد / إلغاء التعديل</button><button type="submit" class="primary">حفظ المستخدم</button></div></form></section>';
+ document.body.appendChild(modal);
+ const form=modal.querySelector("#userAdminForm");let allUsers=[],allBranches=[];
+ const optionsHtml=(users)=>users.map(u=>'<div class="user-list-row"><div><strong>'+esc(u.display_name||"بدون اسم")+'</strong><div class="muted">'+esc(u.email)+' — '+esc(roleName(u.role))+'</div><div class="muted">'+(u.role==="admin"?"كل الفروع":esc((u.branches||[]).join("، ")||"لا توجد فروع محددة"))+'</div></div><button type="button" data-user="'+esc(u.id)+'">تعديل</button></div>').join("")||'<p>لا يوجد مستخدمون.</p>';
+ function resetForm(){form.reset();form.user_id.value="";form.email.disabled=false;form.passwordWrap.style.display="block";form.password.required=true;form.querySelector("#userFormTitle").textContent="إضافة مستخدم جديد";form.querySelector("#userBranchChecks").innerHTML=allBranches.map(b=>'<label class="branch-check"><input type="checkbox" name="branches" value="'+esc(b)+'"> '+esc(b)+'</label>').join("");form.querySelector('[name="role"]').value="viewer";applyBranchRole();}
+ function applyBranchRole(){const isAdmin=form.role.value==="admin";form.querySelector("#branchChoices").classList.toggle("hidden",isAdmin);form.querySelectorAll('input[name="branches"]').forEach(x=>x.disabled=isAdmin);}
+ form.role.onchange=applyBranchRole;
+ modal.querySelector("#closeUsers").onclick=()=>modal.remove();
+ modal.querySelector("#resetUserForm").onclick=resetForm;
+ modal.addEventListener("click",e=>{if(e.target===modal)modal.remove()});
+ try{
+  const data=await callUserAdmin({action:"list"});allUsers=data.users;allBranches=data.branches;
+  modal.querySelector("#usersList").innerHTML=optionsHtml(allUsers);
+  modal.querySelectorAll("[data-user]").forEach(btn=>btn.onclick=()=>{const u=allUsers.find(x=>x.id===btn.dataset.user);if(!u)return;resetForm();form.user_id.value=u.id;form.display_name.value=u.display_name||"";form.email.value=u.email||"";form.email.disabled=true;form.role.value=u.role;form.password.required=false;form.password.value="";form.querySelector("#passwordWrap").style.display="none";form.querySelector("#userFormTitle").textContent="تعديل المستخدم";form.querySelectorAll('input[name="branches"]').forEach(x=>x.checked=(u.branches||[]).includes(x.value));applyBranchRole();});
+  resetForm();
+ }catch(e){modal.querySelector("#usersList").textContent=e.message;return}
+ form.onsubmit=async e=>{e.preventDefault();const fd=new FormData(form);const role=String(fd.get("role"));const branches=fd.getAll("branches").map(String);if(role!=="admin"&&!branches.length)return toast("اختار فرعًا واحدًا على الأقل");const payload={action:"save",user_id:String(fd.get("user_id")||"" )||null,display_name:String(fd.get("display_name")||"").trim(),email:String(fd.get("email")||"").trim(),password:String(fd.get("password")||""),role,branches};const submit=form.querySelector('button[type="submit"]');submit.disabled=true;submit.textContent="جارٍ الحفظ...";try{await callUserAdmin(payload);toast("تم حفظ المستخدم والصلاحيات");modal.remove();}catch(err){toast(err.message)}finally{submit.disabled=false;submit.textContent="حفظ المستخدم"}};
+};
+
 async function importJson(){if(profile.role!=="admin")return toast("الاستيراد متاح لمسؤول النظام فقط");if(records.length&&!confirm("قاعدة البيانات تحتوي بالفعل على "+records.length+" سجل. هل تريد إضافة البيانات مرة أخرى؟"))return;const f=$("importFile").files[0];if(!f)return toast("اختار ملف التقارير_الأصلية.json أولًا");try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw new Error("صيغة الملف غير صحيحة");const rows=data.map(x=>({branch:x.branch||"غير محدد",sheet:x.sheet||"عام",headers:x.headers||Object.keys(x.row||{}),row_data:x.row||x.row_data||{},created_by:user.id}));for(let i=0;i<rows.length;i+=100){const {error}=await db.from("branch_records").insert(rows.slice(i,i+100));if(error)throw error}toast("تم استيراد "+rows.length+" سجل");await refresh()}catch(e){toast("فشل الاستيراد: "+e.message)}}
 function exportCsv(){const a=filtered();if(!a.length)return toast("لا توجد بيانات للتصدير");const hs=unique(a.flatMap(x=>x.headers));const rows=[["الفرع","نوع التقرير",...hs],...a.map(x=>[x.branch,x.sheet,...hs.map(h=>x.row[h]||"")])];const csv="\ufeff"+rows.map(r=>r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(",")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),el=document.createElement("a");el.href=url;el.download="تقرير_الفروع.csv";el.click();URL.revokeObjectURL(url)}
 let uiLanguage="ar";
