@@ -1,0 +1,13 @@
+{
+  "name": "M-Daily",
+  "short_name": "M-Daily",
+  "description": "Moodz & Brooklyn's branch dashboard",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c1518",
+  "theme_color": "#101d33",
+  "icons": [
+    {"src": "./mdaily-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
