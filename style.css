@@ -46,3 +46,13 @@ header h1{font-size:28px}
 h3,.visual-card h3,.record h3{font-size:19px}
 .opening-panel h3{font-size:21px}
 .bar-row{font-size:14px}
+
+.users-panel{width:min(760px,100%);max-height:94vh;overflow:auto;margin:0;padding:20px}
+.users-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.users-heading h2{font-size:21px;margin:0}
+.user-list-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e2e7ef}
+.user-branch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 12px}
+.branch-check{display:flex;align-items:center;gap:7px;background:#f7f9fc;border:1px solid #e2e7ef;border-radius:8px;padding:8px;margin:0;color:#17202a}
+.branch-check input{width:auto;margin:0}
+.users-panel hr{border:0;border-top:1px solid #e2e7ef;margin:18px 0}
+@media(max-width:600px){.user-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.users-panel{padding:14px}.user-list-row{align-items:flex-start}}
