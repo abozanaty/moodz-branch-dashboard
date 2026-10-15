@@ -56,3 +56,7 @@ h3,.visual-card h3,.record h3{font-size:19px}
 .branch-check input{width:auto;margin:0}
 .users-panel hr{border:0;border-top:1px solid #e2e7ef;margin:18px 0}
 @media(max-width:600px){.user-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.users-panel{padding:14px}.user-list-row{align-items:flex-start}}
+
+.branch-permission{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,.9fr);gap:7px;align-items:center}
+.branch-permission select{padding:8px;font-size:12px}
+.branch-check{min-width:0}
