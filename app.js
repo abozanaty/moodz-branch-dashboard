@@ -233,8 +233,6 @@ function applyLanguage(){
  document.querySelectorAll("h1,h2,h3,h4,p,label,button,span,option,small,th,td,strong,div").forEach(el=>{
    if(el.children.length===0){const v=el.textContent; if(map.has(v))el.textContent=map.get(v);}
  });
- const search=$("search");if(search)search.placeholder=en?"Search records...":"ابحث في البيانات...";
- const desc=document.querySelector('#newRecordForm textarea[name="description"]');if(desc)desc.placeholder=en?"Enter details here":"اكتب التفاصيل هنا";
  document.querySelectorAll("#newRecordForm label").forEach(el=>{if(en){if(el.textContent==="وصف السجل / المشكلة / الإجراء")el.textContent="Record / issue / action description";if(el.textContent==="المسؤول عن المتابعة")el.textContent="Assigned to";if(el.textContent==="التاريخ")el.textContent="Date";if(el.textContent==="الفرع")el.textContent="Branch";if(el.textContent==="نوع التقرير")el.textContent="Report type";if(el.textContent==="الحالة")el.textContent="Status";}else{const back=new Map([...englishText].map(([a,b])=>[b,a]));if(back.has(el.textContent))el.textContent=back.get(el.textContent);}});
 }
 window.toggleLanguage=function(){uiLanguage=uiLanguage==="ar"?"en":"ar";applyLanguage();};
