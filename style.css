@@ -66,3 +66,36 @@ body.users-page #app header,body.users-page #app main{display:none}body.users-pa
 .header-actions{align-items:center;justify-content:flex-end}.header-tab{background:#24466f;color:#fff;border:1px solid #52729a;font-weight:700}.users-panel{width:min(100%,1100px);margin:0 auto}.users-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px}.user-list-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #e1e6ed}.user-list-info{min-width:0}.user-branch-summary{font-size:13px;color:#435064;margin-top:5px;overflow-wrap:anywhere}.user-actions{flex-wrap:nowrap}.users-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.users-heading h2{margin:0}.users-heading .note{margin:6px 0 0}.users-page #usersModal{background:#f3f5f8!important}body.users-page #app header,body.users-page #app main{display:none}@media(max-width:640px){.header-actions{flex-wrap:wrap}.user-list-row{align-items:flex-start;flex-direction:column}.user-actions{flex-direction:row}.users-toolbar{align-items:flex-start}}
 
 .branch-permission{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,.85fr);align-items:center;gap:10px;border:1px solid #e2e7ef;border-radius:9px;padding:8px;background:#fff}.branch-check{display:flex;align-items:center;gap:8px;margin:0;color:#17202a;font-size:14px}.branch-check input[type=checkbox]{width:18px;height:18px;flex:0 0 auto;margin:0}.branch-permission select{min-width:0}.user-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.user-branch-grid:empty:after{content:"جاري تحميل أسماء الفروع...";color:#667085;font-size:13px}@media(max-width:600px){.user-branch-grid{grid-template-columns:1fr}.branch-permission{grid-template-columns:minmax(0,1fr) minmax(120px,.9fr)}}
+
+/* M-Daily dashboard refresh */
+body{background:#0c1518;color:#e8f2f0}
+header{background:#0b1718;border-bottom:1px solid #1e3b39}
+.panel,.stat{background:#122322;border-color:#25423f;color:#e8f2f0;box-shadow:0 8px 28px #0002}
+p,.note,.muted{color:#9fb7b1}
+input,select,textarea{background:#0b1919;color:#effaf6;border-color:#31514c}
+button{background:#203c3b;color:#eaf7f3;border-color:#31514c}
+button.primary{background:#39b9a5;color:#062a28;border-color:#39b9a5;font-weight:700}
+.stats{gap:12px}
+.stat strong{color:#4ad1b6}
+.visual-card,.opening-panel{background:#122322}
+.bar-track{background:#203d39}
+.bar-track i{background:linear-gradient(90deg,#25b9a5,#8a78ff)}
+.tabs .active,.tab.active{background:#35b9a5;color:#062a28}
+.admin-tools{display:grid;grid-template-columns:1fr;gap:14px}
+.branch-toggle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:14px 0}
+.branch-toggle{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:12px;background:#0c1c1b;border:1px solid #2a4944;border-radius:12px}
+.branch-toggle span{font-weight:700;direction:ltr;text-align:left}
+.branch-toggle input{width:20px;height:20px;accent-color:#35b9a5}
+.branch-toggle small{grid-column:1/-1;color:#9fb7b1}
+.revenue-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end;margin:14px 0}
+.revenue-form label{display:flex;flex-direction:column;gap:6px}
+.revenue-chart{margin:18px 0}
+.revenue-chart h4{margin:0 0 14px}
+.revenue-chart .bar-row{display:grid;grid-template-columns:minmax(100px,145px) 1fr auto;gap:10px;align-items:center;margin:10px 0}
+.revenue-chart .bar-row span{direction:ltr;text-align:left;font-size:12px}
+.revenue-chart .bar-row b{font-size:12px;white-space:nowrap;color:#65d8c2}
+.table-scroll{overflow-x:auto}
+.revenue-table{width:100%;border-collapse:collapse;min-width:480px}
+.revenue-table th,.revenue-table td{padding:10px;border-bottom:1px solid #284541;text-align:right}
+.revenue-table th{color:#65d8c2}
+@media(max-width:600px){.revenue-chart .bar-row{grid-template-columns:90px 1fr;gap:8px}.revenue-chart .bar-row b{grid-column:2}.branch-toggle-grid{grid-template-columns:1fr 1fr}}
