@@ -89,22 +89,12 @@ function renderVisuals(a,ba){
  el.innerHTML='<div class="visual-grid"><section class="panel visual-card"><h3>حالة المهام</h3>'+statuses.map(s=>'<div class="bar-row"><span>'+esc(s[0])+'</span><div class="bar-track"><i style="width:'+(a.length?Math.round(s[1]/a.length*100):0)+'%"></i></div><b>'+s[1]+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>السجلات حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.count/maxRecords*100)+'%"></i></div><b>'+b.count+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>المشاكل المفتوحة حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.issues/maxIssues*100)+'%"></i></div><b>'+b.issues+'</b></div>').join('')+'</section></div>';
 }
 function renderOpeningTimes(){
- const el=$("openingTimes");if(!el)return;
- const branches=availableBranches();
- const complete=branches.length>0&&branches.every(b=>!!branchSettings[b]);
- el.innerHTML='<section class="panel opening-panel"><div class="opening-alert '+(complete?'is-complete':'is-pending')+'"><span class="opening-alert-dot"></span><strong>'+(complete?'تم إدخال مواعيد كل الفروع':'ادخل ميعاد الفرع')+'</strong><span>'+(complete?'كل الفروع لها ميعاد فتح مسجل':'الفروع باللون الأحمر لم يتم تسجيل ميعاد فتحها بعد')+'</span></div><h3>مواعيد فتح الفروع</h3><p class="note">سجّل ميعاد فتح كل فرع واضغط حفظ. الفرع يتحول للأخضر بعد حفظ الميعاد.</p><div class="opening-grid">'+branches.map((b,i)=>{const saved=!!branchSettings[b];return '<div class="opening-branch '+(saved?'is-set':'is-missing')+'"><h4><span class="branch-status-dot"></span>'+esc(b)+'</h4><label for="openingTime-'+i+'">ميعاد الفتح</label><div class="time-row"><input id="openingTime-'+i+'" data-branch="'+esc(b)+'" type="time" step="60" value="'+esc(branchSettings[b]||"")+'" '+(!canEditBranch(b)?'disabled':'')+'><button type="button" class="primary" data-branch="'+esc(b)+'" onclick="saveOpeningTimeFor(this.dataset.branch)" '+(!canEdit()?'disabled':'')+'>حفظ</button></div><div class="opening-saved">'+(saved?'تم تسجيل الميعاد: '+esc(branchSettings[b]):'لم يتم تسجيل ميعاد الفتح')+'</div></div>'}).join('')+'</div></section>';
+ const el=$("openingTimes");if(!el)return;const branches=availableBranches(),today=egyptDate();
+ el.innerHTML='<section class="panel opening-panel"><h3>مواعيد فتح الفروع</h3><div class="opening-grid">'+branches.map((b,i)=>{const saved=!!branchSettings[b],editable=canEditBranch(b);return '<div class="opening-branch opening-square"><h4>'+esc(b)+'</h4><div class="opening-date">'+today+'</div><input id="openingTime-'+i+'" data-branch="'+esc(b)+'" type="time" value="'+esc(branchSettings[b]||"")+'" '+(!editable||saved?'disabled':'')+'><div class="opening-actions">'+(saved&&editable?'<button type="button" data-edit-opening="'+esc(b)+'">تعديل</button>':'')+(editable?'<button type="button" class="primary" data-save-opening="'+esc(b)+'" '+(saved?'disabled':'')+'>حفظ</button>':'')+'</div></div>'}).join('')+'</div></section>';
+ el.querySelectorAll("[data-edit-opening]").forEach(btn=>btn.onclick=()=>{const b=btn.dataset.editOpening,input=el.querySelector('[data-branch="'+CSS.escape(b)+'"]'),save=el.querySelector('[data-save-opening="'+CSS.escape(b)+'"]');if(input)input.disabled=false;if(save)save.disabled=false;btn.disabled=true});
+ el.querySelectorAll("[data-save-opening]").forEach(btn=>btn.onclick=()=>saveOpeningTimeFor(btn.dataset.saveOpening));
 }
-window.saveOpeningTimeFor=async function(branch){
- if(!canEdit())return;
- const input=[...document.querySelectorAll("#openingTimes input[data-branch]")].find(x=>x.dataset.branch===branch);
- const value=input?.value;
- if(!value)return toast("اختار ميعاد فتح فرع "+branch);
- const {error}=await db.from("branch_settings").upsert({branch,opening_time:value+":00",updated_by:user.id,updated_at:new Date().toISOString()},{onConflict:"branch"});
- if(error)return toast("تعذر حفظ الميعاد: "+error.message);
- branchSettings[branch]=value;toast("تم حفظ ميعاد فتح فرع "+branch);renderOpeningTimes();
-};
-
-
+window.saveOpeningTimeFor=async function(branch){if(!canEditBranch(branch))return;const input=document.querySelector('#openingTimes [data-branch="'+CSS.escape(branch)+'"]'),value=input?.value;if(!value)return toast("اختار ميعاد فتح فرع "+branch);const today=egyptDate();const {error}=await db.from("branch_settings").upsert({branch,opening_time:value+":00",updated_by:user.id,updated_at:new Date().toISOString()},{onConflict:"branch"});if(error)return toast("تعذر حفظ الميعاد: "+error.message);const {error:he}=await db.from("branch_opening_time_history").upsert({branch,record_date:today,opening_time:value+":00",created_by:user.id,updated_at:new Date().toISOString()},{onConflict:"branch,record_date"});if(he)return toast("تعذر حفظ سجل الميعاد: "+he.message);branchSettings[branch]=value;toast("تم حفظ ميعاد فتح "+branch);renderOpeningTimes();renderAdminTools()};
 function selectBranchIndex(i){const bs=availableBranches();$("branch").value=i<0?"":(bs[i]||"");recordsVisible=true;render()} 
 window.toggleRecordsVisibility=function(){recordsVisible=!recordsVisible;render()};
 function changeField(id,h,v){const x=records.find(r=>r.id===id);if(x)x.row[h]=v}
