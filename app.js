@@ -49,7 +49,7 @@ function render(){
 function renderVisuals(a,ba){
  const el=$("visuals");if(!el)return;
  const statuses=[["قيد المتابعة",a.filter(x=>String(x.row["الحالة"]||"").includes("متابعة")).length],["مفتوح",a.filter(x=>String(x.row["الحالة"]||"").includes("مفتوح")).length],["تم الحل",a.filter(x=>String(x.row["الحالة"]||"").includes("تم الحل")).length],["مؤجل",a.filter(x=>String(x.row["الحالة"]||"").includes("مؤجل")).length]];
- const branches=unique([...records.map(x=>x.branch),...extras]).map(b=>({name:b,count:records.filter(x=>x.branch===b).length})).sort((x,y)=>y.count-x.count);
+ const branches=availableBranches().map(b=>({name:b,count:records.filter(x=>x.branch===b).length})).sort((x,y)=>y.count-x.count);
  const max=Math.max(1,...branches.map(x=>x.count));
  el.innerHTML='<div class="visual-grid"><section class="panel visual-card"><h3>حالة المهام</h3>'+statuses.map(s=>'<div class="bar-row"><span>'+esc(s[0])+'</span><div class="bar-track"><i style="width:'+(a.length?Math.round(s[1]/a.length*100):0)+'%"></i></div><b>'+s[1]+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>السجلات حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.count/max*100)+'%"></i></div><b>'+b.count+'</b></div>').join('')+'</section></div>';
 }
@@ -77,7 +77,7 @@ async function saveCard(id){if(!canEdit())return;const x=records.find(r=>r.id===
 async function deleteRecord(id){if(!canDelete()||!confirm("حذف السجل نهائيًا؟"))return;const {error}=await db.from("branch_records").delete().eq("id",id);if(error)toast("فشل الحذف: "+error.message);else{toast("تم الحذف");await refresh()}}
 async function addRecord(){
  if(!canEdit())return;
- const branches=unique([...records.map(x=>x.branch).filter(Boolean),...extras]);
+ const branches=availableBranches();
  const sheets=unique([...records.map(x=>x.sheet).filter(Boolean),"Task"]);
  if(!branches.length||!sheets.length)return toast("لا توجد اختيارات جاهزة للفروع أو أنواع التقارير");
  const statuses=["قيد المتابعة","مفتوح","تم الحل","مؤجل"];
@@ -113,7 +113,7 @@ window.openUserManagement=async function(){
  document.body.appendChild(modal);
  const form=modal.querySelector("#userAdminForm");let allUsers=[],allBranches=[];
  const optionsHtml=(users)=>users.map(u=>'<div class="user-list-row"><div><strong>'+esc(u.display_name||"بدون اسم")+'</strong><div class="muted">'+esc(u.email)+' — '+esc(roleName(u.role))+'</div><div class="muted">'+(u.role==="admin"?"كل الفروع":esc((u.branches||[]).join("، ")||"لا توجد فروع محددة"))+'</div></div><button type="button" data-user="'+esc(u.id)+'">تعديل</button></div>').join("")||'<p>لا يوجد مستخدمون.</p>';
- function resetForm(){form.reset();form.user_id.value="";form.email.disabled=false;form.passwordWrap.style.display="block";form.password.required=true;form.querySelector("#userFormTitle").textContent="إضافة مستخدم جديد";form.querySelector("#userBranchChecks").innerHTML=allBranches.map(b=>'<label class="branch-check"><input type="checkbox" name="branches" value="'+esc(b)+'"> '+esc(b)+'</label>').join("");form.querySelector('[name="role"]').value="viewer";applyBranchRole();}
+ function resetForm(){form.reset();form.user_id.value="";form.email.disabled=false;form.querySelector("#passwordWrap").style.display="block";form.password.required=true;form.querySelector("#userFormTitle").textContent="إضافة مستخدم جديد";form.querySelector("#userBranchChecks").innerHTML=allBranches.map(b=>'<label class="branch-check"><input type="checkbox" name="branches" value="'+esc(b)+'"> '+esc(b)+'</label>').join("");form.querySelector('[name="role"]').value="viewer";applyBranchRole();}
  function applyBranchRole(){const isAdmin=form.role.value==="admin";form.querySelector("#branchChoices").classList.toggle("hidden",isAdmin);form.querySelectorAll('input[name="branches"]').forEach(x=>x.disabled=isAdmin);}
  form.role.onchange=applyBranchRole;
  modal.querySelector("#closeUsers").onclick=()=>modal.remove();
