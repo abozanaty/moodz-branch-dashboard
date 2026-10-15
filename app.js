@@ -18,7 +18,7 @@ window.signIn=async function signIn(){try{const email=$("email").value.trim(),pa
 async function signOut(){if(channel)await db.removeChannel(channel);await db.auth.signOut();location.reload()}
 async function start(){try{const result=await Promise.race([db.auth.getSession(),new Promise((_,reject)=>setTimeout(()=>reject(new Error("الاتصال بخدمة تسجيل الدخول استغرق وقتًا طويلًا. حدّث الصفحة وتأكد من اتصال الإنترنت.")),12000))]);const session=result?.data?.session;if(session){user=session.user;await load()}db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT")location.reload()})}catch(e){console.error("Dashboard startup failed",e);const login=$("login");if(login)login.classList.remove("hidden");toast("تعذر بدء الداشبورد: "+(e?.message||String(e)))}}
 async function load(){try{const p=await db.from("profiles").select("role,display_name").eq("id",user.id).single();if(p.error)throw new Error("الحساب موجود لكن لم تُحدد له صلاحية في profiles. اطلب من المسؤول إكمال الإعداد.");profile=p.data;if(location.pathname.endsWith("/users.html")&&profile.role!=="admin"){location.href="./index.html";return}const {data:assignments,error:assignError}=await db.from("user_branch_access").select("branch,access_level").eq("user_id",user.id);if(assignError)throw assignError;userBranches=(assignments||[]).map(x=>({branch:x.branch,access_level:x.access_level||"view"}));await refresh();$("login").classList.add("hidden");$("app").classList.remove("hidden");$("who").textContent=(profile.display_name||user.email)+" — "+roleName(profile.role);$("add").disabled=!canEdit();if(location.pathname.endsWith("/users.html")){document.body.classList.add("users-page");setTimeout(()=>window.openUserManagement(),0)}const userTab=$("usersNav");if(userTab)userTab.classList.toggle("hidden",!canManageUsers());if(channel)db.removeChannel(channel);channel=db.channel("records-live").on("postgres_changes",{event:"*",schema:"public",table:"branch_records"},refresh).subscribe()}catch(e){console.error("Dashboard load failed",e);toast("تعذر تحميل الداشبورد: "+(e.message||String(e)))}}
-async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();await loadDashboardBranchSettings();await loadDailyRevenue();fillFilters();render();renderAdminTools();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
+async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();await loadDashboardBranchSettings();await loadDailyRevenue();fillFilters();render();renderAdminTools();makePanelsCollapsible();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
 function egyptDate(value=new Date()){return new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(value)}
 async function loadBranchSettings(){const {data,error}=await db.from("branch_settings").select("*");if(error){console.error(error);return}branchSettings={};const today=egyptDate();for(const x of (data||[])){const savedDay=x.updated_at?egyptDate(new Date(x.updated_at)):"";if(x.opening_time&&savedDay&&savedDay!==today){const {error:clearError}=await db.from("branch_settings").update({opening_time:null,updated_at:new Date().toISOString(),updated_by:user?.id||null}).eq("branch",x.branch);if(clearError){console.error(clearError);branchSettings[x.branch]=String(x.opening_time).slice(0,5)}else branchSettings[x.branch]="";}else branchSettings[x.branch]=x.opening_time?String(x.opening_time).slice(0,5):"";}}
 
@@ -75,7 +75,7 @@ function render(){
    }).join("");
    return '<article class="record"><h3>'+esc(x.branch)+' — '+esc(x.sheet)+'</h3>'+fields+'<div class="row">'+(canEditBranch(x.branch)?'<button class="primary" data-id="'+esc(x.id)+'" onclick="saveCard(this.dataset.id)">حفظ التعديلات</button>':'')+(canDelete()?'<button class="danger" data-id="'+esc(x.id)+'" onclick="deleteRecord(this.dataset.id)">حذف</button>':'')+'</div></article>';
  }).join("");
- renderVisuals(a,ba);renderOpeningTimes();applyLanguage();
+ renderVisuals(a,ba);renderOpeningTimes();applyLanguage();makePanelsCollapsible();
 }
 
 function renderVisuals(a,ba){
@@ -110,15 +110,15 @@ async function deleteRecord(id){if(!canDelete()||!confirm("حذف السجل ن�
 async function addRecord(){
  if(!canEdit())return;
  const branches=availableEditableBranches();
- const sheets=unique([...records.map(x=>x.sheet).filter(Boolean),"Task"]);
+ const sheets=["صيانة عامة","صيانة معدات","تأخيرات","مشاكل موظفين","مشاكل تشغيلية","مهمات","تعليمات تشغيلية"];
  if(!branches.length||!sheets.length)return toast("لا توجد اختيارات جاهزة للفروع أو أنواع التقارير");
  const statuses=["قيد المتابعة","مفتوح","تم الحل","مؤجل"];
  const people=unique(records.map(x=>{const k=Object.keys(x.row||{}).find(k=>k.includes("مسؤول")||k.includes("متابعة"));return k?String(x.row[k]||"").trim():""}).filter(Boolean));
  const options=a=>a.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join("");
  const overlay=document.createElement("div");
  overlay.id="addRecordModal";
- overlay.style.cssText="position:fixed;inset:0;background:#10182899;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto";
- overlay.innerHTML='<section style="background:white;color:#17202a;border-radius:14px;padding:20px;width:min(620px,100%);max-height:95vh;overflow:auto;box-shadow:0 15px 50px #0003"><h2 style="margin:0 0 6px">إضافة سجل جديد</h2><p class="note">اختار الفرع ونوع التقرير من القوائم، واكتب اسم المسؤول عن المتابعة بحرية.</p><form id="newRecordForm"><label>الفرع</label><select name="branch" required>'+options(branches)+'</select><label>نوع التقرير</label><select name="sheet" required>'+options(sheets)+'</select><label>التاريخ</label><input name="date" type="date" required value="'+new Date().toISOString().slice(0,10)+'"><label>وصف السجل / المشكلة / الإجراء</label><textarea name="description" required rows="4" placeholder="اكتب التفاصيل هنا"></textarea><label>الحالة</label><select name="status" required>'+options(statuses)+'</select><label>المسؤول عن المتابعة</label><input name="owner" list="followupPeople" placeholder="اكتب اسم المسؤول عن المتابعة"><datalist id="followupPeople">'+options(people)+'</datalist><div class="row" style="margin-top:16px"><button type="button" id="cancelNewRecord">إلغاء</button><button type="submit" class="primary">حفظ السجل</button></div></form></section>';
+ overlay.style.cssText="position:fixed;inset:0;background:#0c1518e8;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto";
+ overlay.innerHTML='<section class="panel new-record-panel" style="border-radius:14px;padding:20px;width:min(620px,100%);max-height:95vh;overflow:auto"><h2 style="margin:0 0 6px">إضافة سجل جديد</h2><p class="note">اختار الفرع ونوع التقرير من القوائم، واكتب اسم المسؤول عن المتابعة بحرية.</p><form id="newRecordForm"><label>الفرع</label><select name="branch" required>'+options(branches)+'</select><label>نوع التقرير</label><select name="sheet" required>'+options(sheets)+'</select><label>التاريخ</label><input name="date" type="date" required value="'+new Date().toISOString().slice(0,10)+'"><label>وصف السجل / المشكلة / الإجراء</label><textarea name="description" required rows="4" placeholder="اكتب التفاصيل هنا"></textarea><label>الحالة</label><select name="status" required>'+options(statuses)+'</select><label>المسؤول عن المتابعة</label><input name="owner" list="followupPeople" placeholder="اكتب اسم المسؤول عن المتابعة"><datalist id="followupPeople">'+options(people)+'</datalist><div class="row" style="margin-top:16px"><button type="button" id="cancelNewRecord">إلغاء</button><button type="submit" class="primary">حفظ السجل</button></div></form></section>';
  document.body.appendChild(overlay);
  $("cancelNewRecord").onclick=()=>overlay.remove();
  overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove()});
@@ -187,6 +187,22 @@ const englishText=new Map([
  ["اختار ملف التقارير_الأصلية.json أولًا","Choose the original reports JSON file first"],
  ["تم حفظ التعديلات ومزامنتها","Changes saved and synced"],["تمت إضافة السجل","Record added"]
 ]);
+function makePanelsCollapsible(){
+ document.querySelectorAll("#app .panel").forEach(panel=>{
+  if(panel.dataset.collapsibleReady==="1")return;
+  const heading=[...panel.children].find(el=>/^H[1-4]$/.test(el.tagName));
+  if(!heading)return;
+  panel.dataset.collapsibleReady="1";
+  const bar=document.createElement("div");bar.className="panel-titlebar";
+  panel.insertBefore(bar,heading);bar.appendChild(heading);
+  const toggle=document.createElement("button");toggle.type="button";toggle.className="panel-collapse-toggle";toggle.textContent="−";toggle.setAttribute("aria-label","إخفاء اللوحة");bar.appendChild(toggle);
+  const content=document.createElement("div");content.className="panel-collapse-content";
+  while(bar.nextSibling)content.appendChild(bar.nextSibling);
+  panel.appendChild(content);
+  toggle.onclick=()=>{const closed=content.classList.toggle("collapsed");toggle.textContent=closed?"+":"−";toggle.setAttribute("aria-label",closed?"إظهار اللوحة":"إخفاء اللوحة")};
+ });
+}
+
 function applyLanguage(){
  const en=uiLanguage==="en";
  document.documentElement.lang=en?"en":"ar";
@@ -194,7 +210,7 @@ function applyLanguage(){
  document.body.style.direction=en?"ltr":"rtl";
  const toggle=$("languageToggle");if(toggle)toggle.textContent=en?"العربية":"English";
  const map=en?englishText:new Map([...englishText].map(([ar,eng])=>[eng,ar]));
- document.querySelectorAll("h1,h2,h3,p,label,button,span,option").forEach(el=>{
+ document.querySelectorAll("h1,h2,h3,h4,p,label,button,span,option,small,th,td").forEach(el=>{
    if(el.children.length===0){const v=el.textContent; if(map.has(v))el.textContent=map.get(v);}
  });
  const search=$("search");if(search)search.placeholder=en?"Search records...":"ابحث في البيانات...";
