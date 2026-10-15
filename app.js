@@ -37,6 +37,7 @@ function renderAdminTools(){
  const root=$("adminTools");if(!root)return;
  const branchPanel=$("branchSettingsAdmin"),revPanel=$("dailyRevenueAdmin");
  if(branchPanel&&profile?.role==="admin"){branchPanel.classList.remove("hidden");branchPanel.innerHTML='<h3>إعدادات ظهور الفروع</h3><p class="note">إخفاء الفرع يخفي سجلاته وملخصاته من الداشبورد الرئيسية، ويمكن إظهاره مرة أخرى في أي وقت.</p><div class="branch-toggle-grid">'+extras.map(b=>'<label class="branch-toggle"><span>'+esc(b)+'</span><input type="checkbox" data-visible-branch="'+esc(b)+'" '+(dashboardBranchSettings[b]?.is_visible===false?'':'checked')+'><small>'+(dashboardBranchSettings[b]?.is_visible===false?'مخفي':'ظاهر')+'</small></label>').join('')+'</div><button type="button" class="primary" id="saveBranchVisibility">حفظ إعدادات الفروع</button>';}
+ if(branchPanel&&profile?.role!=="admin")branchPanel.classList.add("hidden");
  if(revPanel){
  const assigned=profile?.role==="admin"?extras:userBranches.filter(x=>extras.includes(x.branch)).map(x=>x.branch);
  const editable=profile?.role==="admin"?extras:userBranches.filter(x=>extras.includes(x.branch)&&x.access_level==="edit").map(x=>x.branch);
