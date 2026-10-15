@@ -2,7 +2,7 @@
 const URL_API="https://yogsjsqctpnmhhsjxcfm.supabase.co";
 const PUBLIC_KEY="sb_publishable_0HWgGuV4SkfFXlIbFdRsBw_5R-mLz3H";
 const db=window.supabase.createClient(URL_API,PUBLIC_KEY);
-const extras=["مودز صلاح سالم","مودز جراند","مودز مدينتي","مودز بورتو سعيد","بروكلينز","بروكلينز كوربة","توفي كوفي","الكول سنتر","بروكلين","كوربة","مدينتي","توفي"];
+const extras=["M1","MG","MD","BKS","TK","Moodz 1","Moodz G","Moodz M","Brooklyn’s","Toffee koffie"];
 let user=null,profile=null,records=[],channel=null,branchSettings={},activeTimeBranch="",recordsVisible=false,userBranches=[];
 const $=id=>document.getElementById(id);
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
