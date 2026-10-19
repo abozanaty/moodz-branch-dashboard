@@ -95,10 +95,20 @@ function render(){
 
 function renderVisuals(a,ba){
  const el=$("visuals");if(!el)return;
+ const palette=["#ff8a50","#f45f7d","#b77cff","#53d5b5","#65a9ff","#f2c66d"];
  const statuses=[["قيد المتابعة",a.filter(x=>String(x.row["الحالة"]||"").includes("متابعة")).length],["مفتوح",a.filter(x=>String(x.row["الحالة"]||"").includes("مفتوح")).length],["تم الحل",a.filter(x=>String(x.row["الحالة"]||"").includes("تم الحل")).length],["مؤجل",a.filter(x=>String(x.row["الحالة"]||"").includes("مؤجل")).length]];
- const branches=availableBranches().map(b=>({name:b,count:records.filter(x=>x.branch===b).length,issues:records.filter(x=>x.branch===b&&/(قيد المتابعة|مفتوح|مؤجل)/.test(String(x.row["الحالة"]||""))).length})).sort((x,y)=>y.count-x.count);
- const maxRecords=Math.max(1,...branches.map(x=>x.count)),maxIssues=Math.max(1,...branches.map(x=>x.issues));
- el.innerHTML='<div class="visual-grid"><section class="panel visual-card"><h3>حالة المهام</h3>'+statuses.map(s=>'<div class="bar-row"><span>'+esc(s[0])+'</span><div class="bar-track"><i style="width:'+(a.length?Math.round(s[1]/a.length*100):0)+'%"></i></div><b>'+s[1]+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>السجلات حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.count/maxRecords*100)+'%"></i></div><b>'+b.count+'</b></div>').join('')+'</section><section class="panel visual-card"><h3>المشاكل المفتوحة حسب الفرع</h3>'+branches.map(b=>'<div class="bar-row"><span>'+esc(b.name)+'</span><div class="bar-track"><i style="width:'+Math.round(b.issues/maxIssues*100)+'%"></i></div><b>'+b.issues+'</b></div>').join('')+'</section></div>';
+ const statusTotal=statuses.reduce((n,s)=>n+s[1],0);
+ let angle=0;const segments=statuses.map((s,i)=>{const share=statusTotal?s[1]/statusTotal*360:0;const seg=palette[i%palette.length]+" "+angle+"deg "+(angle+share)+"deg";angle+=share;return seg});
+ const pieBg=statusTotal?"conic-gradient("+segments.join(",")+")":"conic-gradient(#353a49 0deg 360deg)";
+ const branches=availableBranches().map(b=>({name:b,count:a.filter(x=>x.branch===b).length,issues:a.filter(x=>x.branch===b&&/(قيد المتابعة|مفتوح|مؤجل)/.test(String(x.row["الحالة"]||""))).length})).sort((x,y)=>y.count-x.count);
+ const top=branches.slice(0,8),maxRecords=Math.max(1,...top.map(x=>x.count)),maxIssues=Math.max(1,...branches.map(x=>x.issues));
+ const vertical=top.map((b,i)=>'<div class="md-column-item" title="'+esc(b.name)+': '+b.count+'"><div class="md-column-value">'+b.count+'</div><div class="md-column-track"><i style="height:'+Math.round(b.count/maxRecords*100)+'%;background:'+palette[i%palette.length]+'"></i></div><div class="md-column-label">'+esc(b.name)+'</div></div>').join("");
+ const horizontal=branches.map((b,i)=>'<div class="md-horizontal-row"><span>'+esc(b.name)+'</span><div class="md-horizontal-track"><i style="width:'+Math.round(b.issues/maxIssues*100)+'%;background:'+palette[i%palette.length]+'"></i></div><b>'+b.issues+'</b></div>').join("");
+ const legend=statuses.map((s,i)=>'<div class="md-legend-row"><i style="background:'+palette[i%palette.length]+'"></i><span>'+esc(s[0])+'</span><b>'+s[1]+'</b><small>'+(statusTotal?Math.round(s[1]/statusTotal*100):0)+'%</small></div>').join("");
+ el.innerHTML='<div class="visual-grid md-chart-grid">'+
+ '<section class="panel visual-card md-chart-card"><div class="md-chart-heading"><div><span class="md-chart-kicker">OVERVIEW</span><h3>توزيع حالات المهام</h3></div><span class="md-chart-type">PIE</span></div><div class="md-pie-layout"><div class="md-pie" role="img" aria-label="توزيع حالات المهام" style="background:'+pieBg+'"><div class="md-pie-hole"><strong>'+statusTotal+'</strong><small>إجمالي الحالات</small></div></div><div class="md-legend">'+legend+'</div></div></section>'+
+ '<section class="panel visual-card md-chart-card"><div class="md-chart-heading"><div><span class="md-chart-kicker">BRANCH COMPARISON</span><h3>السجلات حسب الفرع</h3></div><span class="md-chart-type">VERTICAL</span></div><div class="md-columns">'+(vertical||'<p class="note">لا توجد سجلات لعرضها حتى الآن.</p>')+'</div><p class="md-chart-footnote">أعلى '+top.length+' فروع حسب عدد السجلات</p></section>'+
+ '<section class="panel visual-card md-chart-card md-horizontal-card"><div class="md-chart-heading"><div><span class="md-chart-kicker">OPEN ITEMS</span><h3>المشاكل المفتوحة حسب الفرع</h3></div><span class="md-chart-type">HORIZONTAL</span></div><div class="md-horizontal-list">'+(horizontal||'<p class="note">لا توجد بيانات لعرضها.</p>')+'</div></section></div>';
 }
 function renderOpeningTimes(){
  const el=$("openingTimes");if(!el)return;const branches=availableBranches(),today=egyptDate();
