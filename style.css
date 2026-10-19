@@ -270,3 +270,38 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-se
 #app .panel-titlebar h1,#app .panel-titlebar h2,#app .panel-titlebar h3{font-size:clamp(20px,1.8vw,27px)!important;font-weight:800!important}
 #app .panel-collapse-toggle{background:#2a2434!important;color:#d3a5ff!important;border-color:#4a3c54!important}
 @media(max-width:750px){#login{margin:6vh 12px!important;padding:24px!important}#app>header{padding:18px 14px!important}#app .wrap{padding:12px!important}}
+
+/* M-Daily chart variety: donut/pie, vertical columns and horizontal bars */
+.md-chart-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:16px}
+.md-chart-card{min-width:0;overflow:hidden;padding:clamp(14px,1.5vw,22px)!important}
+.md-chart-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px}
+.md-chart-heading h3{margin:4px 0 0;font-size:clamp(17px,1.4vw,22px)!important}
+.md-chart-kicker{font-size:10px;letter-spacing:1.5px;font-weight:800;color:#b77cff}
+.md-chart-type{flex:0 0 auto;font-size:9px;letter-spacing:.8px;font-weight:800;color:#ffad8b;border:1px solid #55404a;border-radius:7px;padding:5px 7px}
+.md-pie-layout{display:grid;grid-template-columns:minmax(125px,.85fr) minmax(0,1.15fr);align-items:center;gap:clamp(14px,2vw,28px);min-height:220px}
+.md-pie{width:min(100%,210px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;margin:auto;box-shadow:0 12px 30px #0003}
+.md-pie-hole{width:57%;height:57%;border-radius:50%;background:#191e2a;border:1px solid #363b4b;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.md-pie-hole strong{font-size:clamp(22px,2vw,32px);line-height:1.1;color:#fff}
+.md-pie-hole small{font-size:10px;color:#aeb3c0;margin-top:5px}
+.md-legend{display:grid;gap:12px;min-width:0}
+.md-legend-row{display:grid;grid-template-columns:9px minmax(0,1fr) auto auto;align-items:center;gap:8px;font-size:12px;min-width:0}
+.md-legend-row>i{width:8px;height:8px;border-radius:3px}
+.md-legend-row span{overflow-wrap:anywhere;color:#dfe1e8}
+.md-legend-row b{color:#fff;font-variant-numeric:tabular-nums}
+.md-legend-row small{color:#aeb3c0;min-width:30px;text-align:end}
+.md-columns{height:245px;display:flex;align-items:stretch;gap:clamp(5px,1vw,13px);padding:8px 4px 0;overflow-x:auto;border-bottom:1px solid #414555}
+.md-column-item{height:100%;flex:1 0 44px;max-width:90px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.md-column-value{font-size:11px;color:#f5f5f8;font-weight:800;font-variant-numeric:tabular-nums}
+.md-column-track{height:72%;width:min(72%,42px);display:flex;align-items:flex-end;justify-content:center;background:#252a38;border-radius:8px 8px 3px 3px;overflow:hidden}
+.md-column-track i{display:block;width:100%;min-height:2px;border-radius:7px 7px 2px 2px}
+.md-column-label{font-size:10px;color:#b9bdc9;text-align:center;overflow-wrap:anywhere;line-height:1.25;min-height:26px;width:100%}
+.md-chart-footnote{font-size:11px;margin:12px 0 0;color:#aeb3c0}
+.md-horizontal-card{grid-column:1/-1}
+.md-horizontal-list{display:grid;gap:13px}
+.md-horizontal-row{display:grid;grid-template-columns:minmax(100px,150px) minmax(0,1fr) 32px;align-items:center;gap:12px;min-width:0}
+.md-horizontal-row>span{font-size:12px;color:#dfe1e8;overflow-wrap:anywhere;direction:ltr;text-align:left}
+.md-horizontal-track{height:11px;border-radius:20px;background:#292e3d;overflow:hidden;min-width:0}
+.md-horizontal-track i{display:block;height:100%;min-width:0;border-radius:20px}
+.md-horizontal-row>b{text-align:end;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}
+@media(max-width:950px){.md-chart-grid{grid-template-columns:1fr}.md-horizontal-card{grid-column:auto}.md-pie-layout{grid-template-columns:minmax(120px,.8fr) minmax(0,1.2fr)}}
+@media(max-width:480px){.md-pie-layout{grid-template-columns:1fr;gap:20px}.md-pie{width:160px}.md-legend{width:100%}.md-columns{height:215px}.md-horizontal-row{grid-template-columns:minmax(82px,105px) minmax(0,1fr) 25px;gap:8px}.md-horizontal-row>span{font-size:10px}.md-chart-heading{margin-bottom:14px}}
