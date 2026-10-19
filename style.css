@@ -238,3 +238,35 @@ button:disabled{transform:none;opacity:.55}
 @media(min-width:1000px){.stats{gap:14px}.records{gap:14px}}
 @media(max-width:750px){header{padding:18px 14px}.header-actions{justify-content:flex-start}.wrap{padding:12px}.panel{border-radius:13px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* M-Daily high-contrast redesign */
+html,body{background:#11141c!important;color:#f4f5f7!important}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;background:radial-gradient(ellipse at 78% 0%,rgba(255,128,77,.18),transparent 32%),radial-gradient(ellipse at 4% 18%,rgba(242,84,121,.14),transparent 34%),#11141c!important}
+#login{background:linear-gradient(155deg,#1d2230,#151923)!important;border:1px solid #45404b!important;border-radius:24px!important;box-shadow:0 28px 90px #0008!important;padding:30px!important;position:relative;overflow:hidden}
+#login:before{content:"";display:block;height:5px;position:absolute;top:0;left:0;right:0;background:linear-gradient(90deg,#f45f7d,#ff8a50,#b77cff)}
+#login h2{font-size:30px!important;letter-spacing:-1px!important;color:#fff!important}
+#login p,#app p,#app .note,#app .muted,#app label{color:#aeb3c0!important}
+#login input,#app input,#app select,#app textarea{background:#10141d!important;border:1px solid #3b4050!important;color:#fff!important;border-radius:11px!important;padding:12px!important}
+#login .primary{width:100%;min-height:46px!important;background:linear-gradient(100deg,#ff8a50,#f45f7d)!important;color:#1a1218!important;border:0!important;border-radius:12px!important}
+#app>header{background:#11141df5!important;border-bottom:1px solid #343442!important;padding:24px clamp(16px,3vw,48px)!important;position:relative;overflow:hidden}
+#app>header h1{font-size:clamp(30px,3vw,42px)!important;font-weight:850!important;letter-spacing:-1.8px!important;color:#fff!important}
+#app>header .sub{color:#b3b6c3!important}
+#app .wrap{max-width:none!important;width:100%!important;padding:clamp(14px,2.4vw,38px)!important}
+#app .panel,#app .stat,#app .record,#app .opening-branch,#app .revenue-branch-card{background:linear-gradient(145deg,#1b202c,#151923)!important;border:1px solid #343847!important;border-radius:18px!important;color:#f4f5f7!important;box-shadow:0 12px 34px #0003!important}
+#app h2,#app h3,#app h4{color:#f7f7fa!important;letter-spacing:-.4px!important}
+#app button,#app .btn{background:#252a38!important;color:#f7f6fa!important;border:1px solid #414657!important;border-radius:11px!important}
+#app button.primary,#app .tabs .active,#app .tab.active{background:linear-gradient(105deg,#ff8a50,#f45f7d)!important;color:#1a1218!important;border-color:transparent!important;font-weight:800!important}
+#app .stat{position:relative;overflow:hidden!important}
+#app .stat:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f45f7d,#ff8a50,#b77cff)}
+#app .stat strong{color:#fff!important;font-size:clamp(26px,2.4vw,38px)!important}
+#app .bar-track{background:#303443!important;height:8px!important}
+#app .bar-track i{background:linear-gradient(90deg,#f45f7d,#ff8a50)!important}
+#app .revenue-branch-card h4,#app .opening-date,#app .revenue-date,#app .revenue-chart .bar-row b{color:#ffad8b!important}
+#app .opening-branch.is-missing{background:#321e29!important;border-color:#f45f7d!important;color:#ffc1ce!important}
+#app .opening-branch.is-set{background:#172b2a!important;border-color:#53d5b5!important;color:#a7f3df!important}
+#app .branch-toggle,#app .branch-check,#app .branch-permission{background:#151a25!important;border-color:#353a4a!important;color:#f4f5f7!important}
+#app .revenue-table th,#app .revenue-table td{border-bottom-color:#303443!important}
+#app .revenue-table th{color:#ffad8b!important;background:#1b202c!important}
+#app .panel-titlebar h1,#app .panel-titlebar h2,#app .panel-titlebar h3{font-size:clamp(20px,1.8vw,27px)!important;font-weight:800!important}
+#app .panel-collapse-toggle{background:#2a2434!important;color:#d3a5ff!important;border-color:#4a3c54!important}
+@media(max-width:750px){#login{margin:6vh 12px!important;padding:24px!important}#app>header{padding:18px 14px!important}#app .wrap{padding:12px!important}}
