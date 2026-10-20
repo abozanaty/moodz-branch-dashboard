@@ -374,3 +374,14 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
 /* Google Reviews target inputs: compact single-row branch cards. */
 .md-google-admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.md-google-admin-row{grid-template-columns:minmax(82px,.7fr) minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important;padding:7px!important;min-width:0}.md-google-admin-row label{min-width:0;font-size:11px;line-height:1.2}.md-google-admin-row input{min-width:0!important;width:100%;padding:6px 7px!important;font-size:13px!important}.md-google-admin-row strong{font-size:13px!important;white-space:nowrap}@media(max-width:720px){.md-google-admin-grid{grid-template-columns:1fr!important}.md-google-admin-row{grid-template-columns:minmax(72px,.65fr) minmax(0,1fr) minmax(0,1fr)!important;gap:5px!important}.md-google-admin-row label{font-size:10px}.md-google-admin-row input{padding:5px!important}}
+
+/* Layout repair: every dashboard panel occupies the full available row; collapsed panels retain only their title bar. */
+#app .dashboard-content,#app .dashboard-content>*{box-sizing:border-box;min-width:0;max-width:100%;}
+#app .dashboard-content>.panel,#app .dashboard-content>#openingTimes,#app .dashboard-content>#branchTargets,#app .dashboard-content>#branchChecklist,#app .dashboard-content>#progressHero,#app .dashboard-content>#stats,#app .dashboard-content>#visuals,#app .dashboard-content>#adminTools,#app .dashboard-content>#records,#app .dashboard-content>#managerInputs,#app .dashboard-content>#dailyRevenueAdmin,#app .dashboard-content>#googleReviews,#app .dashboard-content>#monthlyTargetAdmin,#app .dashboard-content>#checklistAdminPanel,#app .dashboard-content>#averageCheckAdmin{display:block;width:100%;max-width:100%;min-width:0;float:none;clear:both;position:relative;}
+#app .dashboard-content .panel{width:100%;max-width:100%;min-width:0;box-sizing:border-box;float:none;}
+#app .md-panel-collapsed{width:100%!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:visible!important;resize:none!important;}
+#app .md-panel-collapsed>.panel-collapse-content{display:none!important;height:0!important;margin:0!important;padding:0!important;border:0!important;}
+#app .md-panel-collapsed>.panel-titlebar,#app .md-panel-collapsed>.md-generated-titlebar{display:flex;width:100%;margin:0;}
+#app .panel-collapse-content{min-width:0;width:100%;}
+#app .panel-collapse-toggle{flex:0 0 34px;margin-inline-start:auto;}
+#app .md-user-resizable{resize:none!important;overflow:visible!important;width:100%;}
