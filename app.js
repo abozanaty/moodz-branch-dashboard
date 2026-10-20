@@ -1,3 +1,4 @@
+function convertEditButtonsToPencils(root=document){root.querySelectorAll("button").forEach(btn=>{if(btn.dataset.pencilized==="1")return;const label=btn.textContent.trim();if(label==="تعديل"){btn.title="تعديل";btn.setAttribute("aria-label","تعديل");btn.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>';btn.classList.add("icon-edit");btn.dataset.pencilized="1"}})}
 
 const URL_API="https://yogsjsqctpnmhhsjxcfm.supabase.co";
 const PUBLIC_KEY="sb_publishable_0HWgGuV4SkfFXlIbFdRsBw_5R-mLz3H";
