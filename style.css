@@ -327,3 +327,15 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-se
 .md-panel-layout-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}
 .md-user-resizable{min-width:220px;max-width:100%;resize:both;overflow:auto}
 @media(max-width:600px){.md-panel-layout-open{right:12px;bottom:12px}.md-panel-layout-dialog{padding:12px}}
+
+
+/* M-Daily layout and average check updates */
+.md-panel-layout-open{position:static!important;right:auto!important;bottom:auto!important;z-index:auto!important;box-shadow:none!important;border-radius:10px!important;padding:9px 12px!important;white-space:nowrap}
+header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.md-average-chart{display:flex;align-items:stretch;gap:12px;min-height:230px;overflow-x:auto;padding:16px 4px}
+.md-average-bar-item{min-width:82px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;font-size:12px}
+.md-average-bar{height:150px;width:34px;display:flex;align-items:flex-end;background:#8882;border-radius:8px;overflow:hidden}
+.md-average-bar i{display:block;width:100%;background:var(--accent,#ff8a50);border-radius:8px 8px 0 0}
+.md-average-bar-item small{white-space:nowrap}
+.md-user-resizable{max-width:100%;min-width:0}
+@media(max-width:700px){header .header-actions{justify-content:flex-start}.md-panel-layout-open{position:static!important}.md-average-chart{min-height:190px}}
