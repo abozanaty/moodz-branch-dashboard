@@ -405,3 +405,11 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app header .md-panel-layout-open{display:inline-flex!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:5!important;}
 #app .md-panel-layout-actions{flex-wrap:wrap;gap:6px!important;}
 #app .md-panel-layout-actions button{white-space:normal;}
+
+/* Prevent overlapping dashboard panels in both expanded and all-hidden states. */
+#app .dashboard-content{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:0!important;row-gap:0!important;position:relative!important;isolation:isolate;}
+#app .dashboard-content>*{position:relative!important;inset:auto!important;transform:none!important;flex:0 0 auto!important;align-self:stretch!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;order:initial;box-sizing:border-box!important;}
+#app .dashboard-content>.hidden,#app .dashboard-content>.md-panel-user-hidden{display:none!important;flex:none!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;}
+#app .dashboard-content .panel:not(.md-panel-collapsed){height:auto!important;min-height:0!important;max-height:none!important;position:relative!important;transform:none!important;}
+#app .dashboard-content .panel-titlebar{flex-wrap:wrap;min-height:0;}
+#app .md-panel-layout-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px!important;}
