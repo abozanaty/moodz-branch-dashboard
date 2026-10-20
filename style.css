@@ -339,3 +339,17 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .md-average-bar-item small{white-space:nowrap}
 .md-user-resizable{max-width:100%;min-width:0}
 @media(max-width:700px){header .header-actions{justify-content:flex-start}.md-panel-layout-open{position:static!important}.md-average-chart{min-height:190px}}
+
+/* Google Reviews panel and horizontal progress cards */
+.md-progress-metrics{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.md-progress-metrics>article{min-width:0}
+.md-google-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.md-google-row{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(150px,1fr) minmax(140px,1fr);align-items:center;gap:14px;padding:12px;border:1px solid var(--border,#ddd);border-radius:10px}
+.md-google-branch,.md-google-admin-row strong{font-weight:800;white-space:nowrap;word-break:keep-all;overflow-wrap:normal;font-size:16px}
+.md-google-row label{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.md-google-row input,.md-google-admin-row input{width:100%;min-width:80px;box-sizing:border-box}
+.md-google-progress{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;align-items:center}
+.md-google-progress .md-hero-track{grid-column:1/-1}
+.md-google-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.md-google-admin-row{display:grid;grid-template-columns:minmax(130px,auto) minmax(100px,1fr);align-items:center;gap:10px;border:1px solid var(--border,#ddd);border-radius:8px;padding:10px}
+@media(max-width:720px){.md-progress-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.md-progress-metrics>article{padding:8px;font-size:12px}.md-progress-metrics>article strong{font-size:20px}.md-google-row{grid-template-columns:minmax(100px,1fr) minmax(120px,1fr);gap:8px}.md-google-progress{grid-column:1/-1}.md-google-branch{font-size:14px}.md-google-admin-grid{grid-template-columns:1fr}.md-google-admin-row{grid-template-columns:minmax(120px,auto) minmax(100px,1fr)}}
