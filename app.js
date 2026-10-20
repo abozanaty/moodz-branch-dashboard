@@ -299,8 +299,8 @@ function makePanelsCollapsible(){
   const toggle=document.createElement("button");toggle.type="button";toggle.className="panel-collapse-toggle";const collapseState=(()=>{try{return JSON.parse(localStorage.getItem(panelCollapseKey())||"{}")}catch{return {}}})();const collapseId=panel.dataset.panelKey||panel.id||panelLabel(panel,0);const isCollapsed=!!collapseState[collapseId];toggle.textContent=isCollapsed?"+":"−";toggle.setAttribute("aria-label",isCollapsed?"إظهار اللوحة":"إخفاء اللوحة");bar.appendChild(toggle);
   const content=document.createElement("div");content.className="panel-collapse-content";
   let node=bar.nextSibling;while(node){const next=node.nextSibling;content.appendChild(node);node=next}
-  panel.appendChild(content);if(isCollapsed)content.classList.add("collapsed");
-  toggle.onclick=()=>{const closed=content.classList.toggle("collapsed");toggle.textContent=closed?"+":"−";toggle.setAttribute("aria-label",closed?"إظهار اللوحة":"إخفاء اللوحة");savePanelCollapse(collapseId,closed)};
+  panel.appendChild(content);panel.classList.toggle("md-panel-collapsed",isCollapsed);if(isCollapsed)content.classList.add("collapsed");
+  toggle.onclick=()=>{const closed=content.classList.toggle("collapsed");panel.classList.toggle("md-panel-collapsed",closed);toggle.textContent=closed?"+":"−";toggle.setAttribute("aria-label",closed?"إظهار اللوحة":"إخفاء اللوحة");savePanelCollapse(collapseId,closed)};
  });
 }
 function applyLanguage(){
