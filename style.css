@@ -422,3 +422,14 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .dashboard-content .md-panel-collapsed{height:auto!important;min-height:0!important;overflow:visible!important;}
 #app .dashboard-content .panel-collapse-content.collapsed{display:none!important;}
 #panelLayoutToggleAll{min-width:100px;}
+
+/* Dashboard screenshot fixes: show summary stats in one horizontal row. */
+#app .dashboard-content>#stats.stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important;}
+#app #stats .stat{width:auto!important;min-width:0!important;margin:0!important;padding:12px!important;}
+#app #stats .stat strong{font-size:clamp(18px,2vw,27px)!important;overflow-wrap:anywhere;}
+/* Google review target settings in two clear lines per branch. */
+#app .md-google-admin-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:start!important;}
+#app .md-google-admin-row>strong{grid-column:1/-1!important;}
+#app .md-google-admin-row>label{display:flex!important;flex-direction:column!important;gap:4px!important;}
+#app #branchSettingsAdmin h3{display:none!important;}
+@media(max-width:720px){#app .dashboard-content>#stats.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#app .md-google-admin-row{grid-template-columns:1fr 1fr!important;}}
