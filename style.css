@@ -369,3 +369,5 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .icon-edit svg{display:block}
 .icon-edit.editing{background:var(--surface-secondary,#eee)}
 @media(max-width:640px){.manager-input-grid{grid-template-columns:1fr}.manager-input-panel{padding:12px}}
+
+#dailyRevenueAdmin:not(:has([data-history-tab])){display:none!important}
