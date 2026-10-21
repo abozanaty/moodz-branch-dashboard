@@ -19,7 +19,7 @@ window.signIn=async function signIn(){try{let email=$("email").value.trim(),pass
 async function signOut(){if(channel)await db.removeChannel(channel);await db.auth.signOut();location.reload()}
 async function start(){try{const result=await Promise.race([db.auth.getSession(),new Promise((_,reject)=>setTimeout(()=>reject(new Error("الاتصال بخدمة تسجيل الدخول استغرق وقتًا طويلًا. حدّث الصفحة وتأكد من اتصال الإنترنت.")),12000))]);const session=result?.data?.session;if(session){user=session.user;await load()}db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT")location.reload()})}catch(e){console.error("Dashboard startup failed",e);const login=$("login");if(login)login.classList.remove("hidden");toast("تعذر بدء الداشبورد: "+(e?.message||String(e)))}}
 async function load(){try{const p=await db.from("profiles").select("role,display_name").eq("id",user.id).single();if(p.error)throw new Error("الحساب موجود لكن لم تُحدد له صلاحية في profiles. اطلب من المسؤول إكمال الإعداد.");profile=p.data;if(location.pathname.endsWith("/users.html")&&profile.role!=="admin"){location.href="./index.html";return}const {data:assignments,error:assignError}=await db.from("user_branch_access").select("branch,access_level").eq("user_id",user.id);if(assignError)throw assignError;userBranches=(assignments||[]).map(x=>({branch:x.branch,access_level:x.access_level||"view"}));await refresh();$("login").classList.add("hidden");$("app").classList.remove("hidden");$("who").textContent=(profile.display_name||user.email)+" — "+roleName(profile.role);$("add").disabled=!canEdit();if(location.pathname.endsWith("/users.html")){document.body.classList.add("users-page");setTimeout(()=>window.openUserManagement(),0)}const userTab=$("usersNav");if(userTab)userTab.classList.toggle("hidden",!canManageUsers());if(channel)db.removeChannel(channel);channel=db.channel("records-live").on("postgres_changes",{event:"*",schema:"public",table:"branch_records"},refresh).subscribe()}catch(e){console.error("Dashboard load failed",e);toast("تعذر تحميل الداشبورد: "+(e.message||String(e)))}}
-async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();await loadDashboardBranchSettings();await loadDailyRevenue();await loadOpeningHistory();await loadMonthlyTargets();await loadGoogleReviewTargets();await loadChecklist();await loadChecklistMonthHistory();fillFilters();render();renderAdminTools();renderTargetAdmin();renderChecklistAdmin();renderBranchTargets();renderBranchChecklist();renderProgressHero();renderManagerInputs();renderChecklistMonthAdmin();renderAverageCheckAdmin();renderBranchComparison();formatEgyptHeader();makePanelsCollapsible();makePanelsCustomizable();applyRoleVisibility();convertEditButtonsToPencils();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
+async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();await loadDashboardBranchSettings();await loadDailyRevenue();await loadOpeningHistory();await loadMonthlyTargets();await loadGoogleReviewTargets();await loadChecklist();await loadChecklistMonthHistory();fillFilters();render();renderAdminTools();renderTargetAdmin();renderChecklistAdmin();renderBranchTargets();renderBranchChecklist();renderProgressHero();renderManagerInputs();renderChecklistMonthAdmin();renderAverageCheckAdmin();renderBranchComparison();renderMonthlyArchiveAdmin();formatEgyptHeader();makePanelsCollapsible();makePanelsCustomizable();applyRoleVisibility();convertEditButtonsToPencils();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
 function egyptNow(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Africa/Cairo"}))}
 function egyptDate(value=new Date()){const d=new Date(value.toLocaleString("en-US",{timeZone:"Africa/Cairo"}));if(d.getHours()<7||(d.getHours()===7&&d.getMinutes()<50))d.setDate(d.getDate()-1);return new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(d)}
 function formatEgyptHeader(){const el=$("headerDate");if(el){const n=egyptNow();el.textContent=new Intl.DateTimeFormat("ar-EG",{timeZone:"Africa/Cairo",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(n)}}
@@ -347,6 +347,34 @@ function applyLanguage(){
 window.toggleLanguage=function(){uiLanguage=uiLanguage==="ar"?"en":"ar";applyLanguage();};
 
 
+
+async function renderMonthlyArchiveAdmin(){
+ const root=$("monthlyArchiveAdmin");if(!root)return;
+ if(profile?.role!=="admin"){root.classList.add("hidden");return}
+ root.classList.remove("hidden");
+ const now=egyptDate(),d=new Date(now+"T12:00:00");d.setDate(1);d.setMonth(d.getMonth()-1);
+ const defaultMonth=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+ root.innerHTML='<h3>الأرشيف الشهري وقفل الشهر</h3><p class="note">قفل الشهر يحفظ نسخة كاملة للمراجعة، ويرحّل الشكاوى المفتوحة للشهر التالي. لا تُحذف البيانات الأصلية.</p><div class="md-archive-close-row"><label>الشهر المراد قفله<input id="mdArchiveMonth" type="month" value="'+defaultMonth+'" max="'+now.slice(0,7)+'"></label><button type="button" class="primary" id="mdArchiveClose">مراجعة وقفل الشهر</button></div><div id="mdArchiveStatus" class="note" role="status"></div><h4>الشهور المؤرشفة</h4><div id="mdArchiveList">جارٍ تحميل الأرشيف...</div><div id="mdArchiveDetail"></div>';
+ const list=root.querySelector("#mdArchiveList"),status=root.querySelector("#mdArchiveStatus"),detail=root.querySelector("#mdArchiveDetail");
+ async function loadArchives(){
+  const {data,error}=await db.rpc("list_m_daily_archives");
+  if(error){list.innerHTML='<p class="note">تعذر تحميل الأرشيف: '+esc(error.message)+'</p>';return}
+  const rows=Array.isArray(data)?data:[];
+  if(!rows.length){list.innerHTML='<p class="note">لا توجد شهور مؤرشفة حتى الآن.</p>';return}
+  list.innerHTML='<div class="md-archive-list">'+rows.map(x=>'<button type="button" class="md-archive-item" data-archive-id="'+esc(x.id)+'"><strong>'+esc(String(x.month_start).slice(0,7))+'</strong><span>الشكاوى المُرحّلة: '+Number(x.carried_forward_count||0)+'</span><small>قُفل في '+esc(new Date(x.archived_at).toLocaleString("ar-EG"))+'</small></button>').join("")+'</div>';
+  list.querySelectorAll("[data-archive-id]").forEach(btn=>btn.onclick=()=>{const x=rows.find(y=>y.id===btn.dataset.archiveId);if(!x)return;const s=x.snapshot||{};detail.innerHTML='<section class="md-archive-detail"><h4>أرشيف '+esc(String(x.month_start).slice(0,7))+'</h4><div class="md-archive-metrics">'+[['سجلات الشكاوى والتقارير','branch_records'],['أيام الإيرادات','branch_daily_revenue'],['مواعيد الفتح','branch_opening_time_history'],['فحوصات الـ Checklist','branch_checklist_checks']].map(([label,key])=>'<article><span>'+label+'</span><strong>'+((s[key]||[]).length)+'</strong></article>').join("")+'</div><p>الشكاوى التي تم ترحيلها: '+Number(x.carried_forward_count||0)+'</p><details><summary>عرض تفاصيل النسخة المحفوظة (JSON)</summary><pre>'+esc(JSON.stringify(s,null,2))+'</pre></details></section>'});
+ }
+ await loadArchives();
+ root.querySelector("#mdArchiveClose").onclick=async()=>{
+  const val=root.querySelector("#mdArchiveMonth").value;
+  if(!val)return toast("اختار الشهر الأول");
+  const [y,m]=val.split("-").map(Number),selected=new Date(y,m-1,1),current=new Date(now.slice(0,7)+"-01T12:00:00");
+  if(selected>=current)return toast("يمكن قفل شهر مكتمل فقط");
+  if(!confirm("تأكيد قفل شهر "+val+"؟ سيتم حفظ الأرشيف وترحيل الشكاوى المفتوحة للشهر التالي. لا يمكن تكرار قفل الشهر نفسه."))return;
+  const btn=root.querySelector("#mdArchiveClose");btn.disabled=true;status.textContent="جارٍ حفظ الأرشيف وترحيل الشكاوى...";
+  try{const {data,error}=await db.rpc("close_m_daily_month",{p_month:val+"-01"});if(error)throw error;status.textContent="تم قفل "+val+" بنجاح. الشكاوى المُرحّلة: "+Number(data?.carried_forward_count||0)+".";toast("تم قفل الشهر وحفظ الأرشيف");await loadArchives();await refresh()}catch(e){status.textContent="لم يتم قفل الشهر: "+(e.message||String(e));toast("تعذر قفل الشهر")}finally{btn.disabled=false}
+ };
+}
 
 start();
 applyLanguage();
