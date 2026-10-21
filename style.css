@@ -583,3 +583,13 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
  #app #managerInputs .manager-branch-card .branch-card-static>b{font-size:15px!important}
  #app #managerInputs .manager-branch-card .branch-card-static .branch-metric label input{font-size:15px!important}
 }
+
+
+/* Per-user persistent dashboard zoom controls */
+:root{--md-user-zoom:1}
+#app{zoom:var(--md-user-zoom)}
+.zoom-controls{display:inline-flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--border,#343a4b);border-radius:10px;background:var(--panel,#171b26);white-space:nowrap}
+.zoom-controls button{min-width:30px;height:30px;padding:0 8px;border:1px solid var(--border,#343a4b);border-radius:7px;background:linear-gradient(145deg,#30384b,#1b2130);color:var(--text,#f5f6fa);font-size:18px;font-weight:800;cursor:pointer}
+.zoom-controls button:hover{filter:brightness(1.2)}
+.zoom-controls #zoomValue{min-width:42px;text-align:center;font-size:11px;font-weight:800;color:var(--text,#f5f6fa)}
+@media(max-width:760px){.zoom-controls{gap:2px;padding:3px}.zoom-controls button{min-width:27px;height:27px;padding:0 6px}.zoom-controls #zoomValue{min-width:36px}}
