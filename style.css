@@ -642,3 +642,45 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .manager-branch-card .branch-card-static input{width:100%;min-width:0;box-sizing:border-box;height:40px;}
 #app #managerInputs .manager-branch-card .branch-card-row{align-items:stretch;}
 @media(max-width:600px){#app #managerInputs .simple-manager-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}#app #managerInputs .simple-manager-fields input{height:42px;min-height:42px;}#app #managerInputs .manager-branch-card{min-height:245px;}}
+
+/* Consistent, responsive dashboard layout; overrides older conflicting card rules. */
+#app,#app *{box-sizing:border-box}
+#app .panel,#app .stat,#app .admin-tools,#app .admin-tools>*{min-width:0;max-width:100%}
+#app .panel{padding:clamp(14px,2vw,22px);border-radius:18px}
+#app .panel-titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-width:0}
+#app .panel-titlebar h1,#app .panel-titlebar h2,#app .panel-titlebar h3{min-width:0;overflow-wrap:anywhere}
+#app .panel-titlebar label{margin:0}
+#app button,#app input,#app select,#app textarea{font:inherit;line-height:1.35}
+#app button{min-height:40px;max-width:100%;white-space:normal}
+#app input,#app select,#app textarea{min-width:0;max-width:100%;min-height:44px}
+#app .tabs{align-items:stretch;gap:8px}
+#app .tabs>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#app .filters{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));align-items:end}
+#app .row{align-items:center;gap:10px}
+#app .row>*{min-width:0}
+#app .table-scroll{max-width:100%;overflow-x:auto}
+#app #managerInputs .simple-manager-form{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px;min-width:0}
+#app #managerInputs .simple-manager-form>label{display:grid;grid-template-rows:auto auto;gap:6px;width:100%;max-width:none;min-width:0;margin:0}
+#app #managerInputs .simple-manager-fields{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;align-items:start!important;width:100%;min-width:0}
+#app #managerInputs .simple-manager-fields>label{display:grid!important;grid-template-rows:auto auto;align-content:start;gap:6px;min-width:0;width:100%;margin:0;line-height:1.4}
+#app #managerInputs .simple-manager-fields input,#app #managerInputs #simpleManagerBranch,#app #managerInputs #simpleManagerDate{display:block;width:100%;min-width:0;max-width:100%;height:46px;min-height:46px;margin:0;padding:9px 12px;box-sizing:border-box}
+#app #managerInputs #saveSimpleManagerInputs{justify-self:start;min-width:160px}
+#app #managerInputs #simpleManagerStatus{display:block;min-height:20px;overflow-wrap:anywhere}
+#app #managerInputs .manager-date-picker{display:flex;align-items:center;gap:8px;min-width:0;white-space:normal}
+#app #managerInputs .manager-date-picker input{width:auto;max-width:100%}
+#app #managerInputs .manager-branch-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))!important;grid-auto-flow:row!important;gap:14px!important;align-items:stretch!important;overflow:visible!important;padding:12px 0!important;scroll-snap-type:none!important}
+#app #managerInputs .manager-branch-card{display:flex!important;flex:initial!important;flex-direction:column!important;justify-content:flex-start!important;gap:12px!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:0!important;height:auto!important;aspect-ratio:auto!important;margin:0!important;padding:14px!important;overflow:hidden!important;border-radius:14px!important;scroll-snap-align:none!important}
+#app #managerInputs .manager-branch-card .branch-card-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;align-items:stretch!important;width:100%;min-width:0!important;margin:0!important}
+#app #managerInputs .manager-branch-card .branch-card-row:has([data-manager-field="closing"]){grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#app #managerInputs .manager-branch-card .branch-card-static{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:7px!important;flex:initial!important;width:100%;min-width:0!important;min-height:86px!important;padding:10px!important;overflow:hidden!important}
+#app #managerInputs .manager-branch-card .branch-card-static>span{font-size:clamp(11px,1vw,14px)!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+#app #managerInputs .manager-branch-card .branch-card-static>b{display:block;width:100%;min-width:0!important;font-size:15px!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric{display:grid!important;grid-template-columns:minmax(0,1fr) 32px!important;grid-template-areas:'input edit' 'status status'!important;align-items:center!important;gap:5px!important;width:100%!important;min-width:0!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label{display:block!important;grid-area:input!important;width:100%!important;min-width:0!important;margin:0!important;font-size:0!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label input{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;height:38px!important;min-height:38px!important;padding:6px 8px!important;font-size:14px!important;box-sizing:border-box!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric .icon-edit{grid-area:edit!important;width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;padding:5px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric small{grid-area:status!important;min-height:14px!important;font-size:10px!important;overflow-wrap:anywhere!important}
+#app #managerInputs .manager-branch-card .branch-card-head>strong{min-width:0;font-size:15px!important;line-height:1.3!important;overflow-wrap:anywhere!important}
+#app #managerInputs .manager-branch-card .branch-card-date{margin-top:auto!important;padding-top:4px;text-align:end!important;font-size:11px!important}
+@media(max-width:680px){#app .panel{padding:14px;border-radius:15px}#app header{gap:12px}#app .filters{grid-template-columns:repeat(2,minmax(0,1fr))}#app #managerInputs .manager-branch-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))!important;gap:10px!important}#app #managerInputs .manager-branch-card{padding:11px!important;gap:9px!important}#app #managerInputs .manager-branch-card .branch-card-row{gap:7px!important}#app #managerInputs .manager-branch-card .branch-card-static{padding:8px!important;min-height:76px!important}}
+@media(max-width:480px){#app .filters{grid-template-columns:minmax(0,1fr)}#app #managerInputs .panel-titlebar{align-items:flex-start}#app #managerInputs .manager-date-picker{width:100%;justify-content:space-between}#app #managerInputs .manager-date-picker input{width:min(58%,220px)}#app #managerInputs .simple-manager-fields{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}#app #managerInputs .manager-branch-cards{grid-template-columns:minmax(0,1fr)!important}#app #managerInputs .manager-branch-card .branch-card-row,#app #managerInputs .manager-branch-card .branch-card-row:has([data-manager-field="closing"]){grid-template-columns:repeat(2,minmax(0,1fr))!important}}
