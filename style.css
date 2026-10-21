@@ -599,3 +599,15 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
 /* Simple single-branch manager input for non-admin users */
 .simple-manager-form{display:grid;gap:14px;margin-top:12px}.simple-manager-form>label{max-width:420px}.simple-manager-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.simple-manager-fields label{display:flex;flex-direction:column;gap:6px}.simple-manager-form #saveSimpleManagerInputs{justify-self:start;min-width:160px}.simple-manager-form #simpleManagerStatus{color:#65d8c2;min-height:18px}.manager-date-picker{min-width:190px}@media(max-width:600px){.simple-manager-fields{grid-template-columns:1fr}.manager-date-picker{min-width:0;width:100%}}
+
+/* Mobile header spacing and compact collapsed panels */
+#app header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;}
+#zoomControls{display:inline-flex;align-items:center;justify-content:center;gap:4px;flex:0 0 auto;min-width:0;white-space:nowrap;padding:3px 5px;border-radius:12px;}
+#zoomControls button{min-width:30px;padding:6px 8px;flex:0 0 auto;}
+#zoomValue{min-width:34px;text-align:center;font-size:12px;}
+@media(max-width:600px){#app header .header-actions{gap:5px;}#app header .header-actions>button{padding:7px 9px;}#zoomControls{gap:2px;padding:2px;}#zoomControls button{min-width:27px;padding:5px 6px;}#zoomValue{min-width:30px;font-size:11px;}}
+#app .manager-input-panel.md-panel-collapsed .manager-date-picker{display:none!important;}
+#app .manager-input-panel.md-panel-collapsed{padding:10px 14px!important;margin-bottom:8px!important;}
+#app .manager-input-panel.md-panel-collapsed>.panel-titlebar{min-height:28px;align-items:center;}
+#app .manager-input-panel.md-panel-collapsed .panel-titlebar h3{margin:0;font-size:16px;}
+#app .md-panel-collapsed>.panel-collapse-toggle{margin-inline-start:auto;flex:0 0 auto;}
