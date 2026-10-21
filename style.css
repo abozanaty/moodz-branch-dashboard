@@ -611,3 +611,34 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .manager-input-panel.md-panel-collapsed>.panel-titlebar{min-height:28px;align-items:center;}
 #app .manager-input-panel.md-panel-collapsed .panel-titlebar h3{margin:0;font-size:16px;}
 #app .md-panel-collapsed>.panel-collapse-toggle{margin-inline-start:auto;flex:0 0 auto;}
+
+/* Consistent header controls and manager identity */
+#app header{align-items:center;}
+#app header>div:first-child{display:flex;align-items:center;gap:12px;}
+#app header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+#app header .header-actions>button:not(.panel-collapse-toggle){height:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 13px;}
+#app #who{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:9px;background:linear-gradient(135deg,#ff9a50,#ff6a35);color:#17141a;font-weight:800;white-space:nowrap;border:1px solid rgba(255,255,255,.16);}
+#app #zoomControls{height:38px;box-sizing:border-box;}
+#app #zoomControls button{height:28px;min-height:28px;}
+@media(max-width:600px){#app header>div:first-child{width:100%;justify-content:space-between;}#app header .header-actions{width:100%;gap:6px;}#app header .header-actions>button:not(.panel-collapse-toggle){height:36px;min-height:36px;padding:0 9px;font-size:12px;}#app #who{min-height:36px;padding:0 10px;font-size:12px;}#app #zoomControls{height:36px;}}
+/* Compact minimized Manager Inputs */
+#app #managerInputs.manager-input-panel.md-panel-collapsed{padding:8px 12px!important;margin-bottom:8px!important;}
+#app #managerInputs.md-panel-collapsed .manager-date-picker{display:none!important;}
+#app .manager-input-panel.md-panel-collapsed .manager-date-picker{display:none!important;}
+#app .md-panel-collapsed>.panel-collapse-content{display:none!important;}
+#app .md-panel-collapsed>.panel-titlebar{display:flex!important;align-items:center!important;min-height:28px!important;padding:0!important;gap:8px!important;}
+#app .md-panel-collapsed>.panel-titlebar h3{margin:0!important;font-size:16px!important;line-height:1.25!important;}
+/* Keep the three dashboard sections inside their own panel/table frames */
+#app #branchTargets,#app #branchChecklist,#app #dailyRevenueAdmin{display:block;position:relative;box-sizing:border-box;width:100%;min-width:0;padding:14px;border:1px solid var(--border,#343a4b);border-radius:16px;background:var(--panel,#171b26);margin-bottom:12px;}
+#app #branchTargets.md-panel-collapsed,#app #branchChecklist.md-panel-collapsed,#app #dailyRevenueAdmin.md-panel-collapsed{padding:10px 14px!important;min-height:0!important;height:auto!important;overflow:hidden!important;}
+#app #branchTargets.md-panel-collapsed>.panel-titlebar,#app #branchChecklist.md-panel-collapsed>.panel-titlebar,#app #dailyRevenueAdmin.md-panel-collapsed>.panel-titlebar{display:flex!important;width:100%;margin:0!important;}
+/* Equal-sized Manager Inputs fields */
+#app #managerInputs .simple-manager-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch;}
+#app #managerInputs .simple-manager-fields label{display:flex;flex-direction:column;justify-content:flex-start;min-width:0;}
+#app #managerInputs .simple-manager-fields input,#app #managerInputs #simpleManagerBranch,#app #managerInputs #simpleManagerDate{width:100%;min-width:0;height:44px;min-height:44px;box-sizing:border-box;}
+#app #managerInputs .manager-branch-cards{align-items:stretch!important;}
+#app #managerInputs .manager-branch-card{display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:260px;}
+#app #managerInputs .manager-branch-card .branch-card-static{flex:1;min-width:0;}
+#app #managerInputs .manager-branch-card .branch-card-static input{width:100%;min-width:0;box-sizing:border-box;height:40px;}
+#app #managerInputs .manager-branch-card .branch-card-row{align-items:stretch;}
+@media(max-width:600px){#app #managerInputs .simple-manager-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}#app #managerInputs .simple-manager-fields input{height:42px;min-height:42px;}#app #managerInputs .manager-branch-card{min-height:245px;}}
