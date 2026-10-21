@@ -456,3 +456,21 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .admin-manager-inputs .manager-input-panel>.note{margin-top:12px!important}
 @media(max-width:900px){#app #managerInputs .admin-manager-inputs .manager-input-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:560px){#app #managerInputs .admin-manager-inputs .manager-input-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}#app #managerInputs .admin-manager-inputs .manager-input-row{padding:10px!important;gap:8px!important}}
+
+/* Compact branch-specific manager cards with one consistent gradient palette */
+#app #managerInputs .admin-manager-inputs .manager-branch-select{display:none!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px;align-items:stretch}
+#app #managerInputs .admin-manager-inputs .manager-branch-card{min-width:0;padding:13px;background:linear-gradient(145deg,#e5eaff 0%,#d2dcff 48%,#bdccf7 100%);border:1px solid #ffffffc2;border-radius:15px;box-shadow:0 5px 16px #242f6518;color:#26345f}
+#app #managerInputs .admin-manager-inputs .manager-branch-card>h4{margin:0 0 4px;font-size:15px;font-weight:850;overflow-wrap:anywhere}
+#app #managerInputs .admin-manager-inputs .manager-branch-date{font-size:11px;opacity:.72;margin-bottom:11px}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-grid{display:flex!important;flex-direction:column!important;gap:9px!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row{display:grid!important;grid-template-columns:minmax(0,1fr) 30px;grid-template-areas:'label edit' 'status status';align-items:center!important;gap:5px 8px!important;aspect-ratio:auto!important;min-height:0!important;padding:8px 10px!important;border:1px solid #ffffffd4!important;border-radius:10px!important;background:linear-gradient(135deg,#f8f9ff,#e8edff)!important;color:#29365f!important;box-shadow:none!important;overflow:visible!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row label{grid-area:label;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:5px!important;font-size:11px!important;line-height:1.35!important;font-weight:750!important;min-width:0}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row input{width:100%!important;min-width:0!important;box-sizing:border-box!important;padding:7px 9px!important;border:1px solid #d4dcfa!important;border-radius:8px!important;background:#fff!important;color:#1e2948!important;font-size:14px!important;font-weight:750!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row input:disabled{opacity:1!important;background:#f9faff!important;color:#1e2948!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row .icon-edit{grid-area:edit;align-self:center!important;justify-self:end!important;width:28px!important;min-width:28px!important;height:28px!important;flex:0 0 28px!important;border-color:#c5cff4!important;background:#dce3ff!important;color:#3e4d85!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card .manager-input-row small{grid-area:status;margin:0!important;color:#40518b!important;font-size:10px!important;min-height:12px!important;font-weight:700!important}
+#app #managerInputs .admin-manager-inputs .manager-input-panel>.note{margin-top:14px!important}
+@media(min-width:1400px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#app #managerInputs .admin-manager-inputs .manager-branch-card{padding:10px}}
+@media(max-width:420px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:1fr}}
