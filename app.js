@@ -20,6 +20,22 @@ async function signOut(){if(channel)await db.removeChannel(channel);await db.aut
 async function start(){try{const result=await Promise.race([db.auth.getSession(),new Promise((_,reject)=>setTimeout(()=>reject(new Error("الاتصال بخدمة تسجيل الدخول استغرق وقتًا طويلًا. حدّث الصفحة وتأكد من اتصال الإنترنت.")),12000))]);const session=result?.data?.session;if(session){user=session.user;await load()}db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT")location.reload()})}catch(e){console.error("Dashboard startup failed",e);const login=$("login");if(login)login.classList.remove("hidden");toast("تعذر بدء الداشبورد: "+(e?.message||String(e)))}}
 async function load(){try{const p=await db.from("profiles").select("role,display_name").eq("id",user.id).single();if(p.error)throw new Error("الحساب موجود لكن لم تُحدد له صلاحية في profiles. اطلب من المسؤول إكمال الإعداد.");profile=p.data;if(location.pathname.endsWith("/users.html")&&profile.role!=="admin"){location.href="./index.html";return}const {data:assignments,error:assignError}=await db.from("user_branch_access").select("branch,access_level").eq("user_id",user.id);if(assignError)throw assignError;userBranches=(assignments||[]).map(x=>({branch:x.branch,access_level:x.access_level||"view"}));await refresh();$("login").classList.add("hidden");$("app").classList.remove("hidden");$("who").textContent=(profile.display_name||user.email)+" — "+roleName(profile.role);$("add").disabled=!canEdit();if(location.pathname.endsWith("/users.html")){document.body.classList.add("users-page");setTimeout(()=>window.openUserManagement(),0)}const userTab=$("usersNav");if(userTab)userTab.classList.toggle("hidden",!canManageUsers());if(channel)db.removeChannel(channel);channel=db.channel("records-live").on("postgres_changes",{event:"*",schema:"public",table:"branch_records"},refresh).subscribe()}catch(e){console.error("Dashboard load failed",e);toast("تعذر تحميل الداشبورد: "+(e.message||String(e)))}}
 async function refresh(){const {data,error}=await db.from("branch_records").select("*").order("created_at",{ascending:true});if(error)throw error;records=(data||[]).map(x=>({id:x.id,branch:x.branch,sheet:x.sheet,headers:x.headers||[],row:x.row_data||{},created_at:x.created_at}));await loadBranchSettings();await loadDashboardBranchSettings();await loadDailyRevenue();await loadOpeningHistory();await loadMonthlyTargets();await loadGoogleReviewTargets();await loadChecklist();await loadChecklistMonthHistory();fillFilters();render();renderAdminTools();renderTargetAdmin();renderChecklistAdmin();renderBranchTargets();renderBranchChecklist();renderProgressHero();renderManagerInputs();renderChecklistMonthAdmin();renderAverageCheckAdmin();renderBranchComparison();renderMonthlyArchiveAdmin();formatEgyptHeader();makePanelsCollapsible();makePanelsCustomizable();applyRoleVisibility();convertEditButtonsToPencils();const manage=$("manageUsers");if(manage)manage.classList.toggle("hidden",!canManageUsers())}
+
+function setupUserZoom(){
+ const key="m-daily-user-zoom-v1";
+ const controls=document.getElementById("zoomControls");
+ if(!controls||controls.dataset.ready==="1")return;
+ controls.dataset.ready="1";
+ const valueEl=document.getElementById("zoomValue");
+ let zoom=100;
+ try{const saved=localStorage.getItem(key);if(saved)zoom=Math.max(70,Math.min(140,Number(saved)||100))}catch(e){}
+ const apply=()=>{document.documentElement.style.setProperty("--md-user-zoom",String(zoom/100));if(valueEl)valueEl.textContent=zoom+"%";try{localStorage.setItem(key,String(zoom))}catch(e){}};
+ document.getElementById("zoomIn")?.addEventListener("click",()=>{zoom=Math.min(140,zoom+10);apply()});
+ document.getElementById("zoomOut")?.addEventListener("click",()=>{zoom=Math.max(70,zoom-10);apply()});
+ document.getElementById("zoomReset")?.addEventListener("click",()=>{zoom=100;apply()});
+ apply();
+}
+
 function egyptNow(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Africa/Cairo"}))}
 function egyptDate(value=new Date()){const d=new Date(value.toLocaleString("en-US",{timeZone:"Africa/Cairo"}));if(d.getHours()<7||(d.getHours()===7&&d.getMinutes()<50))d.setDate(d.getDate()-1);return new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(d)}
 function formatEgyptHeader(){const el=$("headerDate");if(el){const n=egyptNow();el.textContent=new Intl.DateTimeFormat("ar-EG",{timeZone:"Africa/Cairo",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(n)}}
@@ -378,5 +394,6 @@ async function renderMonthlyArchiveAdmin(){
 }
 
 start();
+setupUserZoom();
 applyLanguage();
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.warn("M-Daily install support unavailable",e)));
