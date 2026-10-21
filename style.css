@@ -543,3 +543,20 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .manager-date-picker input{width:150px!important;max-width:45vw!important;padding:7px 9px!important;font-size:12px!important}
 @media(max-width:600px){#app #managerInputs .manager-branch-card{flex-basis:172px!important;width:172px!important;min-width:172px!important;padding:8px!important;min-height:180px!important}#app #managerInputs .manager-date-picker input{width:130px!important}}
 @media(prefers-reduced-motion:reduce){#app #managerInputs .manager-branch-card{transition:none!important}}
+
+
+/* User request: increase manager branch card size by 100% */
+#app #managerInputs .manager-branch-card{flex-basis:376px!important;width:376px!important;min-width:376px!important;max-width:376px!important;min-height:380px!important;padding:20px!important;gap:14px!important;border-radius:18px!important;box-shadow:inset 0 2px 0 #ffffff50,0 10px 0 #101522,0 16px 26px #0006!important}
+#app #managerInputs .manager-branch-cards{gap:14px!important;padding:12px 6px 22px!important}
+#app #managerInputs .manager-branch-card .branch-card-row{gap:10px!important}
+#app #managerInputs .manager-branch-card .branch-card-head>strong{font-size:24px!important}
+#app #managerInputs .manager-branch-card .branch-card-static{padding:12px!important;gap:7px!important;border-radius:10px!important}
+#app #managerInputs .manager-branch-card .branch-card-static>span{font-size:18px!important}
+#app #managerInputs .manager-branch-card .branch-card-static>b{font-size:22px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric{grid-template-columns:minmax(0,1fr) 36px!important;gap:5px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label input{font-size:22px!important;padding:8px 5px!important;border-radius:7px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric .icon-edit{width:36px!important;min-width:36px!important;height:36px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric .icon-edit svg{width:20px!important;height:20px!important}
+#app #managerInputs .manager-branch-card .branch-card-static .branch-metric small{font-size:14px!important;min-height:14px!important}
+#app #managerInputs .manager-branch-card .branch-card-date{font-size:15px!important}
+@media(max-width:600px){#app #managerInputs .manager-branch-card{flex-basis:330px!important;width:330px!important;min-width:330px!important;max-width:330px!important;min-height:330px!important;padding:16px!important;gap:11px!important}#app #managerInputs .manager-branch-card .branch-card-head>strong{font-size:20px!important}#app #managerInputs .manager-branch-card .branch-card-static>span{font-size:15px!important}#app #managerInputs .manager-branch-card .branch-card-static>b,#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label input{font-size:18px!important}}
