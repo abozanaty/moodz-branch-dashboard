@@ -67,6 +67,8 @@ body.users-page #app header,body.users-page #app main{display:none}body.users-pa
 
 .branch-permission{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,.85fr);align-items:center;gap:10px;border:1px solid #e2e7ef;border-radius:9px;padding:8px;background:#fff}.branch-check{display:flex;align-items:center;gap:8px;margin:0;color:#17202a;font-size:14px}.branch-check input[type=checkbox]{width:18px;height:18px;flex:0 0 auto;margin:0}.branch-permission select{min-width:0}.user-branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.user-branch-grid:empty:after{content:"جاري تحميل أسماء الفروع...";color:#667085;font-size:13px}@media(max-width:600px){.user-branch-grid{grid-template-columns:1fr}.branch-permission{grid-template-columns:minmax(0,1fr) minmax(120px,.9fr)}}
 
+.branch-manager-settings{margin:8px 0 16px}.branch-manager-edit-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(90px,auto);align-items:end;gap:10px;padding:10px 0;border-bottom:1px solid #e1e6ed}.branch-manager-edit-row label{display:grid;gap:6px;min-width:0;font-weight:600}.branch-manager-edit-row input{width:100%;min-width:0}.branch-manager-edit-row small{padding-bottom:10px;color:#667085}.branch-manager-edit-row small:empty{display:none}@media(max-width:600px){.branch-manager-edit-row{grid-template-columns:minmax(0,1fr) auto}.branch-manager-edit-row small{grid-column:1/-1;padding:0}}
+
 /* M-Daily dashboard refresh */
 body{background:#0c1518;color:#e8f2f0}
 header{background:#0b1718;border-bottom:1px solid #1e3b39}
@@ -644,11 +646,17 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 @media(max-width:600px){#app #managerInputs .simple-manager-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}#app #managerInputs .simple-manager-fields input{height:42px;min-height:42px;}#app #managerInputs .manager-branch-card{min-height:245px;}}
 
 /* Consistent, responsive dashboard layout; overrides older conflicting card rules. */
-#app,#app *{box-sizing:border-box}
-#app .panel,#app .stat,#app .admin-tools,#app .admin-tools>*{min-width:0;max-width:100%}
+#app,
+#app *{box-sizing:border-box}
+#app .panel,
+#app .stat,
+#app .admin-tools,
+#app .admin-tools>*{min-width:0;max-width:100%}
 #app .panel{padding:clamp(14px,2vw,22px);border-radius:18px}
 #app .panel-titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-width:0}
-#app .panel-titlebar h1,#app .panel-titlebar h2,#app .panel-titlebar h3{min-width:0;overflow-wrap:anywhere}
+#app .panel-titlebar h1,
+#app .panel-titlebar h2,
+#app .panel-titlebar h3{min-width:0;overflow-wrap:anywhere}
 #app .panel-titlebar label{margin:0}
 #app button,#app input,#app select,#app textarea{font:inherit;line-height:1.35}
 #app button{min-height:40px;max-width:100%;white-space:normal}
@@ -659,60 +667,21 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .row{align-items:center;gap:10px}
 #app .row>*{min-width:0}
 #app .table-scroll{max-width:100%;overflow-x:auto}
+
+/* The non-admin Manager Inputs form uses one predictable two-column grid. */
 #app #managerInputs .simple-manager-form{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px;min-width:0}
 #app #managerInputs .simple-manager-form>label{display:grid;grid-template-rows:auto auto;gap:6px;width:100%;max-width:none;min-width:0;margin:0}
 #app #managerInputs .simple-manager-fields{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;align-items:start!important;width:100%;min-width:0}
 #app #managerInputs .simple-manager-fields>label{display:grid!important;grid-template-rows:auto auto;align-content:start;gap:6px;min-width:0;width:100%;margin:0;line-height:1.4}
-#app #managerInputs .simple-manager-fields input,#app #managerInputs #simpleManagerBranch,#app #managerInputs #simpleManagerDate{display:block;width:100%;min-width:0;max-width:100%;height:46px;min-height:46px;margin:0;padding:9px 12px;box-sizing:border-box}
+#app #managerInputs .simple-manager-fields input,
+#app #managerInputs #simpleManagerBranch,
+#app #managerInputs #simpleManagerDate{display:block;width:100%;min-width:0;max-width:100%;height:46px;min-height:46px;margin:0;padding:9px 12px;box-sizing:border-box}
 #app #managerInputs #saveSimpleManagerInputs{justify-self:start;min-width:160px}
 #app #managerInputs #simpleManagerStatus{display:block;min-height:20px;overflow-wrap:anywhere}
 #app #managerInputs .manager-date-picker{display:flex;align-items:center;gap:8px;min-width:0;white-space:normal}
 #app #managerInputs .manager-date-picker input{width:auto;max-width:100%}
-#app #managerInputs .manager-branch-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))!important;grid-auto-flow:row!important;gap:14px!important;align-items:stretch!important;overflow:visible!important;padding:12px 0!important;scroll-snap-type:none!important}
-#app #managerInputs .manager-branch-card{display:flex!important;flex:initial!important;flex-direction:column!important;justify-content:flex-start!important;gap:12px!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:0!important;height:auto!important;aspect-ratio:auto!important;margin:0!important;padding:14px!important;overflow:hidden!important;border-radius:14px!important;scroll-snap-align:none!important}
-#app #managerInputs .manager-branch-card .branch-card-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;align-items:stretch!important;width:100%;min-width:0!important;margin:0!important}
-#app #managerInputs .manager-branch-card .branch-card-row:has([data-manager-field="closing"]){grid-template-columns:repeat(3,minmax(0,1fr))!important}
-#app #managerInputs .manager-branch-card .branch-card-static{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:7px!important;flex:initial!important;width:100%;min-width:0!important;min-height:86px!important;padding:10px!important;overflow:hidden!important}
-#app #managerInputs .manager-branch-card .branch-card-static>span{font-size:clamp(11px,1vw,14px)!important;line-height:1.35!important;overflow-wrap:anywhere!important}
-#app #managerInputs .manager-branch-card .branch-card-static>b{display:block;width:100%;min-width:0!important;font-size:15px!important;line-height:1.35!important;overflow-wrap:anywhere!important}
-#app #managerInputs .manager-branch-card .branch-card-static .branch-metric{display:grid!important;grid-template-columns:minmax(0,1fr) 32px!important;grid-template-areas:'input edit' 'status status'!important;align-items:center!important;gap:5px!important;width:100%!important;min-width:0!important}
-#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label{display:block!important;grid-area:input!important;width:100%!important;min-width:0!important;margin:0!important;font-size:0!important}
-#app #managerInputs .manager-branch-card .branch-card-static .branch-metric label input{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;height:38px!important;min-height:38px!important;padding:6px 8px!important;font-size:14px!important;box-sizing:border-box!important}
-#app #managerInputs .manager-branch-card .branch-card-static .branch-metric .icon-edit{grid-area:edit!important;width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;padding:5px!important}
-#app #managerInputs .manager-branch-card .branch-card-static .branch-metric small{grid-area:status!important;min-height:14px!important;font-size:10px!important;overflow-wrap:anywhere!important}
-#app #managerInputs .manager-branch-card .branch-card-head>strong{min-width:0;font-size:15px!important;line-height:1.3!important;overflow-wrap:anywhere!important}
-#app #managerInputs .manager-branch-card .branch-card-date{margin-top:auto!important;padding-top:4px;text-align:end!important;font-size:11px!important}
-@media(max-width:680px){#app .panel{padding:14px;border-radius:15px}#app header{gap:12px}#app .filters{grid-template-columns:repeat(2,minmax(0,1fr))}#app #managerInputs .manager-branch-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))!important;gap:10px!important}#app #managerInputs .manager-branch-card{padding:11px!important;gap:9px!important}#app #managerInputs .manager-branch-card .branch-card-row{gap:7px!important}#app #managerInputs .manager-branch-card .branch-card-static{padding:8px!important;min-height:76px!important}}
-@media(max-width:480px){#app .filters{grid-template-columns:minmax(0,1fr)}#app #managerInputs .panel-titlebar{align-items:flex-start}#app #managerInputs .manager-date-picker{width:100%;justify-content:space-between}#app #managerInputs .manager-date-picker input{width:min(58%,220px)}#app #managerInputs .simple-manager-fields{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}#app #managerInputs .manager-branch-cards{grid-template-columns:minmax(0,1fr)!important}#app #managerInputs .manager-branch-card .branch-card-row,#app #managerInputs .manager-branch-card .branch-card-row:has([data-manager-field="closing"]){grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
-
-/* Consistent, responsive dashboard layout; overrides older conflicting card rules. */
-#app,#app *{box-sizing:border-box}
-#app .panel,#app .stat,#app .admin-tools,#app .admin-tools>*{min-width:0;max-width:100%}
-#app .panel{padding:clamp(14px,2vw,22px);border-radius:18px}
-#app .panel-titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-width:0}
-#app .panel-titlebar h1,#app .panel-titlebar h2,#app .panel-titlebar h3{min-width:0;overflow-wrap:anywhere}
-#app .panel-titlebar label{margin:0}
-#app button,#app input,#app select,#app textarea{font:inherit;line-height:1.35}
-#app button{min-height:40px;max-width:100%;white-space:normal}
-#app input,#app select,#app textarea{min-width:0;max-width:100%;min-height:44px}
-#app .tabs{align-items:stretch;gap:8px}
-#app .tabs>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
-#app .filters{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));align-items:end}
-#app .row{align-items:center;gap:10px}
-#app .row>*{min-width:0}
-#app .table-scroll{max-width:100%;overflow-x:auto}
-/* The non-admin Manager Inputs form uses aligned, equal-width fields. */
-#app #managerInputs .simple-manager-form{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px;min-width:0}
-#app #managerInputs .simple-manager-form>label{display:grid;grid-template-rows:auto auto;gap:6px;width:100%;max-width:none;min-width:0;margin:0}
-#app #managerInputs .simple-manager-fields{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;align-items:start!important;width:100%;min-width:0}
-#app #managerInputs .simple-manager-fields>label{display:grid!important;grid-template-rows:auto auto;align-content:start;gap:6px;min-width:0;width:100%;margin:0;line-height:1.4}
-#app #managerInputs .simple-manager-fields input,#app #managerInputs #simpleManagerBranch,#app #managerInputs #simpleManagerDate{display:block;width:100%;min-width:0;max-width:100%;height:46px;min-height:46px;margin:0;padding:9px 12px;box-sizing:border-box}
-#app #managerInputs #saveSimpleManagerInputs{justify-self:start;min-width:160px}
-#app #managerInputs #simpleManagerStatus{display:block;min-height:20px;overflow-wrap:anywhere}
-#app #managerInputs .manager-date-picker{display:flex;align-items:center;gap:8px;min-width:0;white-space:normal}
-#app #managerInputs .manager-date-picker input{width:auto;max-width:100%}
-/* Admin cards wrap naturally and keep each input inside its branch card. */
+/* Admin branch cards flow with available width instead of fixed horizontal cards. */
 #app #managerInputs .manager-branch-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))!important;grid-auto-flow:row!important;gap:14px!important;align-items:stretch!important;overflow:visible!important;padding:12px 0!important;scroll-snap-type:none!important}
 #app #managerInputs .manager-branch-card{display:flex!important;flex:initial!important;flex-direction:column!important;justify-content:flex-start!important;gap:12px!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:0!important;height:auto!important;aspect-ratio:auto!important;margin:0!important;padding:14px!important;overflow:hidden!important;border-radius:14px!important;scroll-snap-align:none!important}
 #app #managerInputs .manager-branch-card .branch-card-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;align-items:stretch!important;width:100%;min-width:0!important;margin:0!important}
@@ -726,6 +695,7 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .manager-branch-card .branch-card-static .branch-metric small{grid-area:status!important;min-height:14px!important;font-size:10px!important;overflow-wrap:anywhere!important}
 #app #managerInputs .manager-branch-card .branch-card-head>strong{min-width:0;font-size:15px!important;line-height:1.3!important;overflow-wrap:anywhere!important}
 #app #managerInputs .manager-branch-card .branch-card-date{margin-top:auto!important;padding-top:4px;text-align:end!important;font-size:11px!important}
+
 @media(max-width:680px){
  #app .panel{padding:14px;border-radius:15px}
  #app header{gap:12px}
@@ -743,7 +713,9 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
  #app #managerInputs .simple-manager-fields{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
  #app #managerInputs .manager-branch-cards{grid-template-columns:minmax(0,1fr)!important}
 }
-#app .manager-daily-target{display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;min-height:82px;padding:10px 12px;border:1px solid rgba(183,124,255,.3);border-radius:12px;background:linear-gradient(145deg,rgba(183,124,255,.12),rgba(244,95,125,.07))}
+
+/* Read-only daily revenue target, shown alongside the editable revenue field. */
+#app .manager-daily-target{display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;min-height:82px;padding:10px 12px;border:1px solid rgba(183,124,255,.3);border-radius:12px;background:linear-gradient(145deg,rgba(183,124,255,.12),rgba(244,95,125,.07));}
 #app .manager-daily-target>span{font-size:12px;line-height:1.3;color:var(--md-muted)}
 #app .manager-daily-target>strong{font-size:16px;line-height:1.3;color:var(--md-text);overflow-wrap:anywhere}
 #app .manager-daily-target>small{font-size:11px;line-height:1.3;color:#d2a7ff;overflow-wrap:anywhere}
@@ -754,7 +726,6 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .md-daily-target-form input,#app .md-daily-target-form select{width:100%;min-width:0}
 #app #monthlyTargetAdmin .revenue-table{min-width:420px}
 @media(max-width:480px){#app .manager-daily-target{min-height:74px;padding:8px}#app .manager-daily-target>strong{font-size:14px}#app #monthlyTargetAdmin .md-daily-target-form{grid-template-columns:minmax(0,1fr)}}
-
 
 /* Manager Inputs uses the same flat panel surface as the rest of M-Daily. */
 #app #managerInputs .admin-manager-inputs .manager-branch-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))!important;grid-auto-flow:row!important;gap:12px!important;overflow:visible!important;padding:10px 0!important;scroll-snap-type:none!important}
