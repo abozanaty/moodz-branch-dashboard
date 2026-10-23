@@ -751,3 +751,10 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .simple-manager-form .note{color:var(--md-muted);font-size:12px}
 @media(max-width:680px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))!important;gap:9px!important}#app #managerInputs .admin-manager-inputs .manager-branch-card{padding:10px!important;gap:8px!important}#app #managerInputs .admin-manager-inputs .branch-card-row{gap:6px!important}}
 @media(max-width:480px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:minmax(0,1fr)!important}}
+
+/* Admin Manager Inputs: select a single branch instead of stacking every branch */
+#app #managerInputs .admin-manager-selector{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;max-width:460px;margin:14px 0 16px;}
+#app #managerInputs .admin-manager-selector label{font-size:13px;font-weight:700;color:var(--muted,#aab1c2);margin:0;}
+#app #managerInputs .admin-manager-selector select{width:100%;height:44px;min-height:44px;background:var(--input,#11141c);color:var(--text,#f5f6fa);border:1px solid var(--border,#343a4b);border-radius:10px;padding:0 12px;}
+#app #managerInputs .admin-manager-inputs .manager-branch-cards{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;overflow:visible!important;padding:0!important;}
+#app #managerInputs .admin-manager-inputs .manager-branch-card{width:100%;max-width:none;}
