@@ -988,3 +988,10 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .admin-manager-table thead th{background:#252a38!important}
 #app #managerInputs .admin-manager-table th,#app #managerInputs .admin-manager-table td{border-bottom:1px solid rgba(255,255,255,.12)!important;border-right:1px solid rgba(255,255,255,.08)!important}
 @media(max-width:700px){#app #managerInputs .admin-manager-table thead th:first-child,#app #managerInputs .admin-manager-table tbody th{width:175px!important;min-width:175px!important;max-width:175px!important}}
+
+/* Keep the first column pinned while the admin comparison table scrolls horizontally. */
+#app #managerInputs .admin-manager-table thead th:first-child,
+#app #managerInputs .admin-manager-table tbody th{position:sticky!important;left:0!important;z-index:4!important;}
+#app #managerInputs .admin-manager-table thead th:first-child{z-index:6!important;background:#252a38!important;}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(odd) th{background:#090a0d!important;}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(even) th{background:#292d35!important;}
