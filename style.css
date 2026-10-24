@@ -922,3 +922,20 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 @media(max-width:1200px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
 @media(max-width:850px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(max-width:560px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}#app #managerInputs .admin-manager-inputs .manager-daily-target{min-height:62px!important;padding:5px!important}#app #managerInputs .admin-manager-inputs .manager-daily-target small,#app #managerInputs .admin-manager-inputs .manager-daily-target .target-achievement,#app #managerInputs .admin-manager-inputs .manager-daily-target [class*="achiev"]{font-size:14px!important}}
+
+/* Admin branch cards: put each label and its value on the same line to reduce height. */
+#app #managerInputs .admin-manager-inputs .manager-branch-card{gap:4px!important;padding:5px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-row{gap:4px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;column-gap:6px!important;row-gap:2px!important;padding:4px 5px!important;min-width:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static>span{grid-column:1!important;grid-row:1!important;text-align:right!important;font-size:10px!important;line-height:1.2!important;min-width:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static>b{grid-column:2!important;grid-row:1!important;text-align:left!important;font-size:12px!important;line-height:1.2!important;min-width:0!important;max-width:100%!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:minmax(0,1fr) 22px!important;align-items:center!important;gap:3px!important;min-width:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>label{display:none!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>input,#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric input{width:100%!important;min-width:0!important;height:24px!important;min-height:24px!important;font-size:11px!important;padding:2px 4px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>button[data-manager-edit]{width:22px!important;min-width:22px!important;height:24px!important;min-height:24px!important;margin:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>small[data-manager-status]{grid-column:1/-1!important;font-size:8px!important;line-height:1.1!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;column-gap:6px!important;min-height:0!important;padding:5px!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target>span{grid-column:1!important;grid-row:1!important;font-size:10px!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target>strong{grid-column:2!important;grid-row:1!important;font-size:12px!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target>small,#app #managerInputs .admin-manager-inputs .manager-daily-target .target-achievement,#app #managerInputs .admin-manager-inputs .manager-daily-target [class*="achiev"]{grid-column:1/-1!important;font-size:14px!important;line-height:1.2!important;text-align:right!important}
+@media(max-width:560px){#app #managerInputs .admin-manager-inputs .branch-card-static{column-gap:4px!important;padding:3px!important}#app #managerInputs .admin-manager-inputs .branch-card-static>span{font-size:9px!important}#app #managerInputs .admin-manager-inputs .branch-card-static>b{font-size:11px!important}}
