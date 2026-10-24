@@ -974,3 +974,17 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .admin-manager-table .manager-daily-target small,#app #managerInputs .admin-manager-table .manager-daily-target [class*="achiev"]{display:block!important;font-size:14px!important;font-weight:800!important;line-height:1.2!important;color:#ff9b68!important}
 #app #managerInputs .admin-manager-table .manager-not-applicable{color:#777f90!important}
 @media(max-width:700px){#app #managerInputs .admin-manager-table{min-width:1050px!important}#app #managerInputs .admin-manager-table th,#app #managerInputs .admin-manager-table td{padding:5px!important}#app #managerInputs .admin-manager-table thead th:first-child,#app #managerInputs .admin-manager-table tbody th{width:120px!important}}
+
+/* Admin comparison table: wider first column, evenly sized branch columns, zebra rows. */
+#app #managerInputs .admin-manager-table{table-layout:fixed!important;width:100%!important;min-width:1100px!important}
+#app #managerInputs .admin-manager-table thead th:first-child,
+#app #managerInputs .admin-manager-table tbody th{width:205px!important;min-width:205px!important;max-width:205px!important}
+#app #managerInputs .admin-manager-table thead th:not(:first-child),
+#app #managerInputs .admin-manager-table tbody td{width:calc((100% - 205px)/var(--admin-branch-count,10))!important}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(odd) td{background:#111318!important;color:#f3f4f6!important}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(even) td{background:#353943!important;color:#f3f4f6!important}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(odd) th{background:#090a0d!important;color:#f3f4f6!important}
+#app #managerInputs .admin-manager-table tbody tr:nth-child(even) th{background:#292d35!important;color:#f3f4f6!important}
+#app #managerInputs .admin-manager-table thead th{background:#252a38!important}
+#app #managerInputs .admin-manager-table th,#app #managerInputs .admin-manager-table td{border-bottom:1px solid rgba(255,255,255,.12)!important;border-right:1px solid rgba(255,255,255,.08)!important}
+@media(max-width:700px){#app #managerInputs .admin-manager-table thead th:first-child,#app #managerInputs .admin-manager-table tbody th{width:175px!important;min-width:175px!important;max-width:175px!important}}
