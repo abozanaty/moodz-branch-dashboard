@@ -891,3 +891,23 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app #managerInputs .admin-manager-inputs .branch-card-row{gap:4px!important}
 #app #managerInputs .admin-manager-inputs .branch-card-static{padding:4px!important;gap:2px!important}
 @media(max-width:560px){#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric{grid-template-columns:minmax(0,1fr) 22px!important;gap:3px!important}#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>button[data-manager-edit]{width:22px!important;min-width:22px!important;height:25px!important;min-height:25px!important}#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>label input{height:25px!important;min-height:25px!important;font-size:10px!important}}
+
+/* Admin branch cards: narrower and shorter; remove duplicate labels inside editable fields. */
+#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important;align-items:stretch!important}
+#app #managerInputs .admin-manager-inputs .manager-branch-card{padding:5px!important;gap:3px!important;border-radius:7px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-head{padding-bottom:3px!important;margin:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-head strong{font-size:12px!important;line-height:1.15!important}
+#app #managerInputs .admin-manager-inputs .branch-card-row{gap:3px!important;margin:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static{padding:3px 4px!important;gap:2px!important;border-radius:5px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static>span{font-size:9px!important;line-height:1.1!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static>b{font-size:12px!important;line-height:1.1!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>label{font-size:0!important;line-height:0!important;gap:0!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>label input{font-size:11px!important;line-height:1.1!important;height:24px!important;min-height:24px!important;padding:2px 4px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>button[data-manager-edit]{height:24px!important;min-height:24px!important}
+#app #managerInputs .admin-manager-inputs .branch-card-static .branch-metric>small[data-manager-status]{font-size:8px!important;line-height:1.05!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target{padding:3px 4px!important;gap:1px!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target span,#app #managerInputs .admin-manager-inputs .manager-daily-target small{font-size:8px!important;line-height:1.05!important}
+#app #managerInputs .admin-manager-inputs .manager-daily-target strong{font-size:11px!important;line-height:1.1!important}
+@media(max-width:1200px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:850px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:560px){#app #managerInputs .admin-manager-inputs .manager-branch-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}#app #managerInputs .admin-manager-inputs .manager-branch-card{padding:4px!important}#app #managerInputs .admin-manager-inputs .branch-card-static>span{font-size:8px!important}#app #managerInputs .admin-manager-inputs .branch-card-static>b{font-size:10px!important}}
