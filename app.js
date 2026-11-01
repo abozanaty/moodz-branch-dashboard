@@ -208,18 +208,18 @@ function makePanelsCustomizable(){
 
 function renderBranchTargets(){
  const root=$("branchTargets");if(!root)return;
- const admin=profile?.role==="admin",branches=availableBranches();
+ const branches=availableBranches();
  if(!branches.length){root.innerHTML="";root.classList.add("hidden");return}
  const oldMode=root.querySelector("#branchTargetPeriod")?.value||"month";
  const oldMonth=root.querySelector("#branchTargetPeriodDate")?.value||egyptDate().slice(0,7);
- const mode=admin?oldMode:"month",selectedMonth=admin?oldMonth:egyptDate().slice(0,7);
+ const mode=oldMode,selectedMonth=oldMonth;
  const [year,monthNum]=selectedMonth.split("-").map(Number);
  const quarter=Math.floor((monthNum-1)/3)+1,firstMonth=(quarter-1)*3+1;
  const periodMonths=mode==="quarter"?[0,1,2].map(n=>year+"-"+String(firstMonth+n).padStart(2,"0")):[selectedMonth];
  const periodStart=periodMonths[0],periodEnd=periodMonths[periodMonths.length-1];
  const periodLabel=mode==="quarter"?"Q"+quarter+" "+year:selectedMonth;
  root.classList.remove("hidden");
- root.innerHTML='<section class="panel md-target-panel"><div class="panel-titlebar"><h3>التارجت الشهري للفروع</h3>'+(admin?'<div class="md-target-period-controls"><select id="branchTargetPeriod" aria-label="نوع الفترة"><option value="month" '+(mode==="month"?'selected':'')+'>شهر</option><option value="quarter" '+(mode==="quarter"?'selected':'')+'>Quarter</option></select><input id="branchTargetPeriodDate" type="month" value="'+esc(selectedMonth)+'" aria-label="اختيار الشهر أو الكوارتر"></div>':'<span class="md-chart-type">'+periodLabel+'</span>')+'</div><div class="md-target-grid">'+branches.map(branch=>{
+ root.innerHTML='<section class="panel md-target-panel"><div class="panel-titlebar"><h3>التارجت '+(mode==="quarter"?'للكوارتر':'الشهري')+' للفروع</h3><div class="md-target-period-controls"><select id="branchTargetPeriod" aria-label="نوع الفترة"><option value="month" '+(mode==="month"?'selected':'')+'>شهر</option><option value="quarter" '+(mode==="quarter"?'selected':'')+'>Quarter</option></select><input id="branchTargetPeriodDate" type="month" value="'+esc(selectedMonth)+'" aria-label="اختيار الشهر أو الكوارتر"></div></div><div class="md-target-grid">'+branches.map(branch=>{
   const targets=monthlyTargets.filter(x=>x.branch===branch&&periodMonths.includes(String(x.target_month||"").slice(0,7)));
   const goal=targets.reduce((n,x)=>n+Number(x.target_amount||0),0);
   const got=dailyRevenue.filter(x=>x.branch===branch&&String(x.revenue_date||"").slice(0,7)>=periodStart&&String(x.revenue_date||"").slice(0,7)<=periodEnd).reduce((n,x)=>n+Number(x.revenue||0),0);
@@ -228,12 +228,10 @@ function renderBranchTargets(){
   const gGoal=reviewTargets.reduce((n,x)=>n+Number(x.target_count||0),0);
   const gDone=reviewTargets.reduce((n,x)=>{const gc=googleReviewCounts.find(y=>y.branch===branch&&String(y.target_month||"").slice(0,7)===String(x.target_month||"").slice(0,7));return n+Math.max(0,Number(gc?.actual_count||0)-Number(x.baseline_count||0))},0);
   const gp=gGoal?Math.round(gDone/gGoal*100):0;
-  return '<article class="md-target-card"><div class="md-target-head"><h4>'+esc(branch)+'</h4><span class="md-target-percent">'+(goal?p+'%':'لم يحدد')+'</span></div><div class="md-target-numbers"><div><small>تارجت الإيراد '+(mode==="quarter"?'للكوارتر':'الشهري')+'</small><strong>'+(goal?goal.toLocaleString("en-US")+' ج.م':'—')+'</strong></div><div><small>المحقق '+(mode==="quarter"?'خلال الكوارتر':'حتى الآن')+'</small><strong>'+got.toLocaleString("en-US",{maximumFractionDigits:2})+' ج.م</strong></div></div><div class="md-target-track"><i style="width:'+Math.min(100,p)+'%"></i></div><small class="md-target-remaining">'+(goal?'المتبقي: '+Math.max(0,goal-got).toLocaleString("en-US",{maximumFractionDigits:2})+' ج.م':'في انتظار تحديد التارجت')+'</small>'+(admin?'<div class="md-target-google"><div><small>تارجت Google Reviews</small><strong>'+gGoal+' مراجعة</strong></div><div><small>المحقق</small><strong>'+gDone+' / '+gGoal+'</strong></div><div class="md-target-track"><i style="width:'+Math.min(100,gp)+'%"></i></div><small class="md-target-remaining">'+(gGoal?'الإنجاز: '+gp+'%':'في انتظار تحديد التارجت')+'</small></div>':'')+'</article>'
+  return '<article class="md-target-card"><div class="md-target-head"><h4>'+esc(branch)+'</h4><span class="md-target-percent">'+(goal?p+'%':'لم يحدد')+'</span></div><div class="md-target-numbers"><div><small>تارجت الإيراد '+(mode==="quarter"?'للكوارتر':'الشهري')+'</small><strong>'+(goal?goal.toLocaleString("en-US")+' ج.م':'—')+'</strong></div><div><small>المحقق '+(mode==="quarter"?'خلال الكوارتر':'حتى الآن')+'</small><strong>'+got.toLocaleString("en-US",{maximumFractionDigits:2})+' ج.م</strong></div></div><div class="md-target-track"><i style="width:'+Math.min(100,p)+'%"></i></div><small class="md-target-remaining">'+(goal?'المتبقي: '+Math.max(0,goal-got).toLocaleString("en-US",{maximumFractionDigits:2})+' ج.م':'في انتظار تحديد التارجت')+'</small>'+(profile?.role==="admin"?'<div class="md-target-google"><div><small>تارجت Google Reviews</small><strong>'+gGoal+' مراجعة</strong></div><div><small>المحقق</small><strong>'+gDone+' / '+gGoal+'</strong></div><div class="md-target-track"><i style="width:'+Math.min(100,gp)+'%"></i></div><small class="md-target-remaining">'+(gGoal?'الإنجاز: '+gp+'%':'في انتظار تحديد التارجت')+'</small></div>':'')+'</article>'
  }).join('')+'</div></section>';
- if(admin){
-  root.querySelector("#branchTargetPeriod").onchange=()=>renderBranchTargets();
-  root.querySelector("#branchTargetPeriodDate").onchange=()=>renderBranchTargets();
- }
+ root.querySelector("#branchTargetPeriod").onchange=()=>renderBranchTargets();
+ root.querySelector("#branchTargetPeriodDate").onchange=()=>renderBranchTargets();
 }
 function renderTargetAdmin(){
  const root=$("monthlyTargetAdmin");if(!root)return;if(profile?.role!=="admin"){root.classList.add("hidden");return}root.classList.remove("hidden");
