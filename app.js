@@ -289,7 +289,7 @@ function renderManagerInputs(){
 function quarterStartForDate(date){const d=new Date(date+"T12:00:00");const month=Math.floor(d.getMonth()/3)*3;return d.getFullYear()+"-"+String(month+1).padStart(2,"0")+"-01"}
 function renderQuarterPlan(){
  const root=$("quarterPlan");if(!root)return;
- const isAdmin=profile?.role==="admin",branches=availableBranches(),savedQuarter=root.querySelector("#quarterPlanPeriod")?.value||quarterStartForDate(egyptDate()),quarter=/^\\d{4}-\\d{2}-01$/.test(savedQuarter)?savedQuarter:quarterStartForDate(egyptDate());
+ const isAdmin=profile?.role==="admin",branches=availableBranches(),savedQuarter=root.querySelector("#quarterPlanPeriod")?.value||quarterStartForDate(egyptDate()),quarter=/^\d{4}-\d{2}-01$/.test(savedQuarter)?savedQuarter:quarterStartForDate(egyptDate());
  const visible=quarterPlanItems.filter(x=>String(x.quarter_start).slice(0,10)===quarter&&(isAdmin||x.all_branches||(x.branches||[]).some(b=>branches.includes(b))));
  const quarterLabel="Q"+(Math.floor(Number(quarter.slice(5,7))-1)/3+1)+" "+quarter.slice(0,4);
  root.classList.remove("hidden");
