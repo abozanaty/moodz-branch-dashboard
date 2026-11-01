@@ -1034,3 +1034,12 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .md-quarter-plan-actions{display:flex;gap:6px}
 #app .md-quarter-plan-actions button{padding:6px 9px;font-size:12px}
 @media(max-width:600px){#app .md-quarter-plan-item{flex-wrap:wrap}#app .md-quarter-plan-actions{width:100%;justify-content:flex-end}}
+
+/* Quarter Plan orange frame and colorful header */
+#app .md-quarter-plan-panel{border:2px solid #f28a32!important;border-radius:16px!important;overflow:hidden;box-shadow:0 8px 24px rgba(242,138,50,.13)}
+#app .md-quarter-plan-panel>.panel-titlebar{margin:-1px -1px 14px;padding:14px 16px;background:linear-gradient(110deg,#f28a32 0%,#ffb347 48%,#f36b3f 100%);color:#171717;border-radius:12px 12px 8px 8px}
+#app .md-quarter-plan-panel>.panel-titlebar h3{color:#171717!important;font-weight:900}
+#app .md-quarter-plan-panel>.panel-titlebar label{color:#171717;font-weight:800}
+#app .md-quarter-plan-panel>.panel-titlebar input{background:rgba(255,255,255,.88);color:#171717;border:1px solid rgba(0,0,0,.16)}
+#app .md-quarter-plan-item{border-color:rgba(242,138,50,.35);background:rgba(242,138,50,.055)}
+#app .md-quarter-plan-number{background:linear-gradient(135deg,#f28a32,#ffb347);color:#171717}
