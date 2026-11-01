@@ -1001,3 +1001,11 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .md-target-period-controls select,#app .md-target-period-controls input{min-width:115px;max-width:155px;padding:7px 9px;border:1px solid rgba(255,255,255,.2);border-radius:9px;background:#20232c;color:#fff;font:inherit}
 #app .md-target-period-controls input{direction:ltr}
 @media(max-width:600px){#app .md-target-period-controls{width:100%;justify-content:flex-start}#app .md-target-period-controls select,#app .md-target-period-controls input{flex:1;min-width:0}}
+
+/* Weekly weekday/weekend target inputs in admin. */
+#app .md-weekly-target-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:12px 0}
+#app .md-weekly-target-row{display:grid;gap:9px;padding:13px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}
+#app .md-weekly-target-row>strong{font-weight:800;color:var(--text,#fff)}
+#app .md-weekly-target-row label{display:grid;gap:5px;font-size:13px}
+#app .md-weekly-target-row input{width:100%;min-width:0}
+#app #saveWeeklyTargets{margin:8px 0}
