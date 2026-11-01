@@ -1016,3 +1016,21 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .md-quarter-target-row span{font-weight:800}
 #app .md-quarter-target-row input{width:100%;min-width:0}
 #app #saveQuarterTargets{margin:4px 0 10px}
+
+/* Quarter Plan */
+#app .md-quarter-plan-panel{margin-top:14px}
+#app .md-quarter-plan-admin{display:grid;gap:12px;margin:12px 0 18px;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}
+#app .md-quarter-plan-admin textarea{width:100%;min-height:64px;resize:vertical}
+#app .md-quarter-plan-visibility{display:grid;gap:9px}
+#app .md-quarter-branch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}
+#app .md-quarter-branch-option{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid rgba(255,255,255,.12);border-radius:8px}
+#app .md-quarter-branch-grid.disabled{opacity:.45}
+#app .md-quarter-plan-list{display:grid;gap:9px;margin-top:12px}
+#app .md-quarter-plan-item{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:rgba(255,255,255,.035)}
+#app .md-quarter-plan-number{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:8px;background:rgba(255,255,255,.12);font-weight:800}
+#app .md-quarter-plan-copy{flex:1;min-width:0}
+#app .md-quarter-plan-copy p{margin:2px 0 7px;white-space:pre-wrap;overflow-wrap:anywhere}
+#app .md-quarter-plan-copy small{color:var(--muted,#aab0bd);font-size:11px}
+#app .md-quarter-plan-actions{display:flex;gap:6px}
+#app .md-quarter-plan-actions button{padding:6px 9px;font-size:12px}
+@media(max-width:600px){#app .md-quarter-plan-item{flex-wrap:wrap}#app .md-quarter-plan-actions{width:100%;justify-content:flex-end}}
