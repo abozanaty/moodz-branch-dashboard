@@ -136,6 +136,19 @@ body{font-size:18px!important;color:#f4f5f7!important}
  #app .cm-columns{grid-template-columns:1fr!important}
 }
 
+
+/* Inline choice chips and 1–10 rating */
+#app .cm-choice-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+#app .cm-field-title{display:block;color:#d2a7ff!important;font-size:13px!important;font-weight:750!important;line-height:1.35}
+#app .cm-choice-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#app .cm-choice-row label{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;width:auto!important;min-height:32px!important;margin:0!important;padding:6px 11px!important;border:1px solid #454b5d!important;border-radius:8px!important;background:#202635!important;color:#e9eaf0!important;font-size:12px!important;line-height:1.25!important;cursor:pointer!important;white-space:normal!important}
+#app .cm-choice-row input[type=radio]{appearance:none!important;-webkit-appearance:none!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important}
+#app .cm-choice-row label:has(input:checked){background:linear-gradient(110deg,#ff8a50,#f45f7d)!important;border-color:#ff9a70!important;color:#17141b!important;font-weight:850!important;box-shadow:0 0 0 2px rgba(255,138,80,.16)}
+#app .cm-rating-row{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;direction:ltr;width:100%;max-width:520px}
+#app .cm-rating-row label{display:grid!important;place-items:center!important;min-width:0!important;min-height:36px!important;padding:4px 0!important;margin:0!important;border:1px solid #454b5d!important;border-radius:8px!important;background:#202635!important;color:#e9eaf0!important;font-size:13px!important;font-weight:800!important;cursor:pointer!important}
+#app .cm-rating-row label:has(input:checked){background:linear-gradient(145deg,#ff8a50,#f45f7d)!important;color:#17141b!important;border-color:#ff9b70!important;box-shadow:0 0 12px rgba(255,138,80,.65),0 0 0 2px rgba(255,138,80,.22)!important;transform:translateY(-1px)}
+@media(max-width:700px){#app .cm-rating-row{gap:3px}#app .cm-rating-row label{min-height:34px;font-size:12px;border-radius:6px}}
+
 </style></head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -154,14 +167,13 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <input type="hidden" id="recordId">
 <div class="cm-form-grid">
 <label>اسم العميل <span class="cm-required">*</span><input id="customer_name" required></label>
-<label>Age Group – الفئة العمرية<select id="customer_age_group"><option value="">اختر</option><option>أقل من 18</option><option>18–24</option><option>25–31</option><option>32–40</option><option>أكثر من 40</option></select></label>
-<label>النوع<select id="customer_gender"><option value="">لم يتم التحديد</option><option>ذكر</option><option>أنثى</option></select></label>
+<div class="cm-choice-field"><span class="cm-field-title">Age Group – الفئة العمرية</span><input type="hidden" id="customer_age_group"><div class="cm-choice-row" id="customer_age_group_options"></div></div>
+<div class="cm-choice-field"><span class="cm-field-title">النوع</span><input type="hidden" id="customer_gender"><div class="cm-choice-row" id="customer_gender_options"></div></div>
 <label>رقم الهاتف (اختياري)<input id="customer_phone" inputmode="tel" dir="ltr"></label>
 <label>حساب العميل على Instagram أو Facebook<input id="customer_social" dir="ltr"></label>
-<label>البراند <span class="cm-required">*</span><select id="brand" required><option value="">اختر البراند</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
-<label>الفرع<input id="branch" placeholder="اكتب اسم الفرع"></label>
-<label>Interaction Type – نوع التفاعل <span class="cm-required">*</span><select id="interaction_type" required><option value="">اختر</option><option>محادثة عادية</option><option>رأي عميل</option><option>شكوى</option><option>مقابلة عميل</option><option>فعالية أو نشاط مجتمعي</option></select></label>
-<label>Customer Experience – تقييم تجربة العميل<select id="experience_rating"><option value="">بدون تقييم</option><option value="1">1 - ضعيف</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5 - ممتاز</option></select></label>
+<div class="cm-choice-field"><span class="cm-field-title">الفرع <span class="cm-required">*</span></span><input type="hidden" id="branch"><div class="cm-choice-row" id="branch_options"></div><input type="hidden" id="brand"></div>
+<div class="cm-choice-field"><span class="cm-field-title">Interaction Type – نوع التفاعل <span class="cm-required">*</span></span><input type="hidden" id="interaction_type"><div class="cm-choice-row" id="interaction_type_options"></div></div>
+<div class="cm-choice-field"><span class="cm-field-title">Customer Experience – تقييم تجربة العميل</span><input type="hidden" id="experience_rating"><div class="cm-rating-row" id="experience_rating_options" aria-label="تقييم من 1 إلى 10"></div></div>
 <label>إيه أكتر حاجة عاجباه في البراند؟<input id="favorite_brand_aspect"></label>
 <label>إيه المنتجات اللي بيفضلها؟<input id="favorite_products"></label>
 <label>إيه الحاجة اللي مش عاجباه أو شايف إنها محتاجة تتحسن؟<textarea id="dislikes"></textarea></label>
@@ -171,12 +183,12 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <div class="cm-section"><h3>اهتمامات العميل – Customer Interests</h3><div class="cm-pills" id="interestsOptions"></div></div>
 <div class="cm-section"><h3>فرص لبناء Community</h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
 <div class="cm-section"><h3>المتابعة والخطوات المطلوبة – Follow-up & Actions</h3><div class="cm-form-grid">
-<label>هل العميل محتاج Follow-up؟<select id="needs_follow_up"><option value="false">لا</option><option value="true">نعم</option></select></label>
+<div class="cm-choice-field"><span class="cm-field-title">هل العميل محتاج Follow-up؟</span><input type="hidden" id="needs_follow_up" value="false"><div class="cm-choice-row" id="needs_follow_up_options"></div></div>
 <label>ليه محتاجين نتابعه؟<input id="follow_up_reason"></label>
 <label>إيه الخطوة المطلوبة؟ – Action Required<input id="required_action"></label>
 <label>مين المسؤول عن المتابعة؟ – Owner<input id="follow_up_owner"></label>
 <label>ميعاد المتابعة – Follow-up Date<input id="follow_up_date" type="date"></label>
-<label>حالة الـFollow-up<select id="follow_up_status"><option>مفتوح</option><option>قيد التنفيذ</option><option>مغلق</option></select></label>
+<div class="cm-choice-field"><span class="cm-field-title">حالة الـFollow-up</span><input type="hidden" id="follow_up_status" value="مفتوح"><div class="cm-choice-row" id="follow_up_status_options"></div></div>
 </div></div>
 <div class="cm-section"><h3>ملاحظات ورؤية مسؤول المجتمع – Community Insights <span class="cm-required">*</span></h3><div class="cm-form-grid">
 <label>إيه أهم معلومة أو Insight خرجت بيها من التفاعل ده؟<textarea id="cm_insight" required></textarea></label>
@@ -197,5 +209,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=4"></script>
 </body></html>
