@@ -334,6 +334,24 @@ body{font-size:18px!important;color:#f4f5f7!important}
   }
 }
 </style>
+
+<style>
+/* Larger centered gender donut */
+#app #stats>.cm-stat:has(#genderChart){align-items:center!important;text-align:center!important}
+#app #stats #genderChart{width:100%!important;display:flex!important;justify-content:center!important;align-items:center!important}
+#app #stats .cm-gender-layout{width:100%!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:10px!important;min-height:190px!important;padding:8px!important}
+#app #stats .cm-donut{width:132px!important;height:132px!important;flex:0 0 132px!important;margin:0 auto!important}
+#app #stats .cm-donut-hole{width:78px!important;height:78px!important}
+#app #stats .cm-donut-hole b{font-size:23px!important}
+#app #stats .cm-gender-legend{display:flex!important;flex-direction:row!important;justify-content:center!important;align-items:center!important;gap:18px!important;min-width:0!important;width:100%!important}
+#app #stats .cm-gender-legend>div{font-size:12px!important;gap:6px!important}
+@media(max-width:650px){
+ #app #stats .cm-gender-layout{min-height:170px!important;gap:8px!important}
+ #app #stats .cm-donut{width:112px!important;height:112px!important;flex-basis:112px!important}
+ #app #stats .cm-donut-hole{width:66px!important;height:66px!important}
+ #app #stats .cm-gender-legend{gap:10px!important}
+}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -383,5 +401,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=15"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=16"></script>
 </body></html>
