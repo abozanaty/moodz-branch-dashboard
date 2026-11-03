@@ -87,6 +87,55 @@ body{font-size:18px!important;color:#f4f5f7!important}
 #formPanel h2,#app .panel h2,#formPanel h3{font-size:24px;color:#fff!important}
 @media(max-width:650px){#app header h1{font-size:24px}.cm-header-tools{justify-content:flex-start}.cm-wrap{padding:0 10px}.cm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cm-stat{padding:12px}.cm-stat strong{font-size:26px}}
 .cm-main-login-link{text-align:center;margin-top:18px}.cm-main-login-link a{color:#d2a7ff!important;font-weight:800;text-decoration:underline}
+
+/* Compact layout + responsive header controls */
+#app>header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;padding:12px 3vw!important}
+#app>header>div:first-child{flex:1 1 230px!important;min-width:0!important}
+#app>header .cm-header-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;flex:1 1 420px!important;min-width:0!important;flex-wrap:wrap!important}
+#app .cm-header-tools>#who{flex:1 1 100%!important;text-align:right!important;font-size:13px!important;line-height:1.3!important}
+#app .cm-header-tools>button{flex:1 1 105px!important;min-width:0!important;max-width:160px!important;padding:7px 10px!important;white-space:normal!important;line-height:1.25!important;font-size:14px!important;min-height:38px!important}
+#app .cm-header-tools>.cm-zoom-controls{flex:0 1 auto!important;min-width:0!important;padding:2px 5px!important;gap:3px!important}
+#app .cm-header-tools .cm-zoom-controls button{flex:0 0 32px!important;width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;padding:3px!important}
+#app .cm-header-tools .cm-zoom-controls strong{min-width:42px!important;font-size:12px!important}
+#app .cm-wrap{max-width:1500px!important;margin:0 auto!important;padding:0 14px 24px!important}
+#app .cm-section{margin:10px 0!important;padding:13px!important;border-radius:11px!important;box-shadow:none!important}
+#app .cm-columns{gap:10px!important}
+#app .cm-grid{gap:8px!important}
+#app .cm-stat{padding:10px 12px!important;border-radius:10px!important;box-shadow:none!important}
+#app .cm-stat strong{font-size:23px!important;margin-top:3px!important}
+#app .cm-stat span{font-size:13px!important}
+#app .cm-wrap h2{font-size:18px!important;margin:0 0 9px!important}
+#app .cm-wrap h3{font-size:15px!important;margin:0 0 8px!important}
+#app .cm-wrap p{font-size:13px!important;line-height:1.45!important;margin:5px 0!important}
+#app .cm-muted{font-size:12px!important;line-height:1.4!important}
+#app .cm-bars{min-height:112px!important;padding:7px 2px!important;gap:5px!important}
+#app .cm-bar small{font-size:10px!important}
+#app .cm-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important}
+#app .cm-form-grid label{font-size:13px!important;line-height:1.35!important;gap:3px!important}
+#app input,#app select,#app textarea{min-height:38px!important;padding:7px 9px!important;font-size:14px!important;border-width:1px!important;border-radius:8px!important}
+#app textarea{min-height:58px!important}
+#app .cm-pills{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;gap:6px!important}
+#app .cm-pills label{min-height:36px!important;padding:6px 9px!important;border-radius:8px!important;font-size:12px!important;gap:8px!important}
+#app .cm-pills input[type=checkbox]{width:17px!important;height:17px!important;min-height:17px!important;flex:0 0 17px!important}
+#app .cm-table th,#app .cm-table td{font-size:12px!important;padding:7px 8px!important}
+#app .cm-table-wrap{border-radius:9px!important}
+#app .cm-actions{gap:7px!important;margin-top:10px!important}
+#app .cm-actions button{min-height:36px!important;padding:7px 13px!important;font-size:13px!important}
+#app .cm-section>.panel{box-shadow:none!important}
+@media(max-width:700px){
+ #app>header{align-items:flex-start!important;padding:10px 12px!important;gap:8px!important}
+ #app>header>div:first-child{flex:1 1 100%!important}
+ #app>header h1{font-size:21px!important}
+ #app .cm-header-tools{flex:1 1 100%!important;justify-content:stretch!important;gap:6px!important}
+ #app .cm-header-tools>#who{flex:1 1 100%!important}
+ #app .cm-header-tools>button{flex:1 1 calc(50% - 6px)!important;max-width:none!important}
+ #app .cm-header-tools>.cm-zoom-controls{flex:1 1 100%!important;justify-content:center!important}
+ #app .cm-form-grid{grid-template-columns:1fr!important}
+ #app .cm-pills{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #app .cm-section{padding:10px!important;margin:8px 0!important}
+ #app .cm-columns{grid-template-columns:1fr!important}
+}
+
 </style></head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
