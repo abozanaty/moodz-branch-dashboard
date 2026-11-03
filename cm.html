@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة متابعة المجتمع والعملاء | M-Daily</title>
+<link rel="stylesheet" href="./style.css?v=84">
+<style>
+.cm-wrap{max-width:1240px;margin:24px auto;padding:0 16px}.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.cm-stat{background:#fff;border:1px solid #e7e7e7;border-radius:14px;padding:16px}.cm-stat strong{display:block;font-size:28px;margin-top:8px}.cm-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.cm-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.cm-form-grid label{display:block}.cm-form-grid input,.cm-form-grid select,.cm-form-grid textarea{width:100%;margin-top:5px}.cm-form-grid textarea{min-height:74px}.cm-bars{display:flex;align-items:end;gap:8px;min-height:150px;padding:12px 4px}.cm-bar{flex:1;min-width:20px;text-align:center}.cm-bar i{display:block;background:#202b43;border-radius:6px 6px 0 0;min-height:3px}.cm-bar small{display:block;font-size:11px;margin-top:5px;overflow-wrap:anywhere}.cm-table{width:100%;border-collapse:collapse}.cm-table th,.cm-table td{padding:10px;border-bottom:1px solid #eee;text-align:right;font-size:14px}.cm-table-wrap{overflow:auto}.cm-actions{display:flex;gap:8px;flex-wrap:wrap}.cm-muted{color:#777;font-size:13px}.cm-hidden{display:none!important}.cm-section{margin:16px 0}.cm-section h2{margin-top:0}.cm-pills{display:flex;flex-wrap:wrap;gap:10px}.cm-pills label{display:flex;align-items:center;gap:6px;background:#f6f6f6;padding:7px 10px;border-radius:9px}.cm-required{color:#b22}@media(max-width:600px){.cm-wrap{padding:0 10px}.cm-table th,.cm-table td{white-space:nowrap}}
+</style>
+</head>
+<body>
+<section id="login" class="panel auth"><h2>تسجيل الدخول</h2><p>حساب مسؤول المجتمع</p><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" dir="ltr" value="Community@moodz.com"><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" dir="ltr"><button class="primary" id="loginBtn">دخول</button></section>
+<div id="app" class="hidden">
+<header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">لوحة متابعة تفاعل العملاء والمجتمع</div></div><div class="row header-actions"><span id="who"></span><button id="logoutBtn">تسجيل الخروج</button></div></header>
+<main class="cm-wrap">
+<div class="cm-grid" id="stats"></div>
+<div class="cm-columns cm-section">
+<section class="panel"><h2>التفاعلات اليومية</h2><div id="dailyChart" class="cm-bars"></div></section>
+<section class="panel"><h2>التفاعلات حسب البراند</h2><div id="brandChart" class="cm-bars"></div></section>
+<section class="panel"><h2>العملاء الجدد والمتكررون</h2><div id="repeatStats"></div></section>
+</div>
+<section class="panel cm-section" id="formPanel">
+<h2 id="formTitle">تسجيل تفاعل جديد</h2><p class="cm-muted">سجّل كل محادثة أو مقابلة بعد انتهائها. رقم الهاتف يساعد على احتساب العميل مرة واحدة حتى مع تكرار التفاعل.</p>
+<form id="interactionForm">
+<input type="hidden" id="recordId">
+<div class="cm-form-grid">
+<label>اسم العميل <span class="cm-required">*</span><input id="customer_name" required></label>
+<label>الفئة العمرية<select id="customer_age_group"><option value="">اختر</option><option>أقل من 18</option><option>18–24</option><option>25–31</option><option>32–40</option><option>أكثر من 40</option></select></label>
+<label>النوع<select id="customer_gender"><option value="">غير محدد</option><option>ذكر</option><option>أنثى</option></select></label>
+<label>رقم الهاتف (اختياري)<input id="customer_phone" inputmode="tel" dir="ltr"></label>
+<label>حساب Instagram / Facebook<input id="customer_social" dir="ltr"></label>
+<label>البراند <span class="cm-required">*</span><select id="brand" required><option value="">اختر البراند</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
+<label>الفرع<input id="branch" placeholder="اسم الفرع"></label>
+<label>نوع التفاعل <span class="cm-required">*</span><select id="interaction_type" required><option value="">اختر</option><option>محادثة عادية</option><option>رأي عميل</option><option>شكوى</option><option>مقابلة عميل</option><option>فعالية أو نشاط مجتمعي</option></select></label>
+<label>تقييم التجربة<select id="experience_rating"><option value="">بدون تقييم</option><option value="1">1 - ضعيف</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5 - ممتاز</option></select></label>
+<label>أكثر شيء يحبه في البراند<input id="favorite_brand_aspect"></label>
+<label>المنتجات المفضلة<input id="favorite_products"></label>
+<label>ما الذي لا يعجبه؟<textarea id="dislikes"></textarea></label>
+<label>اقتراحات للتحسين<textarea id="improvement_suggestions"></textarea></label>
+<label>المنافسون الذين يزورهم عادة<input id="competitors"></label>
+</div>
+<div class="cm-section"><h3>اهتمامات العميل</h3><div class="cm-pills" id="interestsOptions"></div></div>
+<div class="cm-section"><h3>فرص مجتمعية</h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
+<div class="cm-section"><h3>المتابعة والإجراءات</h3><div class="cm-form-grid">
+<label>يحتاج متابعة؟<select id="needs_follow_up"><option value="false">لا</option><option value="true">نعم</option></select></label>
+<label>سبب المتابعة<input id="follow_up_reason"></label>
+<label>الإجراء المطلوب<input id="required_action"></label>
+<label>الشخص المسؤول<input id="follow_up_owner"></label>
+<label>تاريخ المتابعة<input id="follow_up_date" type="date"></label>
+<label>حالة المتابعة<select id="follow_up_status"><option>مفتوح</option><option>قيد التنفيذ</option><option>مغلق</option></select></label>
+</div></div>
+<div class="cm-section"><h3>رؤى مسؤول المجتمع <span class="cm-required">*</span></h3><div class="cm-form-grid">
+<label>ماذا تعلمت من هذا التفاعل؟<textarea id="cm_insight" required></textarea></label>
+<label>ما الفرصة التي لاحظتها؟<textarea id="noticed_opportunity"></textarea></label>
+<label>ما الإجراء الذي توصي به؟<textarea id="recommendation"></textarea></label>
+</div></div>
+<div class="cm-actions"><button class="primary" type="submit" id="saveBtn">حفظ التفاعل</button><button type="button" id="cancelEdit" class="cm-hidden">إلغاء التعديل</button></div>
+</form>
+</section>
+<section class="panel cm-section"><h2>سجل العملاء والتفاعلات السابقة</h2>
+<div class="cm-form-grid">
+<label>بحث بالاسم أو الهاتف<input id="searchRecords"></label>
+<label>البراند<select id="filterBrand"><option value="">كل البراندات</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
+<label>من تاريخ<input id="dateFrom" type="date"></label><label>إلى تاريخ<input id="dateTo" type="date"></label>
+</div>
+<div class="cm-table-wrap"><table class="cm-table"><thead><tr><th>التاريخ</th><th>اسم العميل</th><th>البراند</th><th>نوع التفاعل</th><th>المتابعة</th><th>إجراء</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+<p id="recordCount" class="cm-muted"></p>
+</section>
+</main></div>
+<div id="toast" class="toast hidden"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=1"></script>
+</body></html>
