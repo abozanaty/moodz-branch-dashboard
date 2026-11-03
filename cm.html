@@ -160,6 +160,29 @@ body{font-size:18px!important;color:#f4f5f7!important}
 @media(max-width:650px){#app #stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
 #customerInterestsPanel{width:100%;display:block!important}#customerInterestsPanel .cm-interest-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;margin-top:12px}#customerInterestsPanel .cm-interest-item{min-width:0;padding:8px 10px;background:#202635;border:1px solid #3b4050;border-radius:10px}#customerInterestsPanel .cm-interest-label{font-size:14px}#customerInterestsPanel .cm-interest-track{height:9px}@media(max-width:650px){#customerInterestsPanel .cm-interest-list{grid-template-columns:1fr}}
+
+/* Top overview cards: clear numeric hierarchy and interest bars */
+#app #stats{grid-template-columns:repeat(6,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important}
+#app #stats .cm-stat{min-width:0;min-height:126px;padding:14px 13px!important;display:flex;flex-direction:column;justify-content:flex-start}
+#app #stats .cm-stat>span{font-size:13px!important;font-weight:800!important;letter-spacing:.1px}
+#app #stats .cm-stat strong.cm-number{font-size:38px!important;line-height:1.12!important;font-weight:900!important;letter-spacing:-1px!important;margin-top:13px!important;color:#fff!important;font-variant-numeric:tabular-nums}
+#app #stats .cm-stat strong.cm-number small{font-size:15px!important;letter-spacing:0}
+#app #stats .cm-stat:has(#genderChart),#app #stats .cm-stat:has(#ageChart){min-height:158px}
+#app #stats .cm-interest-card{grid-column:span 2}
+#app #stats .cm-interest-list{display:grid!important;grid-template-columns:1fr!important;gap:7px!important;margin-top:8px!important}
+#app #stats .cm-interest-item{padding:0!important;background:transparent!important;border:0!important}
+#app #stats .cm-interest-label{font-size:11px!important;line-height:1.25!important}
+#app #stats .cm-interest-track{height:7px!important;margin-top:4px!important}
+#app #stats .cm-bars{min-height:90px!important;align-items:end!important}
+#app #stats .cm-bar i{background:linear-gradient(180deg,#b77cff,#f45f7d,#ff8a50)!important}
+#app #stats .cm-gender-layout{gap:9px!important;min-height:105px!important;padding:5px!important}
+#app #stats .cm-donut{width:88px!important;height:88px!important;flex-basis:88px!important}
+#app #stats .cm-donut-hole{width:55px!important;height:55px!important}
+#app #stats .cm-donut-hole b{font-size:17px!important}
+#app #stats .cm-gender-legend{gap:5px!important;min-width:76px!important}
+#app #stats .cm-gender-legend>div{font-size:10px!important;gap:5px!important}
+@media(max-width:1100px){#app #stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}#app #stats .cm-interest-card{grid-column:span 2}}
+@media(max-width:650px){#app #stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}#app #stats .cm-stat{min-height:118px;padding:11px!important}#app #stats .cm-stat strong.cm-number{font-size:34px!important;margin-top:10px!important}#app #stats .cm-stat:has(#genderChart),#app #stats .cm-stat:has(#ageChart){min-height:145px}#app #stats .cm-interest-card{grid-column:1/-1;min-height:0!important}}
 </style></head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -167,7 +190,7 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">متابعة تفاعل العملاء وبناء مجتمع البراند</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
 <main class="cm-wrap">
 <div class="cm-grid cm-section" id="stats"></div>
-<section class="panel cm-section" id="customerInterestsPanel"><h2>Customer Interests</h2><div id="interestsChart" class="cm-interest-chart"></div></section><section class="panel cm-section" id="formPanel">
+<section class="panel cm-section" id="formPanel">
 <h2 id="formTitle">تسجيل تفاعل جديد مع عميل</h2><p class="cm-muted">سجّل كل محادثة أو مقابلة بعد ما تخلص. رقم الهاتف بيساعدنا نعرف إذا كان العميل بيتواصل معانا لأول مرة أو سبق وسجّلنا تفاعله.</p>
 <form id="interactionForm">
 <input type="hidden" id="recordId">
@@ -209,5 +232,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=10"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=11"></script>
 </body></html>
