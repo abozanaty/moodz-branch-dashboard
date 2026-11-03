@@ -30,7 +30,7 @@ $("stats").innerHTML='<div class="cm-stat"><span>Community Members</span><strong
 const genderCounts={"ذكر":0,"أنثى":0};
 rows.forEach(r=>{if(r.customer_gender==="ذكر"||r.customer_gender==="أنثى")genderCounts[r.customer_gender]++});
 const totalGender=genderCounts["ذكر"]+genderCounts["أنثى"];
-const genderColors={"ذكر":"#ff8a50","أنثى":"#f45f7d"};
+const genderColors={"ذكر":"#a78bfa","أنثى":"#f472b6"};
 let offset=0;
 const slices=Object.entries(genderCounts).filter(([,v])=>v>0).map(([k,v])=>{const from=offset;offset+=totalGender?v/totalGender*100:0;return genderColors[k]+" "+from+"% "+offset+"%"}).join(",");
 $("genderChart").innerHTML=totalGender?'<div class="cm-gender-layout"><div class="cm-donut" style="background:conic-gradient('+slices+')"><div class="cm-donut-hole"><b>'+totalGender+'</b><small>Responses</small></div></div><div class="cm-gender-legend">'+Object.entries(genderCounts).map(([k,v])=>'<div><i style="background:'+genderColors[k]+'"></i><span>'+k+'</span><b>'+v+'</b></div>').join("")+'</div></div>':'<p class="cm-muted">لا توجد بيانات بعد</p>';
