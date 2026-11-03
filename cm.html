@@ -153,6 +153,11 @@ body{font-size:18px!important;color:#f4f5f7!important}
 .cm-gender-layout{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;min-height:150px;padding:10px}.cm-donut{width:142px;height:142px;border-radius:50%;display:grid;place-items:center;flex:0 0 142px}.cm-donut-hole{width:86px;height:86px;border-radius:50%;background:#171c27;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}.cm-donut-hole b{font-size:25px}.cm-donut-hole small{font-size:10px;color:#b9bdc9}.cm-gender-legend{display:grid;gap:10px;min-width:120px}.cm-gender-legend>div{display:flex;align-items:center;gap:8px;font-size:13px}.cm-gender-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}.cm-gender-legend b{margin-right:auto;color:#fff}
 
 #app #stats{grid-template-columns:repeat(5,minmax(0,1fr))!important;align-items:stretch}#app #stats .cm-stat{min-width:0}#app #stats .cm-stat strong small{font-size:13px;color:#ffab82}@media(max-width:900px){#app #stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(max-width:420px){#app #stats{grid-template-columns:1fr 1fr!important}}
+
+.cm-interest-list{display:grid;gap:8px;margin-top:9px}.cm-interest-item{min-width:0}.cm-interest-label{display:flex;align-items:flex-start;justify-content:space-between;gap:7px;font-size:12px;line-height:1.35}.cm-interest-label span{overflow-wrap:anywhere;color:#e7e8ef}.cm-interest-label b{color:#ffab82;flex:0 0 auto}.cm-interest-track{height:6px;border-radius:9px;background:#303548;overflow:hidden;margin-top:4px}.cm-interest-track i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#b77cff,#f45f7d,#ff8a50)}
+#app #stats{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+@media(max-width:1000px){#app #stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:650px){#app #stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style></head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -201,5 +206,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=8"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=9"></script>
 </body></html>
