@@ -26,7 +26,7 @@ const people=uniqueCustomers(rows);
 const avgRatings=rows.map(r=>Number(r.experience_rating)).filter(n=>Number.isFinite(n)&&n>=1&&n<=10);
 const average=avgRatings.length?(avgRatings.reduce((a,b)=>a+b,0)/avgRatings.length).toFixed(1):"—";
 const followUps=rows.filter(r=>r.needs_follow_up===true||r.needs_follow_up==="true").length;
-$("stats").innerHTML='<div class="cm-stat"><span>Community Members</span><strong>'+people+'</strong></div><div class="cm-stat"><span>Gender</span><div id="genderChart"></div></div><div class="cm-stat"><span>Age Group</span><div id="ageChart" class="cm-bars"></div></div><div class="cm-stat"><span>Customer Experience</span><strong>'+average+' <small>/ 10</small></strong></div><div class="cm-stat"><span>Follow up</span><strong>'+followUps+'</strong></div>';
+$("stats").innerHTML='<div class="cm-stat"><span>Community Members</span><strong>'+people+'</strong></div><div class="cm-stat"><span>Gender</span><div id="genderChart"></div></div><div class="cm-stat"><span>Age Group</span><div id="ageChart" class="cm-bars"></div></div><div class="cm-stat"><span>Customer Experience</span><strong>'+average+' <small>/ 10</small></strong></div><div class="cm-stat"><span>Follow up</span><strong>'+followUps+'</strong></div><div class="cm-stat"><span>Customer Interests</span><div id="interestsChart" class="cm-interest-chart"></div></div>';
 const genderCounts={"ذكر":0,"أنثى":0,"غير محدد":0};
 rows.forEach(r=>{const g=genderCounts.hasOwnProperty(r.customer_gender)?r.customer_gender:"غير محدد";genderCounts[g]++});
 const totalGender=rows.length;
@@ -37,6 +37,10 @@ $("genderChart").innerHTML=totalGender?'<div class="cm-gender-layout"><div class
 const ageCounts={"أقل من 18":0,"18–24":0,"25–35":0,"أكثر من 35":0,"غير محدد":0};
 rows.forEach(r=>{const a=ageCounts.hasOwnProperty(r.customer_age_group)?r.customer_age_group:"غير محدد";ageCounts[a]++});
 renderBars("ageChart",Object.entries(ageCounts).map(([label,value])=>({label,value})));
+const interestCounts={};
+rows.forEach(r=>(r.interests||[]).forEach(v=>{interestCounts[v]=(interestCounts[v]||0)+1}));
+const interestEntries=Object.entries(interestCounts).sort((a,b)=>b[1]-a[1]);
+$("interestsChart").innerHTML=interestEntries.length?'<div class="cm-interest-list">'+interestEntries.map(([label,value])=>'<div class="cm-interest-item"><div class="cm-interest-label"><span>'+esc(label)+'</span><b>'+value+'</b></div><div class="cm-interest-track"><i style="width:'+Math.round(value/Math.max(1,...interestEntries.map(x=>x[1]))*100)+'%"></i></div></div>').join("")+'</div>':'<p class="cm-muted">لا توجد بيانات بعد</p>';
 renderRecords();
 }
 function renderRecords(){const q=$("searchRecords").value.trim().toLowerCase(),brand=$("filterBrand").value,from=$("dateFrom").value,to=$("dateTo").value;const filtered=rows.filter(r=>(!q||(r.customer_name||"").toLowerCase().includes(q)||(r.customer_phone||"").includes(q))&&(!brand||r.brand===brand)&&(!from||cairoDate(r.created_at)>=from)&&(!to||cairoDate(r.created_at)<=to));$("recordsBody").innerHTML=filtered.map(r=>'<tr><td>'+new Date(r.created_at).toLocaleString("ar-EG")+'</td><td>'+esc(r.customer_name)+'</td><td>'+esc(r.brand)+'</td><td>'+esc(r.interaction_type)+'</td><td>'+esc(r.follow_up_status||"—")+'</td><td><button type="button" data-edit="'+r.id+'">فتح / تعديل</button></td></tr>').join("")||'<tr><td colspan="6">لا توجد تسجيلات مطابقة</td></tr>';$("recordCount").textContent="عدد التفاعلات المعروضة: "+filtered.length}
