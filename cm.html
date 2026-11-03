@@ -3,9 +3,60 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>لوحة متابعة المجتمع والعملاء | M-Daily</title>
-<link rel="stylesheet" href="./style.css?v=84">
+<link rel="stylesheet" href="./style.css?v=85">
 <style>
-.cm-wrap{max-width:1240px;margin:24px auto;padding:0 16px}.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.cm-stat{background:#fff;border:1px solid #e7e7e7;border-radius:14px;padding:16px}.cm-stat strong{display:block;font-size:28px;margin-top:8px}.cm-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.cm-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.cm-form-grid label{display:block}.cm-form-grid input,.cm-form-grid select,.cm-form-grid textarea{width:100%;margin-top:5px}.cm-form-grid textarea{min-height:74px}.cm-bars{display:flex;align-items:end;gap:8px;min-height:150px;padding:12px 4px}.cm-bar{flex:1;min-width:20px;text-align:center}.cm-bar i{display:block;background:#202b43;border-radius:6px 6px 0 0;min-height:3px}.cm-bar small{display:block;font-size:11px;margin-top:5px;overflow-wrap:anywhere}.cm-table{width:100%;border-collapse:collapse}.cm-table th,.cm-table td{padding:10px;border-bottom:1px solid #eee;text-align:right;font-size:14px}.cm-table-wrap{overflow:auto}.cm-actions{display:flex;gap:8px;flex-wrap:wrap}.cm-muted{color:#777;font-size:13px}.cm-hidden{display:none!important}.cm-section{margin:16px 0}.cm-section h2{margin-top:0}.cm-pills{display:flex;flex-wrap:wrap;gap:10px}.cm-pills label{display:flex;align-items:center;gap:6px;background:#f6f6f6;padding:7px 10px;border-radius:9px}.cm-required{color:#b22}@media(max-width:600px){.cm-wrap{padding:0 10px}.cm-table th,.cm-table td{white-space:nowrap}}
+
+/* Community Manager — match the original M-Daily dark theme */
+body{background:radial-gradient(ellipse at 78% 0%,rgba(255,128,77,.18),transparent 32%),radial-gradient(ellipse at 4% 18%,rgba(242,84,121,.14),transparent 34%),#11141c!important;color:#f4f5f7!important}
+html{background:#11141c!important;color-scheme:dark}
+#login,.cm-wrap .panel,.cm-stat,.cm-record,.cm-section,.cm-columns>section{background:linear-gradient(145deg,#1d2230,#151923)!important;border:1px solid #3b4050!important;color:#f4f5f7!important;border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.2)}
+#login{max-width:470px;margin:8vh auto;padding:30px!important;position:relative;overflow:hidden}
+#login:before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#f45f7d,#ff8a50,#b77cff)}
+#login h2,.cm-wrap h1,.cm-wrap h2,.cm-wrap h3,.cm-wrap h4,.cm-section h2,.cm-section h3{color:#fff!important;font-weight:850!important}
+#login p,.cm-wrap p,.cm-wrap .note,.cm-wrap .muted,.cm-muted{color:#b9bdc9!important}
+#app header{background:#11141df5!important;border-bottom:1px solid #343442!important}
+#app header h1{color:#fff!important}
+#app header .sub{color:#ffab82!important}
+#app label,.cm-form-grid label{color:#d2a7ff!important;font-weight:700}
+#login input,.cm-wrap input,.cm-wrap select,.cm-wrap textarea{background:#10141d!important;border:1px solid #3b4050!important;color:#fff!important;border-radius:11px!important}
+#login input::placeholder,.cm-wrap input::placeholder,.cm-wrap textarea::placeholder{color:#858b9b!important}
+#login button.primary,.cm-wrap button.primary{background:linear-gradient(100deg,#ff8a50,#f45f7d)!important;color:#1a1218!important;border:0!important;font-weight:850}
+.cm-wrap button,.cm-zoom-controls button{background:#252a38!important;color:#f3f3f7!important;border:1px solid #494052!important}
+.cm-wrap button:hover{border-color:#ff8a50!important}
+.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.cm-stat{position:relative;overflow:hidden;padding:16px}
+.cm-stat:before{content:"";position:absolute;top:0;right:0;left:0;height:3px;background:linear-gradient(90deg,#b77cff,#f45f7d,#ff8a50)}
+.cm-stat strong{display:block;font-size:28px;margin-top:8px;color:#fff!important}
+.cm-stat span,.cm-stat small{color:#ffab82!important}
+.cm-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.cm-form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.cm-form-grid label{display:block}
+.cm-form-grid input,.cm-form-grid select,.cm-form-grid textarea{width:100%;margin-top:5px}
+.cm-form-grid textarea{min-height:74px}
+.cm-bars{display:flex;align-items:end;gap:8px;min-height:150px;padding:12px 4px}
+.cm-bar{flex:1;min-width:20px;text-align:center}
+.cm-bar i{display:block;background:linear-gradient(180deg,#ff8a50,#f45f7d);border-radius:6px 6px 0 0;min-height:3px}
+.cm-bar small{display:block;font-size:11px;margin-top:5px;overflow-wrap:anywhere;color:#d6d8e0!important}
+.cm-table{width:100%;border-collapse:collapse}
+.cm-table th,.cm-table td{padding:10px;border-bottom:1px solid #34394a;text-align:right;font-size:14px;color:#f4f5f7}
+.cm-table th{color:#ffab82!important;background:#1b202c!important;font-weight:850}
+.cm-table-wrap{overflow:auto;border:1px solid #34394a;border-radius:12px}
+.cm-actions{display:flex;gap:8px;flex-wrap:wrap}
+.cm-muted{font-size:13px;color:#b9bdc9!important}
+.cm-hidden{display:none!important}
+.cm-section{margin:16px 0}
+.cm-section h2{margin-top:0}
+.cm-pills{display:flex;flex-wrap:wrap;gap:10px}
+.cm-pills label{display:flex;align-items:center;gap:6px;background:#252a38!important;color:#f4f5f7!important;border:1px solid #454052;padding:8px 11px;border-radius:9px}
+.cm-required{color:#ff8a9e!important}
+.cm-record{padding:14px}
+.cm-zoom-controls{display:flex;align-items:center;gap:5px}
+.cm-zoom-controls strong{color:#ffab82!important}
+.cm-main-login-link{text-align:center;margin-top:18px}
+.cm-main-login-link a{color:#d2a7ff!important;font-weight:800;text-decoration:underline}
+.toast{background:#242838!important;color:#fff!important;border:1px solid #494052!important}
+@media(max-width:600px){.cm-wrap{padding:0 10px}.cm-table th,.cm-table td{white-space:nowrap}.cm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 
 <style>
