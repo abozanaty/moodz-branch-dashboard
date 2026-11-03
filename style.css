@@ -1043,3 +1043,20 @@ header .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #app .md-quarter-plan-panel>.panel-titlebar input{background:rgba(255,255,255,.88);color:#171717;border:1px solid rgba(0,0,0,.16)}
 #app .md-quarter-plan-item{border-color:rgba(242,138,50,.35);background:rgba(242,138,50,.055)}
 #app .md-quarter-plan-number{background:linear-gradient(135deg,#f28a32,#ffb347);color:#171717}
+
+
+/* Community Reports admin section */
+#communityReports{margin:18px 0;padding:20px}
+#communityReports .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#communityReports .cr-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+#communityReports .cr-kpi{background:linear-gradient(145deg,#202737,#171c27);border:1px solid #3b4050;border-radius:13px;padding:14px;min-width:0}
+#communityReports .cr-kpi small{display:block;color:#a5a9b6}
+#communityReports .cr-kpi strong{display:block;color:#ffab82;font-size:26px;margin-top:6px}
+#communityReports .cr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+#communityReports .cr-grid .panel{margin:0}
+#communityReports .cr-table-wrap{overflow:auto;width:100%;border:1px solid #34394a;border-radius:12px;margin-top:10px}
+#communityReports table{width:100%;border-collapse:collapse;min-width:680px}
+#communityReports th,#communityReports td{padding:10px;text-align:right;border-bottom:1px solid #34394a;vertical-align:top}
+#communityReports th{color:#ffab82;background:#1b202c}
+#communityReports ol{padding-right:22px;line-height:1.9}
+@media(max-width:760px){#communityReports .cr-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#communityReports .cr-grid{grid-template-columns:1fr}}
