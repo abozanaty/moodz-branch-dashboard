@@ -149,19 +149,19 @@ body{font-size:18px!important;color:#f4f5f7!important}
 #app .cm-rating-row label:has(input:checked){background:linear-gradient(145deg,#ff8a50,#f45f7d)!important;color:#17141b!important;border-color:#ff9b70!important;box-shadow:0 0 12px rgba(255,138,80,.65),0 0 0 2px rgba(255,138,80,.22)!important;transform:translateY(-1px)}
 @media(max-width:700px){#app .cm-rating-row{gap:3px}#app .cm-rating-row label{min-height:34px;font-size:12px;border-radius:6px}}
 
+
+.cm-gender-layout{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;min-height:150px;padding:10px}.cm-donut{width:142px;height:142px;border-radius:50%;display:grid;place-items:center;flex:0 0 142px}.cm-donut-hole{width:86px;height:86px;border-radius:50%;background:#171c27;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}.cm-donut-hole b{font-size:25px}.cm-donut-hole small{font-size:10px;color:#b9bdc9}.cm-gender-legend{display:grid;gap:10px;min-width:120px}.cm-gender-legend>div{display:flex;align-items:center;gap:8px;font-size:13px}.cm-gender-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}.cm-gender-legend b{margin-right:auto;color:#fff}
 </style></head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
 <div id="app" class="hidden">
 <header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">متابعة تفاعل العملاء وبناء مجتمع البراند</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
 <main class="cm-wrap">
-<div class="cm-grid" id="stats"></div>
+<div class="cm-grid cm-section" id="stats"></div>
 <div class="cm-columns cm-section">
-<section class="panel"><h2>عدد العملاء يومياً</h2><div id="dailyChart" class="cm-bars"></div></section>
-<section class="panel"><h2>التفاعلات حسب البراند</h2><div id="brandChart" class="cm-bars"></div></section>
-<section class="panel"><h2>العملاء الجدد والعملاء العائدون</h2><div id="repeatStats"></div></section>
-</div>
-<div class="cm-columns cm-section"><section class="panel"><h2>المنتجات الأكثر ذكراً</h2><div id="topProducts"></div></section><section class="panel"><h2>آراء العملاء وملاحظاتهم</h2><div id="topFeedback"></div></section><section class="panel"><h2>فرص لبناء Community حول البراند</h2><div id="topOpportunities"></div></section></div><section class="panel cm-section" id="formPanel">
+<section class="panel"><h2>Gender</h2><div id="genderChart" class="cm-gender-chart"></div></section>
+<section class="panel"><h2>Age Group</h2><div id="ageChart" class="cm-bars"></div></section>
+</div><section class="panel cm-section" id="formPanel">
 <h2 id="formTitle">تسجيل تفاعل جديد مع عميل</h2><p class="cm-muted">سجّل كل محادثة أو مقابلة بعد ما تخلص. رقم الهاتف بيساعدنا نعرف إذا كان العميل بيتواصل معانا لأول مرة أو سبق وسجّلنا تفاعله.</p>
 <form id="interactionForm">
 <input type="hidden" id="recordId">
@@ -203,5 +203,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=6"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=7"></script>
 </body></html>
