@@ -21,12 +21,28 @@ function uniqueCustomers(list){const keys=new Set();let noPhone=0;for(const r of
 function renderBars(id,entries){const max=Math.max(1,...entries.map(x=>x.value));$(id).innerHTML=entries.length?entries.map(x=>'<div class="cm-bar"><i style="height:'+Math.max(4,Math.round(x.value/max*112))+'px"></i><b>'+x.value+'</b><small>'+esc(x.label)+'</small></div>').join(""):'<p class="cm-muted">لا توجد بيانات بعد</p>'}
 function renderTopList(id,counts){const items=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,6);$(id).innerHTML=items.length?items.map(([name,n])=>'<p>'+esc(name)+' <b>('+n+')</b></p>').join(''):'<p class="cm-muted">لا توجد بيانات بعد</p>'}
 function renderInsights(){const products={},feedback={},opps={};rows.forEach(r=>{String(r.favorite_products||'').split(/[,،؛;\n]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>products[x]=(products[x]||0)+1);[r.dislikes,r.improvement_suggestions].forEach(v=>String(v||'').split('\n').map(x=>x.trim()).filter(Boolean).forEach(x=>feedback[x]=(feedback[x]||0)+1));(r.community_opportunities||[]).forEach(x=>opps[x]=(opps[x]||0)+1)});renderTopList('topProducts',products);renderTopList('topFeedback',feedback);renderTopList('topOpportunities',opps)}
-function render(){const today=new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());const todays=rows.filter(r=>cairoDate(r.created_at)===today);const people=uniqueCustomers(rows);const phoneGroups={};rows.forEach(r=>{const p=r.customer_phone_normalized||normalizedPhone(r.customer_phone);if(p)phoneGroups[p]=(phoneGroups[p]||0)+1});const repeat=Object.values(phoneGroups).filter(n=>n>1).length;const newCustomers=Math.max(0,people-repeat);
-$("stats").innerHTML=[["عملاء اليوم",uniqueCustomers(todays)],["عدد العملاء بدون تكرار",people],["إجمالي التفاعلات",rows.length],["عملاء عائدون",repeat],["عملاء لأول مرة",newCustomers],["متابعات مطلوبة",rows.filter(r=>r.needs_follow_up&&r.follow_up_status!=="مغلق").length]].map(x=>'<div class="cm-stat"><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div>').join("");
-const byDay={};rows.forEach(r=>{const d=cairoDate(r.created_at);(byDay[d]??=[]).push(r)});renderBars("dailyChart",Object.entries(byDay).sort((a,b)=>a[0].localeCompare(b[0])).slice(-10).map(([label,list])=>({label:label.slice(5),value:uniqueCustomers(list)})));
-const byBrand={};rows.forEach(r=>byBrand[r.brand]=(byBrand[r.brand]||0)+1);renderBars("brandChart",Object.entries(byBrand).map(([label,value])=>({label,value})));
-$("repeatStats").innerHTML='<p>عملاء جدد: <b>'+newCustomers+'</b></p><p>عملاء متكررون: <b>'+repeat+'</b></p><p class="cm-muted">التكرار يُحدد برقم الهاتف؛ التسجيلات بلا رقم تُحسب كعملاء منفصلين لتجنب دمج أشخاص بالخطأ.</p>';
-renderRecords();renderInsights()}
+function render(){
+const people=uniqueCustomers(rows);
+const avgRatings=rows.map(r=>Number(r.experience_rating)).filter(n=>Number.isFinite(n)&&n>=1&&n<=10);
+const average=avgRatings.length?(avgRatings.reduce((a,b)=>a+b,0)/avgRatings.length).toFixed(1):"—";
+const followUps=rows.filter(r=>r.needs_follow_up===true||r.needs_follow_up==="true").length;
+$("stats").innerHTML=[
+["Community Members",people],
+["Customer Experience",average+" <small>/ 10</small>"],
+["Follow up",followUps]
+].map(x=>'<div class="cm-stat"><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div>').join("");
+const genderCounts={"ذكر":0,"أنثى":0,"غير محدد":0};
+rows.forEach(r=>{const g=genderCounts.hasOwnProperty(r.customer_gender)?r.customer_gender:"غير محدد";genderCounts[g]++});
+const totalGender=rows.length;
+const genderColors={"ذكر":"#ff8a50","أنثى":"#f45f7d","غير محدد":"#b77cff"};
+let offset=0;
+const slices=Object.entries(genderCounts).filter(([,v])=>v>0).map(([k,v])=>{const from=offset;offset+=totalGender?v/totalGender*100:0;return genderColors[k]+" "+from+"% "+offset+"%"}).join(",");
+$("genderChart").innerHTML=totalGender?'<div class="cm-gender-layout"><div class="cm-donut" style="background:conic-gradient('+slices+')"><div class="cm-donut-hole"><b>'+totalGender+'</b><small>Responses</small></div></div><div class="cm-gender-legend">'+Object.entries(genderCounts).map(([k,v])=>'<div><i style="background:'+genderColors[k]+'"></i><span>'+k+'</span><b>'+v+'</b></div>').join("")+'</div></div>':'<p class="cm-muted">لا توجد بيانات بعد</p>';
+const ageCounts={"أقل من 18":0,"18–24":0,"25–35":0,"أكثر من 35":0,"غير محدد":0};
+rows.forEach(r=>{const a=ageCounts.hasOwnProperty(r.customer_age_group)?r.customer_age_group:"غير محدد";ageCounts[a]++});
+renderBars("ageChart",Object.entries(ageCounts).map(([label,value])=>({label,value})));
+renderRecords();
+}
 function renderRecords(){const q=$("searchRecords").value.trim().toLowerCase(),brand=$("filterBrand").value,from=$("dateFrom").value,to=$("dateTo").value;const filtered=rows.filter(r=>(!q||(r.customer_name||"").toLowerCase().includes(q)||(r.customer_phone||"").includes(q))&&(!brand||r.brand===brand)&&(!from||cairoDate(r.created_at)>=from)&&(!to||cairoDate(r.created_at)<=to));$("recordsBody").innerHTML=filtered.map(r=>'<tr><td>'+new Date(r.created_at).toLocaleString("ar-EG")+'</td><td>'+esc(r.customer_name)+'</td><td>'+esc(r.brand)+'</td><td>'+esc(r.interaction_type)+'</td><td>'+esc(r.follow_up_status||"—")+'</td><td><button type="button" data-edit="'+r.id+'">فتح / تعديل</button></td></tr>').join("")||'<tr><td colspan="6">لا توجد تسجيلات مطابقة</td></tr>';$("recordCount").textContent="عدد التفاعلات المعروضة: "+filtered.length}
 function resetForm(){$("interactionForm").reset();$("recordId").value="";["customer_age_group","customer_gender","branch","interaction_type","experience_rating"].forEach(id=>setRadio(id+"_options",""));setRadio("needs_follow_up_options","false");setRadio("follow_up_status_options","مفتوح");$("brand").value="";setSelected("interestsOptions");setSelected("opportunitiesOptions");$("formTitle").textContent="تسجيل تفاعل جديد مع عميل";$("saveBtn").textContent="حفظ التفاعل";$("cancelEdit").classList.add("cm-hidden")}
 function editRecord(id){const r=rows.find(x=>x.id===id);if(!r)return;fields.forEach(k=>{if($(k))$(k).value=r[k]??""});$("recordId").value=id;["customer_age_group","customer_gender","branch","interaction_type","experience_rating","needs_follow_up","follow_up_status"].forEach(id=>setRadio(id+"_options",$(id).value));setSelected("interestsOptions",r.interests||[]);setSelected("opportunitiesOptions",r.community_opportunities||[]);$("formTitle").textContent="تعديل بيانات التفاعل";$("saveBtn").textContent="حفظ التغييرات";$("cancelEdit").classList.remove("cm-hidden");$("formPanel").scrollIntoView({behavior:"smooth"})}
