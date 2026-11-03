@@ -8,7 +8,7 @@ const opportunities=["سفير محتمل للبراند","مؤثر محتمل",
 const fields=["customer_name","customer_age_group","customer_gender","customer_phone","customer_social","brand","branch","interaction_type","favorite_brand_aspect","favorite_products","dislikes","improvement_suggestions","competitors","experience_rating","follow_up_reason","required_action","follow_up_owner","follow_up_date","follow_up_status","cm_insight","noticed_opportunity","recommendation"];
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function normalizedPhone(v){return String(v||"").replace(/\D/g,"")}
+function normalizedPhone(v){let d=String(v||"").replace(/\D/g,"");if(/^01\d{9}$/.test(d))return "2"+d;if(d.startsWith("0020"))return d.slice(2);return d}
 function options(id,items){$(id).innerHTML=items.map((x,i)=>'<label><input type="checkbox" value="'+esc(x)+'"> '+esc(x)+'</label>').join("")}
 function selected(id){return [...$(id).querySelectorAll("input:checked")].map(x=>x.value)}
 function setSelected(id,values=[]){[...$(id).querySelectorAll("input")].forEach(x=>x.checked=values.includes(x.value))}
