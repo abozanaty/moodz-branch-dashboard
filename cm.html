@@ -91,62 +91,62 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
 <div id="app" class="hidden">
-<header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">لوحة متابعة تفاعل العملاء والمجتمع</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
+<header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">متابعة تفاعل العملاء وبناء مجتمع البراند</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
 <main class="cm-wrap">
 <div class="cm-grid" id="stats"></div>
 <div class="cm-columns cm-section">
-<section class="panel"><h2>العملاء يومياً</h2><div id="dailyChart" class="cm-bars"></div></section>
+<section class="panel"><h2>عدد العملاء يومياً</h2><div id="dailyChart" class="cm-bars"></div></section>
 <section class="panel"><h2>التفاعلات حسب البراند</h2><div id="brandChart" class="cm-bars"></div></section>
-<section class="panel"><h2>العملاء الجدد والمتكررون</h2><div id="repeatStats"></div></section>
+<section class="panel"><h2>العملاء الجدد والعملاء العائدون</h2><div id="repeatStats"></div></section>
 </div>
-<div class="cm-columns cm-section"><section class="panel"><h2>المنتجات الأكثر ذكراً</h2><div id="topProducts"></div></section><section class="panel"><h2>أبرز الشكاوى والاقتراحات</h2><div id="topFeedback"></div></section><section class="panel"><h2>الفرص المجتمعية</h2><div id="topOpportunities"></div></section></div><section class="panel cm-section" id="formPanel">
-<h2 id="formTitle">تسجيل تفاعل جديد</h2><p class="cm-muted">سجّل كل محادثة أو مقابلة بعد انتهائها. رقم الهاتف يساعد على احتساب العميل مرة واحدة حتى مع تكرار التفاعل.</p>
+<div class="cm-columns cm-section"><section class="panel"><h2>المنتجات الأكثر ذكراً</h2><div id="topProducts"></div></section><section class="panel"><h2>آراء العملاء وملاحظاتهم</h2><div id="topFeedback"></div></section><section class="panel"><h2>فرص لبناء Community حول البراند</h2><div id="topOpportunities"></div></section></div><section class="panel cm-section" id="formPanel">
+<h2 id="formTitle">تسجيل تفاعل جديد مع عميل</h2><p class="cm-muted">سجّل كل محادثة أو مقابلة بعد ما تخلص. رقم الهاتف بيساعدنا نعرف إذا كان العميل بيتواصل معانا لأول مرة أو سبق وسجّلنا تفاعله.</p>
 <form id="interactionForm">
 <input type="hidden" id="recordId">
 <div class="cm-form-grid">
 <label>اسم العميل <span class="cm-required">*</span><input id="customer_name" required></label>
-<label>الفئة العمرية<select id="customer_age_group"><option value="">اختر</option><option>أقل من 18</option><option>18–24</option><option>25–31</option><option>32–40</option><option>أكثر من 40</option></select></label>
-<label>النوع<select id="customer_gender"><option value="">غير محدد</option><option>ذكر</option><option>أنثى</option></select></label>
+<label>Age Group – الفئة العمرية<select id="customer_age_group"><option value="">اختر</option><option>أقل من 18</option><option>18–24</option><option>25–31</option><option>32–40</option><option>أكثر من 40</option></select></label>
+<label>النوع<select id="customer_gender"><option value="">لم يتم التحديد</option><option>ذكر</option><option>أنثى</option></select></label>
 <label>رقم الهاتف (اختياري)<input id="customer_phone" inputmode="tel" dir="ltr"></label>
-<label>حساب Instagram / Facebook<input id="customer_social" dir="ltr"></label>
+<label>حساب العميل على Instagram أو Facebook<input id="customer_social" dir="ltr"></label>
 <label>البراند <span class="cm-required">*</span><select id="brand" required><option value="">اختر البراند</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
-<label>الفرع<input id="branch" placeholder="اسم الفرع"></label>
-<label>نوع التفاعل <span class="cm-required">*</span><select id="interaction_type" required><option value="">اختر</option><option>محادثة عادية</option><option>رأي عميل</option><option>شكوى</option><option>مقابلة عميل</option><option>فعالية أو نشاط مجتمعي</option></select></label>
-<label>تقييم التجربة<select id="experience_rating"><option value="">بدون تقييم</option><option value="1">1 - ضعيف</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5 - ممتاز</option></select></label>
-<label>أكثر شيء يحبه في البراند<input id="favorite_brand_aspect"></label>
-<label>المنتجات المفضلة<input id="favorite_products"></label>
-<label>ما الذي لا يعجبه؟<textarea id="dislikes"></textarea></label>
-<label>اقتراحات للتحسين<textarea id="improvement_suggestions"></textarea></label>
-<label>المنافسون الذين يزورهم عادة<input id="competitors"></label>
+<label>الفرع<input id="branch" placeholder="اكتب اسم الفرع"></label>
+<label>Interaction Type – نوع التفاعل <span class="cm-required">*</span><select id="interaction_type" required><option value="">اختر</option><option>محادثة عادية</option><option>رأي عميل</option><option>شكوى</option><option>مقابلة عميل</option><option>فعالية أو نشاط مجتمعي</option></select></label>
+<label>Customer Experience – تقييم تجربة العميل<select id="experience_rating"><option value="">بدون تقييم</option><option value="1">1 - ضعيف</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5 - ممتاز</option></select></label>
+<label>إيه أكتر حاجة عاجباه في البراند؟<input id="favorite_brand_aspect"></label>
+<label>إيه المنتجات اللي بيفضلها؟<input id="favorite_products"></label>
+<label>إيه الحاجة اللي مش عاجباه أو شايف إنها محتاجة تتحسن؟<textarea id="dislikes"></textarea></label>
+<label>اقتراحات العميل لتطوير التجربة<textarea id="improvement_suggestions"></textarea></label>
+<label>إيه البراندات المنافسة اللي بيتعامل معاها كمان؟<input id="competitors"></label>
 </div>
-<div class="cm-section"><h3>اهتمامات العميل</h3><div class="cm-pills" id="interestsOptions"></div></div>
-<div class="cm-section"><h3>فرص مجتمعية</h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
-<div class="cm-section"><h3>المتابعة والإجراءات</h3><div class="cm-form-grid">
-<label>يحتاج متابعة؟<select id="needs_follow_up"><option value="false">لا</option><option value="true">نعم</option></select></label>
-<label>سبب المتابعة<input id="follow_up_reason"></label>
-<label>الإجراء المطلوب<input id="required_action"></label>
-<label>الشخص المسؤول<input id="follow_up_owner"></label>
-<label>تاريخ المتابعة<input id="follow_up_date" type="date"></label>
-<label>حالة المتابعة<select id="follow_up_status"><option>مفتوح</option><option>قيد التنفيذ</option><option>مغلق</option></select></label>
+<div class="cm-section"><h3>اهتمامات العميل – Customer Interests</h3><div class="cm-pills" id="interestsOptions"></div></div>
+<div class="cm-section"><h3>فرص لبناء Community</h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
+<div class="cm-section"><h3>المتابعة والخطوات المطلوبة – Follow-up & Actions</h3><div class="cm-form-grid">
+<label>هل العميل محتاج Follow-up؟<select id="needs_follow_up"><option value="false">لا</option><option value="true">نعم</option></select></label>
+<label>ليه محتاجين نتابعه؟<input id="follow_up_reason"></label>
+<label>إيه الخطوة المطلوبة؟ – Action Required<input id="required_action"></label>
+<label>مين المسؤول عن المتابعة؟ – Owner<input id="follow_up_owner"></label>
+<label>ميعاد المتابعة – Follow-up Date<input id="follow_up_date" type="date"></label>
+<label>حالة الـFollow-up<select id="follow_up_status"><option>مفتوح</option><option>قيد التنفيذ</option><option>مغلق</option></select></label>
 </div></div>
-<div class="cm-section"><h3>رؤى مسؤول المجتمع <span class="cm-required">*</span></h3><div class="cm-form-grid">
-<label>ماذا تعلمت من هذا التفاعل؟<textarea id="cm_insight" required></textarea></label>
-<label>ما الفرصة التي لاحظتها؟<textarea id="noticed_opportunity"></textarea></label>
-<label>ما الإجراء الذي توصي به؟<textarea id="recommendation"></textarea></label>
+<div class="cm-section"><h3>ملاحظات ورؤية مسؤول المجتمع – Community Insights <span class="cm-required">*</span></h3><div class="cm-form-grid">
+<label>إيه أهم معلومة أو Insight خرجت بيها من التفاعل ده؟<textarea id="cm_insight" required></textarea></label>
+<label>هل لاحظت فرصة ممكن نستفيد منها؟ – Opportunity<textarea id="noticed_opportunity"></textarea></label>
+<label>إيه الخطوة اللي بتوصي إننا ناخدها؟ – Recommendation<textarea id="recommendation"></textarea></label>
 </div></div>
 <div class="cm-actions"><button class="primary" type="submit" id="saveBtn">حفظ التفاعل</button><button type="button" id="cancelEdit" class="cm-hidden">إلغاء التعديل</button></div>
 </form>
 </section>
-<section class="panel cm-section"><h2>سجل العملاء والتفاعلات السابقة</h2>
+<section class="panel cm-section"><h2>سجل العملاء والتفاعلات – Customer Log</h2>
 <div class="cm-form-grid">
-<label>بحث بالاسم أو الهاتف<input id="searchRecords"></label>
+<label>ابحث باسم العميل أو رقم تليفونه<input id="searchRecords"></label>
 <label>البراند<select id="filterBrand"><option value="">كل البراندات</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
 <label>من تاريخ<input id="dateFrom" type="date"></label><label>إلى تاريخ<input id="dateTo" type="date"></label>
 </div>
-<div class="cm-table-wrap"><table class="cm-table"><thead><tr><th>التاريخ</th><th>اسم العميل</th><th>البراند</th><th>نوع التفاعل</th><th>المتابعة</th><th>إجراء</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+<div class="cm-table-wrap"><table class="cm-table"><thead><tr><th>التاريخ</th><th>اسم العميل</th><th>البراند</th><th>نوع التفاعل</th><th>Follow-up</th><th>إجراء</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
 <p id="recordCount" class="cm-muted"></p>
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=3"></script>
 </body></html>
