@@ -36,9 +36,9 @@ body{background:#f3f5f8!important;color:#17202a!important;font-size:18px}
 #formPanel h2,#app .panel h2{font-size:24px;color:#17202a}
 #formPanel h3{font-size:21px;color:#17202a}
 @media(max-width:650px){#app header h1{font-size:24px}.cm-header-tools{justify-content:flex-start}.cm-wrap{padding:0 10px}.cm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cm-stat{padding:12px}.cm-stat strong{font-size:26px}}
-</style></head>
+.cm-main-login-link{text-align:center;margin-top:18px}.cm-main-login-link a{color:#174ea6;font-weight:700;text-decoration:underline}</style></head>
 <body>
-<section id="login" class="panel auth"><h2>تسجيل الدخول</h2><p>حساب مسؤول المجتمع</p><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" dir="ltr" value="Community@moodz.com"><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" dir="ltr"><button class="primary" id="loginBtn">دخول</button></section>
+<section id="login" class="panel auth"><h2>تسجيل الدخول</h2><p>حساب مسؤول المجتمع</p><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" dir="ltr" value="Community@moodz.com"><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" dir="ltr"><button class="primary" id="loginBtn">دخول</button><p class="cm-main-login-link"><a href="./index.html">العودة لتسجيل الدخول الرئيسي</a></p></section>
 <div id="app" class="hidden">
 <header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">لوحة متابعة تفاعل العملاء والمجتمع</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
 <main class="cm-wrap">
