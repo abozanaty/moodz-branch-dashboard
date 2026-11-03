@@ -34,7 +34,7 @@ const genderColors={"ذكر":"#a78bfa","أنثى":"#f472b6"};
 let offset=0;
 const slices=Object.entries(genderCounts).filter(([,v])=>v>0).map(([k,v])=>{const from=offset;offset+=totalGender?v/totalGender*100:0;return genderColors[k]+" "+from+"% "+offset+"%"}).join(",");
 $("genderChart").innerHTML=totalGender?'<div class="cm-gender-layout"><div class="cm-donut" style="background:conic-gradient('+slices+')"><div class="cm-donut-hole"><b>'+totalGender+'</b><small>Responses</small></div></div><div class="cm-gender-legend">'+Object.entries(genderCounts).map(([k,v])=>'<div><i style="background:'+genderColors[k]+'"></i><span>'+k+'</span><b>'+v+'</b></div>').join("")+'</div></div>':'<p class="cm-muted">لا توجد بيانات بعد</p>';
-const ageCounts={"أقل من 18":0,"18–24":0,"25–35":0,"أكثر من 35":0,"غير محدد":0};
+const ageCounts={"أقل من 18":0,"18–24":0,"25–35":0,"35+":0,"غير محدد":0};
 rows.forEach(r=>{const a=ageCounts.hasOwnProperty(r.customer_age_group)?r.customer_age_group:"غير محدد";ageCounts[a]++});
 renderBars("ageChart",Object.entries(ageCounts).map(([label,value])=>({label,value})));
 const interestCounts={};
@@ -51,7 +51,7 @@ if(!payload.customer_name||!payload.branch||!payload.brand||!payload.interaction
 let result;if(id)result=await db.from("cm_interactions").update(payload).eq("id",id).select().single();else{payload.created_by=currentUser.id;result=await db.from("cm_interactions").insert(payload).select().single()}if(result.error)return toast("ما قدرناش نحفظ البيانات: "+result.error.message);resetForm();await load();toast(id?"تم تحديث بيانات التفاعل بنجاح":"تم تسجيل التفاعل بنجاح")}
 function setupCmDisplay(){let zoom=100;const apply=()=>{document.documentElement.style.fontSize=(16*zoom/100)+"px";$("cmZoomValue").textContent=zoom+"%"};$("cmZoomIn").onclick=()=>{zoom=Math.min(140,zoom+10);apply()};$("cmZoomOut").onclick=()=>{zoom=Math.max(80,zoom-10);apply()};$("cmZoomReset").onclick=()=>{zoom=100;apply()};$("cmRefresh").onclick=()=>location.reload();apply()}
 async function boot(){setupCmDisplay();options("interestsOptions",interests);options("opportunitiesOptions",opportunities);
-radioOptions("customer_age_group_options",["أقل من 18","18–24","25–35","أكثر من 35"].map(x=>({value:x,label:x})));
+radioOptions("customer_age_group_options",["أقل من 18","18–24","25–35","35+"].map(x=>({value:x,label:x})));
 radioOptions("customer_gender_options",["ذكر","أنثى"].map(x=>({value:x,label:x})));
 radioOptions("branch_options",["Moodz Grand","Brooklyn’s","Toffee Koffie"].map(x=>({value:x,label:x})));
 radioOptions("interaction_type_options",["محادثة عادية chatting","شكوى","فعالية Event"].map(x=>({value:x,label:x})));
