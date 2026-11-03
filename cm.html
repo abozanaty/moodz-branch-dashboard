@@ -7,11 +7,40 @@
 <style>
 .cm-wrap{max-width:1240px;margin:24px auto;padding:0 16px}.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.cm-stat{background:#fff;border:1px solid #e7e7e7;border-radius:14px;padding:16px}.cm-stat strong{display:block;font-size:28px;margin-top:8px}.cm-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.cm-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.cm-form-grid label{display:block}.cm-form-grid input,.cm-form-grid select,.cm-form-grid textarea{width:100%;margin-top:5px}.cm-form-grid textarea{min-height:74px}.cm-bars{display:flex;align-items:end;gap:8px;min-height:150px;padding:12px 4px}.cm-bar{flex:1;min-width:20px;text-align:center}.cm-bar i{display:block;background:#202b43;border-radius:6px 6px 0 0;min-height:3px}.cm-bar small{display:block;font-size:11px;margin-top:5px;overflow-wrap:anywhere}.cm-table{width:100%;border-collapse:collapse}.cm-table th,.cm-table td{padding:10px;border-bottom:1px solid #eee;text-align:right;font-size:14px}.cm-table-wrap{overflow:auto}.cm-actions{display:flex;gap:8px;flex-wrap:wrap}.cm-muted{color:#777;font-size:13px}.cm-hidden{display:none!important}.cm-section{margin:16px 0}.cm-section h2{margin-top:0}.cm-pills{display:flex;flex-wrap:wrap;gap:10px}.cm-pills label{display:flex;align-items:center;gap:6px;background:#f6f6f6;padding:7px 10px;border-radius:9px}.cm-required{color:#b22}@media(max-width:600px){.cm-wrap{padding:0 10px}.cm-table th,.cm-table td{white-space:nowrap}}
 </style>
-</head>
+
+<style>
+/* Community dashboard: high-contrast, readable, vertical-first */
+body{background:#f3f5f8!important;color:#17202a!important;font-size:18px}
+#app header{background:#101d33!important;color:#fff!important;padding:18px 4vw}
+#app header h1{font-size:30px;line-height:1.35}
+#app header .sub{font-size:16px;color:#e1e8f0}
+#app .panel,#app .cm-stat{background:#fff!important;color:#17202a!important;border:1px solid #d8e0ea!important;box-shadow:0 3px 14px #17202a12}
+#app p,#app .cm-muted{color:#475467!important;font-size:16px;line-height:1.7}
+#app label{color:#17202a!important;font-size:18px;font-weight:700;line-height:1.6}
+#app input,#app select,#app textarea{background:#fff!important;color:#17202a!important;border:2px solid #cbd5e1!important;border-radius:10px;min-height:52px;font-size:18px;padding:12px}
+#app textarea{min-height:92px}
+#app button{font-size:17px;min-height:46px}
+#app button.primary{background:#173b68!important;color:#fff!important;border-color:#173b68!important}
+.cm-form-grid{grid-template-columns:1fr!important;gap:14px!important}
+.cm-form-grid label{display:flex!important;flex-direction:column;align-items:stretch}
+.cm-pills{display:flex;flex-direction:column;gap:10px}
+.cm-pills label{display:flex!important;align-items:center;gap:14px;background:#f8fafc;border:2px solid #d7e0eb;border-radius:12px;padding:13px 16px;min-height:58px}
+.cm-pills input[type=checkbox]{width:26px!important;height:26px!important;min-height:26px!important;accent-color:#173b68;flex:0 0 26px}
+.cm-stat strong{font-size:32px;color:#173b68}
+.cm-table th,.cm-table td{font-size:16px;padding:13px}
+.cm-header-tools{gap:8px}
+.cm-zoom-controls{display:flex;align-items:center;gap:6px;background:#fff;color:#17202a;border-radius:10px;padding:4px 7px}
+.cm-zoom-controls button{min-width:42px;min-height:40px;padding:5px 10px;color:#17202a;background:#f3f5f8;border:1px solid #cbd5e1}
+.cm-zoom-controls strong{min-width:54px;text-align:center;font-size:15px}
+#cmRefresh{background:#fff;color:#17202a;border:1px solid #cbd5e1}
+#formPanel h2,#app .panel h2{font-size:24px;color:#17202a}
+#formPanel h3{font-size:21px;color:#17202a}
+@media(max-width:650px){#app header h1{font-size:24px}.cm-header-tools{justify-content:flex-start}.cm-wrap{padding:0 10px}.cm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cm-stat{padding:12px}.cm-stat strong{font-size:26px}}
+</style></head>
 <body>
 <section id="login" class="panel auth"><h2>تسجيل الدخول</h2><p>حساب مسؤول المجتمع</p><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" dir="ltr" value="Community@moodz.com"><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" dir="ltr"><button class="primary" id="loginBtn">دخول</button></section>
 <div id="app" class="hidden">
-<header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">لوحة متابعة تفاعل العملاء والمجتمع</div></div><div class="row header-actions"><span id="who"></span><button id="logoutBtn">تسجيل الخروج</button></div></header>
+<header><div><h1>M-Daily | المجتمع والعملاء</h1><div class="sub">لوحة متابعة تفاعل العملاء والمجتمع</div></div><div class="row header-actions cm-header-tools"><span id="who"></span><div class="cm-zoom-controls" aria-label="التحكم في حجم الخط"><button type="button" id="cmZoomOut" aria-label="تصغير">−</button><strong id="cmZoomValue">100%</strong><button type="button" id="cmZoomIn" aria-label="تكبير">+</button><button type="button" id="cmZoomReset" aria-label="الحجم الأصلي">↺</button></div><button type="button" id="cmRefresh">↻ تحديث</button><button id="logoutBtn">تسجيل الخروج</button></div></header>
 <main class="cm-wrap">
 <div class="cm-grid" id="stats"></div>
 <div class="cm-columns cm-section">
