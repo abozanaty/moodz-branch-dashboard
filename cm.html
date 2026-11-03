@@ -592,11 +592,13 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <div class="cm-section"><h3>فرص لبناء Community <em class="cm-required">*</em></h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
 <div class="cm-section"><h3>المتابعة والخطوات المطلوبة – Follow-up & Actions</h3><div class="cm-form-grid">
 <div class="cm-choice-field"><span class="cm-field-title">هل العميل محتاج Follow-up؟ <em class="cm-required">*</em></span><input type="hidden" id="needs_follow_up" value="false"><div class="cm-choice-row" id="needs_follow_up_options"></div></div>
-<label><span class="cm-label-text">ليه محتاجين نتابعه؟ <em class="cm-required">*</em></span><input id="follow_up_reason" required></label>
-<label><span class="cm-label-text">إيه الخطوة المطلوبة؟ – Action Required <em class="cm-required">*</em></span><input id="required_action" required></label>
-<label><span class="cm-label-text">مين المسؤول عن المتابعة؟ – Owner <em class="cm-required">*</em></span><input id="follow_up_owner" required></label>
-<label><span class="cm-label-text">ميعاد المتابعة – Follow-up Date <em class="cm-required">*</em></span><input id="follow_up_date" type="date" required></label>
+<div id="followUpDetails" hidden>
+<label><span class="cm-label-text">ليه محتاجين نتابعه؟ <em class="cm-required">*</em></span><input id="follow_up_reason"></label>
+<label><span class="cm-label-text">إيه الخطوة المطلوبة؟ – Action Required <em class="cm-required">*</em></span><input id="required_action"></label>
+<label><span class="cm-label-text">مين المسؤول عن المتابعة؟ – Owner <em class="cm-required">*</em></span><input id="follow_up_owner"></label>
+<label><span class="cm-label-text">ميعاد المتابعة – Follow-up Date <em class="cm-required">*</em></span><input id="follow_up_date" type="date"></label>
 <div class="cm-choice-field"><span class="cm-field-title">حالة الـFollow-up <em class="cm-required">*</em></span><input type="hidden" id="follow_up_status" value="مفتوح"><div class="cm-choice-row" id="follow_up_status_options"></div></div>
+</div>
 </div></div>
 <div class="cm-actions"><button class="primary" type="submit" id="saveBtn">حفظ التفاعل</button><button type="button" id="cancelEdit" class="cm-hidden">إلغاء التعديل</button></div>
 </form>
@@ -612,5 +614,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=21"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=22"></script>
 </body></html>
