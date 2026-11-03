@@ -352,6 +352,51 @@ body{font-size:18px!important;color:#f4f5f7!important}
  #app #stats .cm-gender-legend{gap:10px!important}
 }
 </style>
+
+<style>
+/* Clean, balanced interaction form */
+#app #interactionForm .cm-form-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ align-items:start!important;gap:16px 18px!important;
+}
+#app #interactionForm .cm-form-grid>label,
+#app #interactionForm .cm-form-grid>.cm-choice-field{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ justify-content:flex-start!important;gap:7px!important;width:100%!important;
+ min-width:0!important;max-width:none!important;margin:0!important;
+ box-sizing:border-box!important;min-height:0!important;
+}
+#app #interactionForm .cm-label-text,
+#app #interactionForm .cm-field-title{
+ display:block!important;min-height:24px!important;line-height:1.45!important;
+ font-size:14px!important;font-weight:800!important;color:#d2a7ff!important;
+}
+#app #interactionForm .cm-required{display:inline!important;color:#ff5b70!important;font-style:normal!important;font-weight:900!important;margin-inline-start:3px!important}
+#app #interactionForm input:not([type=hidden]),
+#app #interactionForm textarea,
+#app #interactionForm select{
+ width:100%!important;max-width:none!important;min-width:0!important;
+ height:48px!important;min-height:48px!important;margin:0!important;
+ padding:10px 13px!important;box-sizing:border-box!important;
+ border-radius:9px!important;font-size:15px!important;
+}
+#app #interactionForm textarea{height:92px!important;min-height:92px!important;resize:vertical!important}
+#app #interactionForm .cm-choice-row{display:flex!important;flex-wrap:wrap!important;align-content:flex-start!important;gap:7px!important;min-height:48px!important;width:100%!important}
+#app #interactionForm .cm-choice-row label{min-height:40px!important;padding:8px 12px!important;white-space:nowrap!important}
+#app #interactionForm .cm-rating-row{width:100%!important;max-width:none!important;gap:6px!important}
+#app #interactionForm .cm-rating-row label{min-height:44px!important}
+#app #interactionForm .cm-form-grid>.cm-choice-field:has(#experience_rating_options){grid-column:1/-1!important}
+#app #interactionForm .cm-section{margin:16px 0!important;padding:14px!important}
+#app #interactionForm .cm-section h3{display:flex!important;align-items:center!important;gap:4px!important;margin:0 0 10px!important}
+#app #interactionForm .cm-section .cm-form-grid{margin-top:10px!important}
+#app #interactionForm .cm-actions{margin-top:16px!important}
+@media(max-width:700px){
+ #app #interactionForm .cm-form-grid{grid-template-columns:minmax(0,1fr)!important;gap:13px!important}
+ #app #interactionForm .cm-form-grid>.cm-choice-field:has(#experience_rating_options){grid-column:auto!important}
+ #app #interactionForm .cm-label-text,#app #interactionForm .cm-field-title{font-size:13px!important}
+ #app #interactionForm textarea{height:84px!important;min-height:84px!important}
+}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -364,28 +409,28 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <form id="interactionForm">
 <input type="hidden" id="recordId">
 <div class="cm-form-grid">
-<label>اسم العميل <span class="cm-required">*</span><input id="customer_name" required></label>
-<div class="cm-choice-field"><span class="cm-field-title">Age Group – الفئة العمرية</span><input type="hidden" id="customer_age_group"><div class="cm-choice-row" id="customer_age_group_options"></div></div>
-<div class="cm-choice-field"><span class="cm-field-title">النوع</span><input type="hidden" id="customer_gender"><div class="cm-choice-row" id="customer_gender_options"></div></div>
-<label>رقم الهاتف (اختياري)<input id="customer_phone" inputmode="tel" dir="ltr"></label>
-<div class="cm-choice-field"><span class="cm-field-title">الفرع <span class="cm-required">*</span></span><input type="hidden" id="branch"><div class="cm-choice-row" id="branch_options"></div><input type="hidden" id="brand"></div>
-<div class="cm-choice-field"><span class="cm-field-title">Interaction Type – نوع التفاعل <span class="cm-required">*</span></span><input type="hidden" id="interaction_type"><div class="cm-choice-row" id="interaction_type_options"></div></div>
-<div class="cm-choice-field"><span class="cm-field-title">Customer Experience – تقييم تجربة العميل</span><input type="hidden" id="experience_rating"><div class="cm-rating-row" id="experience_rating_options" aria-label="تقييم من 1 إلى 10"></div></div>
-<label>إيه أكتر حاجة عاجباه في البراند؟<input id="favorite_brand_aspect"></label>
-<label>إيه المنتجات اللي بيفضلها؟<input id="favorite_products"></label>
-<label>إيه الحاجة اللي مش عاجباه أو شايف إنها محتاجة تتحسن؟<textarea id="dislikes"></textarea></label>
-<label>اقتراحات العميل لتطوير التجربة<textarea id="improvement_suggestions"></textarea></label>
-<label>إيه البراندات المنافسة اللي بيتعامل معاها كمان؟<input id="competitors"></label>
+<label><span class="cm-label-text">اسم العميل <em class="cm-required">*</em></span><input id="customer_name" required></label>
+<div class="cm-choice-field"><span class="cm-field-title">Age Group – الفئة العمرية <em class="cm-required">*</em></span><input type="hidden" id="customer_age_group"><div class="cm-choice-row" id="customer_age_group_options"></div></div>
+<div class="cm-choice-field"><span class="cm-field-title">النوع <em class="cm-required">*</em></span><input type="hidden" id="customer_gender"><div class="cm-choice-row" id="customer_gender_options"></div></div>
+<label><span class="cm-label-text">رقم الهاتف <em class="cm-required">*</em></span><input id="customer_phone" inputmode="tel" dir="ltr" required></label>
+<div class="cm-choice-field"><span class="cm-field-title">الفرع <em class="cm-required">*</em></span><input type="hidden" id="branch"><div class="cm-choice-row" id="branch_options"></div><input type="hidden" id="brand"></div>
+<div class="cm-choice-field"><span class="cm-field-title">Interaction Type – نوع التفاعل <em class="cm-required">*</em></span><input type="hidden" id="interaction_type"><div class="cm-choice-row" id="interaction_type_options"></div></div>
+<div class="cm-choice-field"><span class="cm-field-title">Customer Experience – تقييم تجربة العميل <em class="cm-required">*</em></span><input type="hidden" id="experience_rating"><div class="cm-rating-row" id="experience_rating_options" aria-label="تقييم من 1 إلى 10"></div></div>
+<label><span class="cm-label-text">إيه أكتر حاجة عاجباه في البراند؟ <em class="cm-required">*</em></span><input id="favorite_brand_aspect" required></label>
+<label><span class="cm-label-text">إيه المنتجات اللي بيفضلها؟ <em class="cm-required">*</em></span><input id="favorite_products" required></label>
+<label><span class="cm-label-text">إيه الحاجة اللي مش عاجباه أو شايف إنها محتاجة تتحسن؟ <em class="cm-required">*</em></span><textarea id="dislikes" required></textarea></label>
+<label><span class="cm-label-text">اقتراحات العميل لتطوير التجربة <em class="cm-required">*</em></span><textarea id="improvement_suggestions" required></textarea></label>
+<label><span class="cm-label-text">إيه البراندات المنافسة اللي بيتعامل معاها كمان؟ <em class="cm-required">*</em></span><input id="competitors" required></label>
 </div>
-<div class="cm-section"><h3>اهتمامات العميل – Customer Interests</h3><div class="cm-pills" id="interestsOptions"></div></div>
-<div class="cm-section"><h3>فرص لبناء Community</h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
+<div class="cm-section"><h3>اهتمامات العميل – Customer Interests <em class="cm-required">*</em></h3><div class="cm-pills" id="interestsOptions"></div></div>
+<div class="cm-section"><h3>فرص لبناء Community <em class="cm-required">*</em></h3><div class="cm-pills" id="opportunitiesOptions"></div></div>
 <div class="cm-section"><h3>المتابعة والخطوات المطلوبة – Follow-up & Actions</h3><div class="cm-form-grid">
-<div class="cm-choice-field"><span class="cm-field-title">هل العميل محتاج Follow-up؟</span><input type="hidden" id="needs_follow_up" value="false"><div class="cm-choice-row" id="needs_follow_up_options"></div></div>
-<label>ليه محتاجين نتابعه؟<input id="follow_up_reason"></label>
-<label>إيه الخطوة المطلوبة؟ – Action Required<input id="required_action"></label>
-<label>مين المسؤول عن المتابعة؟ – Owner<input id="follow_up_owner"></label>
-<label>ميعاد المتابعة – Follow-up Date<input id="follow_up_date" type="date"></label>
-<div class="cm-choice-field"><span class="cm-field-title">حالة الـFollow-up</span><input type="hidden" id="follow_up_status" value="مفتوح"><div class="cm-choice-row" id="follow_up_status_options"></div></div>
+<div class="cm-choice-field"><span class="cm-field-title">هل العميل محتاج Follow-up؟ <em class="cm-required">*</em></span><input type="hidden" id="needs_follow_up" value="false"><div class="cm-choice-row" id="needs_follow_up_options"></div></div>
+<label><span class="cm-label-text">ليه محتاجين نتابعه؟ <em class="cm-required">*</em></span><input id="follow_up_reason" required></label>
+<label><span class="cm-label-text">إيه الخطوة المطلوبة؟ – Action Required <em class="cm-required">*</em></span><input id="required_action" required></label>
+<label><span class="cm-label-text">مين المسؤول عن المتابعة؟ – Owner <em class="cm-required">*</em></span><input id="follow_up_owner" required></label>
+<label><span class="cm-label-text">ميعاد المتابعة – Follow-up Date <em class="cm-required">*</em></span><input id="follow_up_date" type="date" required></label>
+<div class="cm-choice-field"><span class="cm-field-title">حالة الـFollow-up <em class="cm-required">*</em></span><input type="hidden" id="follow_up_status" value="مفتوح"><div class="cm-choice-row" id="follow_up_status_options"></div></div>
 </div></div>
 <div class="cm-actions"><button class="primary" type="submit" id="saveBtn">حفظ التفاعل</button><button type="button" id="cancelEdit" class="cm-hidden">إلغاء التعديل</button></div>
 </form>
@@ -401,5 +446,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=16"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=17"></script>
 </body></html>
