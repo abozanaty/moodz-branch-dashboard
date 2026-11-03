@@ -455,6 +455,72 @@ body{font-size:18px!important;color:#f4f5f7!important}
  #app #interactionForm .cm-choice-row label{min-height:40px!important}
 }
 </style>
+
+<style>
+/* Compact choice controls: one indicator circle, never a circle inside a circle */
+#app #interactionForm .cm-choice-row label{
+  border-radius:10px!important;
+  min-height:34px!important;
+  padding:6px 10px!important;
+  background:#202635!important;
+  border:1px solid #454b5d!important;
+  gap:6px!important;
+}
+#app #interactionForm .cm-choice-row label:has(input:checked){
+  border-radius:10px!important;
+  background:linear-gradient(110deg,#ff8a50,#f45f7d)!important;
+}
+#app #interactionForm .cm-choice-row input[type="radio"]{
+  width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;
+  max-width:16px!important;flex:0 0 16px!important;
+  margin:0 0 0 4px!important;border:1.7px solid #a7aabb!important;
+  border-radius:50%!important;background:#11151f!important;
+}
+#app #interactionForm .cm-choice-row input[type="radio"]:checked{
+  background:#f472b6!important;border-color:#f472b6!important;
+  box-shadow:inset 0 0 0 3px #202635!important;
+}
+#app #interactionForm .cm-pills label{
+  border-radius:10px!important;min-height:40px!important;
+  padding:7px 10px!important;gap:7px!important;
+}
+#app #interactionForm .cm-pills input[type="checkbox"]{
+  width:17px!important;height:17px!important;min-width:17px!important;min-height:17px!important;
+  max-width:17px!important;flex:0 0 17px!important;
+  border:1.7px solid #a7aabb!important;border-radius:50%!important;
+  background:#11151f!important;margin:0 0 0 4px!important;
+}
+#app #interactionForm .cm-pills input[type="checkbox"]:checked{
+  background:#a78bfa!important;border-color:#a78bfa!important;
+  box-shadow:inset 0 0 0 3px #202635!important;
+}
+/* Remove artificial empty height and tighten vertical rhythm */
+#app #interactionForm .cm-form-grid{row-gap:10px!important;column-gap:16px!important}
+#app #interactionForm .cm-form-grid>.cm-choice-field,
+#app #interactionForm .cm-form-grid>label{min-height:0!important}
+#app #interactionForm .cm-form-grid>.cm-choice-field{gap:5px!important}
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-choice-row{min-height:0!important}
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-field-title,
+#app #interactionForm .cm-form-grid>label .cm-label-text{min-height:0!important}
+#app #interactionForm .cm-section{
+  margin:9px 0!important;padding:10px!important;
+}
+#app #interactionForm .cm-section h3{margin:0 0 7px!important}
+#app #interactionForm .cm-section .cm-pills{
+  gap:7px!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+#app #interactionForm .cm-rating-row{gap:7px!important;margin:0!important}
+#app #interactionForm .cm-rating-row label{
+  width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important;
+  flex:0 0 40px!important;
+}
+#app #interactionForm .cm-actions{margin-top:10px!important}
+@media(max-width:700px){
+ #app #interactionForm .cm-section .cm-pills{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #app #interactionForm .cm-form-grid{row-gap:9px!important}
+ #app #interactionForm .cm-section{margin:8px 0!important;padding:9px!important}
+}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -504,5 +570,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=19"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=20"></script>
 </body></html>
