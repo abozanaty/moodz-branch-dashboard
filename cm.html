@@ -241,6 +241,99 @@ body{font-size:18px!important;color:#f4f5f7!important}
   #app #stats .cm-gender-legend>div{font-size:10px!important}
 }
 </style>
+
+<style>
+/* Consistent form field sizing and spacing */
+#app #interactionForm .cm-form-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:18px 20px!important;
+}
+#app #interactionForm .cm-form-grid>label,
+#app #interactionForm .cm-form-grid>.cm-choice-field{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  gap:8px!important;
+}
+#app #interactionForm .cm-form-grid>label{
+  min-height:108px!important;
+}
+#app #interactionForm .cm-form-grid>label>input,
+#app #interactionForm .cm-form-grid>label>textarea,
+#app #interactionForm .cm-form-grid>label>select{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:50px!important;
+  min-height:50px!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  box-sizing:border-box!important;
+  border-radius:10px!important;
+  font:inherit!important;
+}
+#app #interactionForm .cm-form-grid>label>textarea{
+  height:104px!important;
+  min-height:104px!important;
+  resize:vertical!important;
+}
+#app #interactionForm .cm-form-grid>.cm-choice-field{
+  min-height:108px!important;
+}
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-choice-row,
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-rating-row{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-choice-row{
+  min-height:50px!important;
+  align-content:flex-start!important;
+}
+#app #interactionForm .cm-form-grid>.cm-choice-field .cm-rating-row{
+  max-width:none!important;
+}
+#app #interactionForm .cm-form-grid>.cm-choice-field:has(#experience_rating_options){
+  grid-column:1/-1!important;
+  min-height:90px!important;
+}
+#app #interactionForm .cm-section .cm-form-grid{
+  margin-top:12px!important;
+}
+#app #interactionForm .cm-form-grid .cm-field-title{
+  min-height:22px!important;
+  line-height:1.4!important;
+}
+@media(max-width:700px){
+  #app #interactionForm .cm-form-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:14px!important;
+  }
+  #app #interactionForm .cm-form-grid>label,
+  #app #interactionForm .cm-form-grid>.cm-choice-field{
+    min-height:0!important;
+  }
+  #app #interactionForm .cm-form-grid>.cm-choice-field:has(#experience_rating_options){
+    grid-column:auto!important;
+  }
+  #app #interactionForm .cm-form-grid>label>input,
+  #app #interactionForm .cm-form-grid>label>select{
+    height:48px!important;min-height:48px!important;
+  }
+  #app #interactionForm .cm-form-grid>label>textarea{
+    height:96px!important;min-height:96px!important;
+  }
+}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -290,5 +383,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=14"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=15"></script>
 </body></html>
