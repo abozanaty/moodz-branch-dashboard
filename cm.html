@@ -397,6 +397,64 @@ body{font-size:18px!important;color:#f4f5f7!important}
  #app #interactionForm textarea{height:84px!important;min-height:84px!important}
 }
 </style>
+
+<style>
+/* Restore true circular radio/checkbox controls; pill-shaped choice surfaces */
+#app #interactionForm .cm-choice-row input[type="radio"],
+#app #interactionForm .cm-rating-row input[type="radio"],
+#app #interactionForm .cm-pills input[type="checkbox"]{
+  appearance:none!important;-webkit-appearance:none!important;
+  display:inline-block!important;position:relative!important;
+  width:22px!important;height:22px!important;
+  min-width:22px!important;min-height:22px!important;max-width:22px!important;
+  margin:0 0 0 7px!important;padding:0!important;
+  border:2px solid #a7aabb!important;border-radius:50%!important;
+  background:#11151f!important;box-shadow:none!important;
+  flex:0 0 22px!important;vertical-align:middle!important;
+}
+#app #interactionForm .cm-choice-row input[type="radio"]:checked,
+#app #interactionForm .cm-rating-row input[type="radio"]:checked{
+  border-color:#f472b6!important;
+  background:radial-gradient(circle,#f472b6 0 5px,#202635 6px)!important;
+}
+#app #interactionForm .cm-pills input[type="checkbox"]:checked{
+  border-color:#a78bfa!important;
+  background:radial-gradient(circle,#a78bfa 0 5px,#202635 6px)!important;
+}
+#app #interactionForm .cm-choice-row label{
+  border-radius:999px!important;min-height:42px!important;
+  padding:8px 14px!important;gap:7px!important;
+}
+#app #interactionForm .cm-rating-row{
+  display:flex!important;flex-wrap:wrap!important;justify-content:center!important;
+  gap:10px!important;direction:ltr!important;
+}
+#app #interactionForm .cm-rating-row label{
+  display:flex!important;flex:0 0 48px!important;width:48px!important;height:48px!important;
+  min-width:48px!important;min-height:48px!important;
+  border-radius:50%!important;padding:0!important;
+  align-items:center!important;justify-content:center!important;gap:0!important;
+  background:#202635!important;border:1px solid #555b70!important;
+}
+#app #interactionForm .cm-rating-row input[type="radio"]{
+  position:absolute!important;opacity:0!important;width:1px!important;height:1px!important;
+  min-width:1px!important;min-height:1px!important;padding:0!important;margin:0!important;
+}
+#app #interactionForm .cm-rating-row label:has(input:checked){
+  background:linear-gradient(145deg,#a78bfa,#f472b6)!important;
+  border-color:#f472b6!important;color:#17141b!important;
+  box-shadow:0 0 0 3px rgba(244,114,182,.18)!important;
+}
+#app #interactionForm .cm-pills label{
+  border-radius:18px!important;min-height:54px!important;
+}
+#app #interactionForm .cm-pills input[type="checkbox"]{margin-inline-start:4px!important}
+@media(max-width:700px){
+ #app #interactionForm .cm-rating-row{gap:7px!important}
+ #app #interactionForm .cm-rating-row label{flex-basis:42px!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}
+ #app #interactionForm .cm-choice-row label{min-height:40px!important}
+}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -446,5 +504,5 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </section>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=18"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=19"></script>
 </body></html>
