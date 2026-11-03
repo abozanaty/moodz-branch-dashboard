@@ -563,6 +563,27 @@ body{font-size:18px!important;color:#f4f5f7!important}
  #app #interactionForm .cm-choice-row label{padding:5px 6px!important;font-size:11px!important}
 }
 </style>
+
+<style>
+/* Collapsible customer log */
+#app .customer-log-accordion{padding:0!important;overflow:hidden}
+#app .customer-log-accordion>summary{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ gap:14px!important;list-style:none!important;cursor:pointer!important;
+ padding:16px 18px!important;user-select:none!important;
+}
+#app .customer-log-accordion>summary::-webkit-details-marker{display:none!important}
+#app .customer-log-accordion>summary>span{font-size:18px!important;font-weight:850!important;color:#f1f1f5!important}
+#app .customer-log-toggle{
+ width:30px!important;height:30px!important;flex:0 0 30px!important;
+ display:grid!important;place-items:center!important;border:1px solid #555b70!important;
+ border-radius:8px!important;color:#d2a7ff!important;background:#202635!important;
+}
+#app .customer-log-toggle:before{content:"+";font-size:23px!important;line-height:1!important;font-weight:500!important}
+#app .customer-log-accordion[open] .customer-log-toggle:before{content:"−"}
+#app .customer-log-content{padding:0 16px 16px!important}
+#app .customer-log-accordion:not([open]){margin-bottom:12px!important}
+</style>
 </head>
 <body>
 <section id="login" class="hidden" aria-hidden="true"></section>
@@ -603,7 +624,9 @@ body{font-size:18px!important;color:#f4f5f7!important}
 <div class="cm-actions"><button class="primary" type="submit" id="saveBtn">حفظ التفاعل</button><button type="button" id="cancelEdit" class="cm-hidden">إلغاء التعديل</button></div>
 </form>
 </section>
-<section class="panel cm-section"><h2>سجل العملاء والتفاعلات – Customer Log</h2>
+<details class="panel cm-section customer-log-accordion">
+<summary><span>سجل العملاء والتفاعلات – Customer Log</span><b class="customer-log-toggle" aria-hidden="true"></b></summary>
+<div class="customer-log-content">
 <div class="cm-form-grid">
 <label>ابحث باسم العميل أو رقم تليفونه<input id="searchRecords"></label>
 <label>البراند<select id="filterBrand"><option value="">كل البراندات</option><option>Moodz</option><option>Brooklyn’s</option><option>Toffee Koffie</option><option>Nino Jeans</option></select></label>
@@ -611,8 +634,9 @@ body{font-size:18px!important;color:#f4f5f7!important}
 </div>
 <div class="cm-table-wrap"><table class="cm-table"><thead><tr><th>التاريخ</th><th>اسم العميل</th><th>البراند</th><th>نوع التفاعل</th><th>Follow-up</th><th>إجراء</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
 <p id="recordCount" class="cm-muted"></p>
-</section>
+</div>
+</details>
 </main></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=23"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./cm.js?v=24"></script>
 </body></html>
