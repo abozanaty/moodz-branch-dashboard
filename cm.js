@@ -26,7 +26,7 @@ const people=uniqueCustomers(rows);
 const avgRatings=rows.map(r=>Number(r.experience_rating)).filter(n=>Number.isFinite(n)&&n>=1&&n<=10);
 const average=avgRatings.length?(avgRatings.reduce((a,b)=>a+b,0)/avgRatings.length).toFixed(1):"—";
 const followUps=rows.filter(r=>r.needs_follow_up===true||r.needs_follow_up==="true").length;
-$("stats").innerHTML='<div class="cm-stat"><span>Community Members</span><strong>'+people+'</strong></div><div class="cm-stat"><span>Gender</span><div id="genderChart"></div></div><div class="cm-stat"><span>Age Group</span><div id="ageChart" class="cm-bars"></div></div><div class="cm-stat"><span>Customer Experience</span><strong>'+average+' <small>/ 10</small></strong></div><div class="cm-stat"><span>Follow up</span><strong>'+followUps+'</strong></div><div class="cm-stat"><span>Customer Interests</span><div id="interestsChart" class="cm-interest-chart"></div></div>';
+$("stats").innerHTML='<div class="cm-stat"><span>Community Members</span><strong>'+people+'</strong></div><div class="cm-stat"><span>Gender</span><div id="genderChart"></div></div><div class="cm-stat"><span>Age Group</span><div id="ageChart" class="cm-bars"></div></div><div class="cm-stat"><span>Customer Experience</span><strong>'+average+' <small>/ 10</small></strong></div><div class="cm-stat"><span>Follow up</span><strong>'+followUps+'</strong></div>';
 const genderCounts={"ذكر":0,"أنثى":0,"غير محدد":0};
 rows.forEach(r=>{const g=genderCounts.hasOwnProperty(r.customer_gender)?r.customer_gender:"غير محدد";genderCounts[g]++});
 const totalGender=rows.length;
