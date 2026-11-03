@@ -3,8 +3,8 @@ const SUPABASE_KEY="sb_publishable_0HWgGuV4SkfFXlIbFdRsBw_5R-mLz3H";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 let currentUser=null, rows=[];
 const $=id=>document.getElementById(id);
-const interests=["الفعاليات والـEvents","المنتجات الجديدة","العروض والـPromotions","الأنشطة المجتمعية","التعاونات والـCollaborations"];
-const opportunities=["Brand Ambassador محتمل","Influencer محتمل","فرصة Collaboration","قصة عميل تستحق المشاركة","Community Leader محتمل"];
+const interests=["الفعاليات، الأنشطة والـEvents","المنتجات الجديدة","العروض والـPromotions","التعاونات والـCollaborations"];
+const opportunities=["Brand Ambassador محتمل","Influencer محتمل","فرصة Collaboration","قصة عميل تستحق المشاركة"];
 const fields=["customer_name","customer_age_group","customer_gender","customer_phone","brand","branch","interaction_type","favorite_brand_aspect","favorite_products","dislikes","improvement_suggestions","competitors","experience_rating","follow_up_reason","required_action","follow_up_owner","follow_up_date","follow_up_status"];
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
