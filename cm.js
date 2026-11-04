@@ -10,7 +10,7 @@ function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden")
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function normalizedPhone(v){let d=String(v||"").replace(/\D/g,"");if(/^01\d{9}$/.test(d))return "2"+d;if(d.startsWith("0020"))return d.slice(2);return d}
 function options(id,items){$(id).innerHTML=items.map((x,i)=>'<label><input type="checkbox" value="'+esc(x)+'"> '+esc(x)+'</label>').join("")}
-function radioOptions(id,items,selectedValue=""){const el=$(id);el.innerHTML=items.map((x,i)=>'<label><input type="radio" name="'+id+'" value="'+esc(x.value)+'" '+(String(x.value)===String(selectedValue)?'checked':'')+'>'+esc(x.label)+'</label>').join("");el.querySelectorAll('input').forEach(input=>input.addEventListener('change',()=>{const field=$(id.replace("_options",""));if(field)field.value=input.value;if(id==="branch_options")$("brand").value=input.value==="Moodz Grand"?"Moodz":input.value==="Brooklyn’s"?"Brooklyn’s":"Toffee Koffie";if(id==="needs_follow_up_options")syncFollowUpVisibility()}))}
+function radioOptions(id,items,selectedValue=""){const el=$(id);el.innerHTML=items.map((x,i)=>'<label><input type="radio" name="'+id+'" value="'+esc(x.value)+'" '+(String(x.value)===String(selectedValue)?'checked':'')+'>'+esc(x.label)+'</label>').join("");el.querySelectorAll('input').forEach(input=>input.addEventListener('change',()=>{const field=$(id.replace("_options",""));if(field)field.value=input.value;if(id==="branch_options")$("brand").value=(input.value==="Moodz Grand"||input.value==="Moodz 1")?"Moodz":input.value==="Brooklyn’s"?"Brooklyn’s":"Toffee Koffie";if(id==="needs_follow_up_options")syncFollowUpVisibility()}))}
 function setRadio(id,value){const field=$(id.replace("_options",""));if(field)field.value=value??"";$(id).querySelectorAll('input[type=radio]').forEach(input=>input.checked=String(input.value)===String(value??""))}
 function selected(id){return [...$(id).querySelectorAll("input:checked")].map(x=>x.value)}
 function setSelected(id,values=[]){[...$(id).querySelectorAll("input")].forEach(x=>x.checked=values.includes(x.value))}
@@ -63,7 +63,7 @@ function setupCmDisplay(){let zoom=100;const app=$("app");const apply=()=>{app.s
 async function boot(){setupCmDisplay();options("interestsOptions",interests);options("opportunitiesOptions",opportunities);
 radioOptions("customer_age_group_options",["أقل من 18","18–24","25–35","35+"].map(x=>({value:x,label:x})));
 radioOptions("customer_gender_options",["ذكر","أنثى"].map(x=>({value:x,label:x})));
-radioOptions("branch_options",["Moodz Grand","Brooklyn’s","Toffee Koffie"].map(x=>({value:x,label:x})));
+radioOptions("branch_options",["Moodz Grand","Moodz 1","Brooklyn’s","Toffee Koffie"].map(x=>({value:x,label:x})));
 radioOptions("interaction_type_options",["محادثة عادية chatting","شكوى","فعالية Event"].map(x=>({value:x,label:x})));
 radioOptions("needs_follow_up_options",[{value:"true",label:"نعم"},{value:"false",label:"لا"}],"false");
 radioOptions("follow_up_status_options",["مفتوح","قيد التنفيذ","مغلق"].map(x=>({value:x,label:x})),"مفتوح");
