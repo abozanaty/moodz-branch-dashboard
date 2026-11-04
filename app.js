@@ -194,7 +194,7 @@ function renderCommunityReports(){
 function exportCommunityCsv(rows){
  const columns=["created_at","customer_name","customer_age_group","customer_gender","customer_phone","customer_social","brand","branch","interaction_type","favorite_brand_aspect","favorite_products","dislikes","improvement_suggestions","competitors","experience_rating","interests","community_opportunities","needs_follow_up","follow_up_reason","required_action","follow_up_owner","follow_up_date","follow_up_status","cm_insight","noticed_opportunity","recommendation"];
  const csv=[columns.join(","),...rows.map(r=>columns.map(k=>{const v=Array.isArray(r[k])?r[k].join(" | "):(r[k]??"");return '"'+String(v).replaceAll('"','""')+'"'}).join(","))].join("\r\n");
- const blob=new Blob(["\\uFEFF",csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="community-reports.csv";a.click();URL.revokeObjectURL(url);
+ const blob=new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="community-reports.csv";a.click();URL.revokeObjectURL(url);
 }
 
 function applyRoleVisibility(){const admin=profile?.role==="admin";["checklistMonthlyAdmin","monthlyTargetAdmin","checklistAdminPanel","visuals","averageCheckAdmin"].forEach(id=>{const el=$(id);if(el)el.classList.toggle("hidden",!admin)});["progressHero","branchTargets","branchChecklist","googleReviews"].forEach(id=>{const el=$(id);if(el)el.classList.remove("hidden")});const opener=$("panelLayoutOpen");if(opener)opener.classList.remove("hidden")}
